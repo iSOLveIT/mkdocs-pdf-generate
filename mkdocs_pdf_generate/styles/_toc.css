@@ -1,0 +1,61 @@
+/* TOC */
+@media print{
+    @page toc {
+        @top-left {
+            content: normal !important;
+        }
+    }
+
+    article#doc-toc{
+        page-break-after: always !important;
+        break-after: always !important;
+        margin: 0 .8rem 1.2rem;
+        padding-top: .6rem;
+        line-height: 1.6;
+        page: toc;
+    }
+    article#doc-toc h1{
+        margin: 0 0 2rem;
+        color: rgba(0, 0, 0, .54);
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: -.01em;
+        page-break-after: auto;
+        page-break-inside: auto;
+        bookmark-level: none;
+        border-bottom: 2px solid #3144b7;
+        padding-bottom: 2px!important;
+    }
+    article#doc-toc h1::before{
+        display: block;
+        margin-top: -9px;
+        padding-top: 9px;
+        content: "";
+    }
+    article#doc-toc ul{
+        list-style: none;
+        padding-left: 0;
+        margin-left: 1em;
+        font-size: 10.5pt;
+        page-break-inside: auto !important;
+    }
+    article#doc-toc li{
+        list-style: none;
+    }
+    article#doc-toc li a{
+        color: inherit;
+        text-decoration: none;
+
+        padding-top: 0.4rem;
+        border-bottom: 1px dotted #ddd;
+        display: inline-block;
+        width: 100%;
+    }
+    article#doc-toc li a .pdf-order{
+        padding-right: 0.5em;
+    }
+    article#doc-toc li a::after{
+        float: right;
+        content: target-counter(attr(href), page);
+    }
+}

@@ -1,0 +1,43 @@
+# This workflow runs a CI test to ensure your documentation still builds.
+
+name: "Pull Request MkDocs Check"
+env:
+  ENABLE_PDF_EXPORT: 0
+on:
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  docs-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set Up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9.7
+    - name: Update pip
+      run: |
+        pip install -U wheel
+        pip install -U setuptools
+        python -m pip install -U pip
+    - name: Get pip cache dir
+      id: pip-cache
+      run: |
+        echo "::set-output name=dir::$(pip cache dir)"
+    - name: Pip cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.pip-cache.outputs.dir }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: MkDocs Link Check
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-verbose-mode: 'yes'
+        folder-path: 'docs/'

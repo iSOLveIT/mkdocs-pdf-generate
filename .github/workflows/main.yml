@@ -1,0 +1,70 @@
+# This is a workflow to compile MkDocs sources on *main* branch and update *docs-build* branch
+
+name: Compile MkDocs source and update docs-build branch
+
+env:
+  ENABLE_PDF_EXPORT: 1
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the main branch
+  push:
+    branches:
+      - main
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    env:
+      ENABLE_PDF_EXPORT: '1'
+    steps:
+    - name: Set Up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9.7
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0 # otherwise, you will fail to push refs to destination repo
+    - name: Required packages for WeasyPrint
+      run: |
+        sudo apt install libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libffi-dev libjpeg-dev libopenjp2-7-dev
+    - name: Update pip
+      run: |
+        pip install -U wheel
+        pip install -U setuptools
+        python -m pip install -U pip
+    - name: Get pip cache dir
+      id: pip-cache
+      run: |
+        echo "::set-output name=dir::$(pip cache dir)"
+    - name: Pip cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.pip-cache.outputs.dir }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install PDF generator
+      run: |
+        pip install -e .
+    - name: MkDocs Link Check
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-verbose-mode: 'yes'
+        folder-path: 'docs/'
+    - name: Build MkDocs
+      uses: iSOLveIT/mkdocs-notes@main
+      with:
+        config_file_path: docs/mkdocs.yml
+        documentation_path: docs/
+        requirements_path: requirements.txt
+        target_branch: docs-build
+        mkdocs_version: '1.3.1'
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: docs-build
+        force: true

@@ -1,0 +1,37 @@
+<article id="doc-cover">
+    {% if cover_logo is defined %}
+        <div class="wrapper upper">
+            <div class="logo" style="background-image: url('{{ cover_logo | to_url }}');"></div>
+        </div>
+    {% else %}
+        <div class="wrapper"></div>
+    {% endif %}
+    <div class="wrapper">
+        <h1>{{ cover_title | e }}</h1>
+        <h2>{{ cover_subtitle | e }}</h2>
+        {% if revision is defined %}
+            <h3>Revision {{ revision | e }}</h3>
+        {% endif %}
+    </div>
+    <div class="properties">
+        <address>
+            {% if author is defined %}
+                <p id="author">{{ author | e }}</p>
+            {% endif %}
+            <a href="https://resources.breadboardmates.com" id="project_logo" title="Resource Centre">
+                <img src="https://resources.breadboardmates.com/img/full-logo.svg"
+                style="width:80px;height:30px" alt="BBM Logo"/>
+            </a>
+        </address>
+    </div>
+    <div class="reserved_rights">
+        <address>
+            {% if copyright is defined %}
+                <p id="copyright">{{ copyright | e }}</p>
+            {% endif %}
+            {% if disclaimer is defined %}
+                <p id="disclaimer">{{ disclaimer | e }}</p>
+            {% endif %}
+        </address>
+    </div>
+</article>
