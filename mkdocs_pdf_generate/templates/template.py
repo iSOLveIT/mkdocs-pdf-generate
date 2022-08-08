@@ -19,14 +19,13 @@ class Template(object):
         "disclaimer",
         "cover_title",
         "cover_subtitle",
-        "cover_image",
         "site_url",
         "repo_url",
     ]
 
-    def __init__(self, options: object):
+    def __init__(self, options: object, config: Config):
         self._options = options
-        self._config = options.user_config
+        self._config = config
 
         self._keywords = None
         self._jinja_env = None

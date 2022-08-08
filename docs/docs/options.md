@@ -1,6 +1,7 @@
 # Options
 
 The plugin allows users to pass in both global and local options.
+Back to [Home](/)
 
 !!! note
 

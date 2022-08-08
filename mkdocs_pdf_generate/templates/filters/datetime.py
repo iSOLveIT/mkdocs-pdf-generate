@@ -1,9 +1,9 @@
 from datetime import date, datetime
 
 
-def strptime(value: str, format) -> date:
-    return datetime.strptime(value, format)
+def strptime(value: str, fmt) -> date:
+    return datetime.strptime(value, fmt)
 
 
-def strftime(value, format) -> str:
-    return value.strftime(format)
+def strftime(value, fmt) -> str:
+    return value.strftime(fmt)

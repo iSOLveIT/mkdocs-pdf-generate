@@ -3,8 +3,9 @@ import os
 from weasyprint import urls
 from bs4 import BeautifulSoup
 
+
 # check if href is relative --
-# if it is relative it *should* be a HTML that generates a PDF doc
+# if it is relative it *should* be an HTML that generates a PDF doc
 def is_doc(href: str):
     tail = os.path.basename(href)
     _, ext = os.path.splitext(tail)

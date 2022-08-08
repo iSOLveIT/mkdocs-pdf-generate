@@ -21,6 +21,7 @@ setup(
         "weasyprint>=54.0",
         "beautifulsoup4>=4.6.3",
         "libsass>=0.15",
+        "jinja2>=3.0.0",
     ],
     classifiers=[
         "Development Status :: 4 - Beta",

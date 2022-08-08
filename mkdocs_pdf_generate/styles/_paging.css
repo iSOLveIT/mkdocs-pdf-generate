@@ -11,7 +11,8 @@
     margin: 10mm 10mm 15mm 10mm!important;
 
     @top-right {
-        content: url(string(author_logo));
+
+        content: var(--author_logo);
         height: 1.5rem!important;
         width: 70px!important;
     }
@@ -22,7 +23,7 @@
         font-family: Montserrat!important;
     }
     @bottom-center {
-        content: string(type)!important;
+        content: var(--type)!important;
         font-size: 10pt;
         font-weight: 600;
         font-family: Montserrat!important;

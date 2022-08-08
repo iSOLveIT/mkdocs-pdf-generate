@@ -100,6 +100,12 @@ class PdfGeneratePlugin(BasePlugin):
         if build_pdf_document:
             try:
                 self._logger.info("Converting {} to PDF".format(src_path))
+                download_name = (
+                    pdf_meta.get("filename")
+                    or pdf_meta.get("title")
+                    or h1_title(output_content)
+                    or None
+                )
                 self.renderer.write_pdf(
                     output_content,
                     base_url,
@@ -107,12 +113,6 @@ class PdfGeneratePlugin(BasePlugin):
                     pdf_metadata=pdf_meta,
                 )
                 # Generate a secure filename
-                download_name = (
-                    pdf_metadata.get("filename")
-                    or pdf_metadata.get("title")
-                    or h1_title(output_content)
-                    or None
-                )
                 if download_name is not None:
                     download_name = secure_filename(download_name)
                     output_content = self.renderer.add_link(

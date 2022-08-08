@@ -26,14 +26,14 @@ def _css_escape(text: str) -> str:
 def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[CSS]:
     scss = f"""
     :root {{
-        string-set: author '{_css_escape(options.author)}',
-            author_logo '{_css_escape(options.author_logo)}',
-            copyright '{_css_escape(options.copyright)}',
-            title '{_css_escape(pdf_metadata.get("title", options.cover_title))}',
-            subtitle '{_css_escape(pdf_metadata.get("subtitle", options.cover_subtitle))}',
-            type '{_css_escape(pdf_metadata.get("type", "Documentation"))}',
-            revision '{_css_escape(pdf_metadata.get("revision", ""))}',
-            filename '{_css_escape(pdf_metadata.get("filename", ""))}';
+        --author: '{_css_escape(options.author)}',
+        --author_logo: url('{_css_escape(options.author_logo)}'),
+        --copyright: '{_css_escape(options.copyright)}',
+        --title: '{_css_escape(pdf_metadata.get("title", options.cover_title))}',
+        --subtitle: '{_css_escape(pdf_metadata.get("subtitle", options.cover_subtitle))}',
+        --type: '{_css_escape(pdf_metadata.get("type", "Documentation"))}',
+        --revision: '{_css_escape(pdf_metadata.get("revision", ""))}',
+        --filename: '{_css_escape(pdf_metadata.get("filename", ""))}';
     }}
     h1 {{
         string-set: chapter content();

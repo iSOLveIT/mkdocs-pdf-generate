@@ -45,7 +45,7 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
             if el.name == "a":
                 a.append(el.contents[0])
             else:
-                a.append(clone_element(el))
+                a.append(_clone_element(el))
         li.append(a)
         options.logger.debug(f"| [{h.get_text(separator=' ')}]({ref})")
         return li
