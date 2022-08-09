@@ -35,9 +35,9 @@ def _make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict
                 str(img_k).lower(): path_filter(pathname=str(img_v))
                 for img_k, img_v in options.cover_images.items()
             }
-            keywords["cover_image"] = cover_images.get(
-                document_type.lower()
-            ) or cover_images.get("default")
+            keywords["cover_image"] = (
+                cover_images.get(document_type.lower()) or cover_images.get("default")
+            )
         # Set cover sub_title
         keywords["cover_subtitle"] = (
             pdf_metadata.get("subtitle")

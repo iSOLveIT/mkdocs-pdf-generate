@@ -2,6 +2,9 @@
 site_author: Duodu Randy
 site_name: MkDocs PDF Generate Plugin 
 site_url: https://isolveit.github.io/mkdocs-pdf-generate-plugin/
+copyright: Copyright &copy; 2022 iSOLveIT
+extra:
+  disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
 
 # Repository information
 repo_name: iSOLveIT/mkdocs-pdf-generate-plugin
@@ -10,7 +13,8 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  logo: img/favicon.png
+  logo: img/favicon.svg
+  favicon: img/logo.svg
   font:
     text: Montserrat
     code: Fira Mono

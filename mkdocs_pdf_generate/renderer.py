@@ -76,7 +76,7 @@ class Renderer(object):
         pgnum_counter = soup.new_tag("style")
         pgnum_counter.string = """
         @page :first {{
-            counter-reset: __pgnum__ {};    # noqa: W291
+            counter-reset: __pgnum__ {};    
         }}
         @page {{
             counter-increment: __pgnum__;

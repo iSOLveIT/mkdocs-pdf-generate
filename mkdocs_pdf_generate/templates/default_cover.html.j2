@@ -19,10 +19,8 @@
                 <p id="author">{{ author | e }}</p>
             {% endif %}
             <a href="https://resources.breadboardmates.com" id="project_logo" title="Resource Centre">
-                {% if author_logo %}
-                    <img src="{{ author_logo }}" alt="Company Logo"
-                    style="width:80px;height:30px"/>
-                {% endif %}
+                <img src="{{ author_logo }}" alt="Company Logo"
+                style="width:80px;height:30px"/>
             </a>
         </address>
     </div>

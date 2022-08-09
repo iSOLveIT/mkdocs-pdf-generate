@@ -56,12 +56,9 @@
     article#doc-cover .properties{
         flex: 0 0 auto;
         text-align: right;
+        float: right!important
         padding: 0 2rem;
     }
-    /*
-    article#doc-cover .properties p#copyright{
-        font-size: 80%;
-    }*/
 
     article#doc-cover .reserved_rights{
         flex: 0 0 auto;

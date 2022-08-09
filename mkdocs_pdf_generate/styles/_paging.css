@@ -11,10 +11,10 @@
     margin: 10mm 10mm 15mm 10mm!important;
 
     @top-right {
-
-        content: var(--author_logo);
-        height: 1.5rem!important;
-        width: 70px!important;
+        content: var(--author-logo);
+        height: 35px!important;
+        width: 60px!important;
+        max-width: 70px!important;
     }
 
     @top-left {
@@ -34,7 +34,7 @@
         font-family: Montserrat!important;
     }
     @bottom-left {
-        content: "https://resources.breadboardmates.com";
+        content: var(--site-url);
         font-size: 8pt;
         font-family: Montserrat!important;
     }

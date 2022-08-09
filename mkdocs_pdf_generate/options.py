@@ -34,7 +34,8 @@ class Options(object):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
         # user_configs in mkdocs.yml
-        self._user_config = config
+        self._user_config: Config = config
+        self.site_url = config["site_url"]
 
         # Author and Copyright
         self._author = local_config["author"]
