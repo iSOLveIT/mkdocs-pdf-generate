@@ -1,5 +1,7 @@
 # MkDocs PDF Generate Plugin 
 
+Next Page to [Options](options.md)
+
 The pdf-generate plugin will generate separate PDF files for each markdown page
 in your MkDocs repository using [WeasyPrint](http://weasyprint.org/). 
 The exported documents support many advanced features such as table of contents, customisable cover page,  

@@ -35,7 +35,7 @@ class Options(object):
         self.verbose = local_config["verbose"]
         # user_configs in mkdocs.yml
         self._user_config: Config = config
-        self.site_url = config["site_url"]
+        self._site_url = config["site_url"]
 
         # Author and Copyright
         self._author = local_config["author"]
@@ -90,6 +90,14 @@ class Options(object):
 
         # for system
         self._logger = logger
+
+    @property
+    def site_url(self):
+        return self._site_url
+
+    @site_url.setter
+    def site_url(self, url):
+        self._site_url = url
 
     @property
     def author(self) -> str:

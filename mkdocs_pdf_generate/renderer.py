@@ -26,7 +26,11 @@ class Renderer(object):
         self.pages = []
 
     def write_pdf(
-        self, content: str, base_url: str, filename: str, pdf_metadata: Optional[Dict] = None
+        self,
+        content: str,
+        base_url: str,
+        filename: str,
+        pdf_metadata: Optional[Dict] = None,
     ):
         self.render_doc(content, base_url, pdf_metadata=pdf_metadata).write_pdf(
             filename
@@ -76,7 +80,7 @@ class Renderer(object):
         pgnum_counter = soup.new_tag("style")
         pgnum_counter.string = """
         @page :first {{
-            counter-reset: __pgnum__ {};    
+            counter-reset: __pgnum__ {};    #noqa W291
         }}
         @page {{
             counter-increment: __pgnum__;

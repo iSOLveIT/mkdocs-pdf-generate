@@ -1,14 +1,14 @@
 # Project information
 site_author: Duodu Randy
 site_name: MkDocs PDF Generate Plugin 
-site_url: https://isolveit.github.io/mkdocs-pdf-generate-plugin/
+site_url: https://isolveit.github.io/mkdocs-pdf-generate/
 copyright: Copyright &copy; 2022 iSOLveIT
 extra:
   disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
 
 # Repository information
-repo_name: iSOLveIT/mkdocs-pdf-generate-plugin
-repo_url: https://github.com/iSOLveIT/mkdocs-pdf-generate-plugin
+repo_name: iSOLveIT/mkdocs-pdf-generate
+repo_url: https://github.com/iSOLveIT/mkdocs-pdf-generate
 edit_uri: edit/main/docs/
 
 theme:
