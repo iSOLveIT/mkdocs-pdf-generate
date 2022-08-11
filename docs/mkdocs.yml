@@ -27,14 +27,14 @@ theme:
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: 'white'
-      accent: 'yellow'
+      accent: 'green'
       toggle:
         icon: material/weather-night
         name: Switch to Dark Mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: 'white'
-      accent: 'green'
+      accent: 'yellow'
       toggle:
         icon: material/weather-sunny
         name: Switch to Light Mode
