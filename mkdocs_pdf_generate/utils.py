@@ -1,25 +1,22 @@
+import os
+
 from bs4 import BeautifulSoup, PageElement
 import re
 from typing import Union
 
 
 def get_pdf_metadata(metadata):
-    pdf_meta = metadata["pdf"] if "pdf" in metadata else []
-    result = {}
-    for i in pdf_meta:
-        if isinstance(i, dict):
-            result.update(i)
-
-    return result
+    pdf_meta = metadata["pdf"] if "pdf" in metadata else {}
+    return pdf_meta
 
 
 def secure_filename(filename):
-    r"""Pass it a filename and it will return a secure version of it.  This
+    r"""Pass it a filename, and it will return a secure version of it.  This
     filename can then safely be stored on a regular file system and passed
     to :func:`os.path.join`.  The filename returned is an ASCII only string
     for maximum portability.
 
-    On windows systems the function also makes sure that the file is not
+    On Windows systems the function also makes sure that the file is not
     named after one of the special device files.
 
     >>> secure_filename("My cool movie.mov")
@@ -74,6 +71,6 @@ def h1_title(content: Union[str, PageElement]) -> str:
     soup = content
     if isinstance(soup, str):
         soup = BeautifulSoup(soup, "html5lib")
-    h1_title = soup.find("h1", attrs={"id": re.compile(r"[\w_\d\-]+")})
-    h1_title = re.sub(r"^[\d.]+ ", "", h1_title.text)
-    return h1_title
+    title = soup.find("h1", attrs={"id": re.compile(r"[\w_\d\-]+")})
+    title = re.sub(r"^[\d.]+ ", "", title.text)
+    return title

@@ -1,7 +1,7 @@
 <article id="doc-cover">
-    {% if cover_logo is defined %}
+    {% if cover_image is defined %}
         <div class="wrapper upper">
-            <div class="logo" style="background-image: url('{{ cover_logo | to_url }}');"></div>
+            <div class="logo" style="background-image: url('{{ cover_image | to_url }}');"></div>
         </div>
     {% else %}
         <div class="wrapper"></div>
@@ -9,27 +9,27 @@
     <div class="wrapper">
         <h1>{{ cover_title | e }}</h1>
         <h2>{{ cover_subtitle | e }}</h2>
-        {% if revision is defined %}
+        {% if revision %}
             <h3>Revision {{ revision | e }}</h3>
         {% endif %}
     </div>
     <div class="properties">
         <address>
-            {% if author is defined %}
+            {% if author %}
                 <p id="author">{{ author | e }}</p>
             {% endif %}
             <a href="https://resources.breadboardmates.com" id="project_logo" title="Resource Centre">
-                <img src="https://resources.breadboardmates.com/img/full-logo.svg"
-                style="width:80px;height:30px" alt="BBM Logo"/>
+                <img src="{{ author_logo }}" alt="Company Logo"
+                style="width:80px;height:30px"/>
             </a>
         </address>
     </div>
     <div class="reserved_rights">
         <address>
-            {% if copyright is defined %}
+            {% if copyright %}
                 <p id="copyright">{{ copyright | e }}</p>
             {% endif %}
-            {% if disclaimer is defined %}
+            {% if disclaimer %}
                 <p id="disclaimer">{{ disclaimer | e }}</p>
             {% endif %}
         </address>

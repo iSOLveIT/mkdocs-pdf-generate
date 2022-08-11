@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mkdocs-pdf-generate",
-    version="0.1.0",
+    version="0.2.0",
     description="An MkDocs plugin to generate individual PDF files from content pages.",
     long_description="The pdf-generate plugin will generate separate PDF files for each markdown page "
     "in your MkDocs repository using WeasyPrint. "
@@ -21,6 +21,7 @@ setup(
         "weasyprint>=54.0",
         "beautifulsoup4>=4.6.3",
         "libsass>=0.15",
+        "jinja2>=3.0.0",
     ],
     classifiers=[
         "Development Status :: 4 - Beta",

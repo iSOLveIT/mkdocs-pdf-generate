@@ -3,40 +3,40 @@
 
 def get_stylesheet() -> str:
     return """
-    .md-container {
-        display: block;
-        padding-top: 0;
-    }
-    
-    .md-main {
-        display: block;
-        height: inherit;
-    }
-    
-    .md-main__inner {
-        height: inherit;
-        padding-top: 0;
-    }
-    
-    .md-typeset .codehilitetable .linenos {
-        display: none;
-    }
-    
-    .md-typeset .footnote-ref {
-        display: inline-block;
-    }
-    
-    .md-typeset a.footnote-backref {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    
-    .md-typeset a::after {
-        color: inherit;
-        content: none;
-    }
-    
-    """
+.md-container {
+    display: block;
+    padding-top: 0;
+}
+
+.md-main {
+    display: block;
+    height: inherit;
+}
+
+.md-main__inner {
+    height: inherit;
+    padding-top: 0;
+}
+
+.md-typeset .codehilitetable .linenos {
+    display: none;
+}
+
+.md-typeset .footnote-ref {
+    display: inline-block;
+}
+
+.md-typeset a.footnote-backref {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.md-typeset a::after {
+    color: inherit;
+    content: none;
+}
+
+"""
 
 
 def modify_html(html: str, href: str, download_name: str = None) -> str:

@@ -29,8 +29,8 @@ class URLFilter(_FilterBase):
                 continue
             path = os.path.abspath(os.path.join(d, pathname))
             if os.path.isfile(path):
-                # return "file://" + path
-                return path
+                return "file://" + path
+        # return path
 
         # not found?
         return pathname

@@ -34,7 +34,8 @@ class Options(object):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
         # user_configs in mkdocs.yml
-        self._user_config = config
+        self._user_config: Config = config
+        self._site_url = config["site_url"]
 
         # Author and Copyright
         self._author = local_config["author"]
@@ -77,18 +78,26 @@ class Options(object):
             self.theme_handler_path = config.get("theme_handler_path", None)
 
         # Template handler(Jinja2 wrapper)
-        self._template = Template(self)
+        self._template = Template(self, config)
 
         # Author Logo
-        logo_path_filter = URLFilter(self)
+        logo_path_filter = URLFilter(self, config)
         self.author_logo = local_config["author_logo"]
-        if isinstance(self.author_logo, str):
-            self.author_logo = logo_path_filter(self.author_logo)
         if not self.author_logo:
             self.author_logo = config["theme"]["logo"]
+        if isinstance(self.author_logo, str):
+            self.author_logo = logo_path_filter(self.author_logo)
 
         # for system
         self._logger = logger
+
+    @property
+    def site_url(self):
+        return self._site_url
+
+    @site_url.setter
+    def site_url(self, url):
+        self._site_url = url
 
     @property
     def author(self) -> str:

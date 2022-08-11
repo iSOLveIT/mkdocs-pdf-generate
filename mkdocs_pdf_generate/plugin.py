@@ -2,6 +2,7 @@ import os
 from timeit import default_timer as timer
 import logging
 
+from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
 
 from .options import Options
@@ -68,13 +69,24 @@ class PdfGeneratePlugin(BasePlugin):
 
         return nav
 
-    def on_post_page(self, output_content, page, config):
+    def on_post_page(self, output_content, page, config: Config):
         if not self.enabled:
             return output_content
 
         start = timer()
 
         self.num_files += 1
+
+        # Since the MkDocs build is done on a local server, the `site_url` config variable is equal to
+        # the address of the local server. But if we are hosting the documentation on a remote server,
+        # we would want the `site_url` to be the remote server, so we need to set `site_url` variable
+        # in our `mkdocs.yml` configuration file.
+        # The plugin will then pick the user defined `site_url` variable and set the `site_url` in `config` to it.
+        # We are doing this because we want the plugin to be able to determine where project links in the PDF
+        # will lead to.
+        site_url = [i["site_url"] for i in config.user_configs if "site_url" in i]
+        if len(site_url) > 0:
+            self._options.site_url = site_url[0]
 
         try:
             abs_dest_path = page.file.abs_dest_path
@@ -100,6 +112,12 @@ class PdfGeneratePlugin(BasePlugin):
         if build_pdf_document:
             try:
                 self._logger.info("Converting {} to PDF".format(src_path))
+                download_name = (
+                    pdf_meta.get("filename")
+                    or pdf_meta.get("title")
+                    or h1_title(output_content)
+                    or None
+                )
                 self.renderer.write_pdf(
                     output_content,
                     base_url,
@@ -107,12 +125,6 @@ class PdfGeneratePlugin(BasePlugin):
                     pdf_metadata=pdf_meta,
                 )
                 # Generate a secure filename
-                download_name = (
-                    pdf_metadata.get("filename")
-                    or pdf_metadata.get("title")
-                    or h1_title(output_content)
-                    or None
-                )
                 if download_name is not None:
                     download_name = secure_filename(download_name)
                     output_content = self.renderer.add_link(
@@ -126,6 +138,8 @@ class PdfGeneratePlugin(BasePlugin):
             except Exception as e:
                 self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
                 self.num_errors += 1
+        else:
+            self._logger.info("Skipped: PDF conversion for {}".format(src_path))
 
         end = timer()
         self.total_time += end - start

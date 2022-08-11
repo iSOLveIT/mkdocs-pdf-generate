@@ -2,9 +2,9 @@ from mkdocs.config.base import Config
 
 
 class _FilterBase:
-    def __init__(self, options: object):
+    def __init__(self, options: object, config: Config):
         self.__options = options
-        self.__config = options.user_config
+        self.__config = config
 
     @property
     def options(self):
