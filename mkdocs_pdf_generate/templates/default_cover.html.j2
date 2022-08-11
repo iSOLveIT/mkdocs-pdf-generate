@@ -9,7 +9,7 @@
     <div class="wrapper">
         <h1>{{ cover_title | e }}</h1>
         <h2>{{ cover_subtitle | e }}</h2>
-        {% if revision is defined %}
+        {% if revision %}
             <h3>Revision {{ revision | e }}</h3>
         {% endif %}
     </div>

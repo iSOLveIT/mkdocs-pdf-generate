@@ -1,3 +1,11 @@
+---
+pdf:
+  filename: Plugin Options
+  title: Options for MkDocs PDF Generate Plugin
+  type: Options
+  revision: 0.2    
+---
+
 # Options
 
 The plugin allows users to pass in both global and local options.

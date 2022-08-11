@@ -1,4 +1,4 @@
-from .links import replace_asset_hrefs, rel_pdf_href
+from .links import replace_asset_hrefs, rel_html_href
 from .content import restructure_tabbed_content
 
 from bs4 import BeautifulSoup
@@ -20,11 +20,11 @@ from bs4 import BeautifulSoup
 #     return soup
 
 
-def get_separate(soup: BeautifulSoup, base_url: str):
+def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
     # transforms all relative hrefs pointing to other html docs
     # into relative pdf hrefs
     for a in soup.find_all("a", href=True):
-        a["href"] = rel_pdf_href(a["href"])
+        a["href"] = rel_html_href(base_url, a["href"], site_url)
 
     soup = replace_asset_hrefs(soup, base_url)
     soup = restructure_tabbed_content(soup)

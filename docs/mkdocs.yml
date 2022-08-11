@@ -3,8 +3,6 @@ site_author: Duodu Randy
 site_name: MkDocs PDF Generate Plugin 
 site_url: https://isolveit.github.io/mkdocs-pdf-generate/
 copyright: Copyright &copy; 2022 iSOLveIT
-extra:
-  disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
 
 # Repository information
 repo_name: iSOLveIT/mkdocs-pdf-generate
@@ -13,8 +11,8 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  logo: img/favicon.svg
-  favicon: img/logo.svg
+  logo: img/plugin_icon.svg
+  favicon: img/plugin_favicon.png
   font:
     text: Montserrat
     code: Fira Mono
@@ -28,15 +26,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: 'black'
-      accent: 'indigo'
+      primary: 'white'
+      accent: 'yellow'
       toggle:
         icon: material/weather-night
         name: Switch to Dark Mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: 'black'
-      accent: 'indigo'
+      primary: 'white'
+      accent: 'green'
       toggle:
         icon: material/weather-sunny
         name: Switch to Light Mode
@@ -60,12 +58,20 @@ plugins:
   - minify:
       minify_html: true
   - pdf-generate:
+      copyright: "Copyright © 2022 Breadboard Mates"
+      disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
+      cover_images:
+        default: img/home-banner.svg
+        home: img/manual-banner.svg
+        options: img/project-banner.svg
+        customize: img/tutorial-banner.svg
       enabled_if_env: ENABLE_PDF_EXPORT
       
 
 nav:
   - Intro: index.md
   - Options: options.md
+  - Customizations: customise/customisation.md
 
 markdown_extensions:
   - meta

@@ -138,6 +138,8 @@ class PdfGeneratePlugin(BasePlugin):
             except Exception as e:
                 self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
                 self.num_errors += 1
+        else:
+            self._logger.info("Skipped: PDF conversion for {}".format(src_path))
 
         end = timer()
         self.total_time += end - start

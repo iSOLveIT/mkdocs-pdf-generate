@@ -44,7 +44,7 @@ class Renderer(object):
         css = style_for_print(self._options, pdf_metadata)
         css.append(CSS(string=self.theme.get_stylesheet()))
 
-        soup = prep_separate(soup, base_url)
+        soup = prep_separate(soup, base_url, self._options.site_url)
         toc.make_toc(soup, self._options)
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 

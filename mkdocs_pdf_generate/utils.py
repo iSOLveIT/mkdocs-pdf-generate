@@ -6,14 +6,8 @@ from typing import Union
 
 
 def get_pdf_metadata(metadata):
-    pdf_meta = metadata["pdf"] if "pdf" in metadata else []
-    result = {}
-    if len(pdf_meta) > 0:
-        for i in pdf_meta:
-            if isinstance(i, dict):
-                result.update(i)
-
-    return result
+    pdf_meta = metadata["pdf"] if "pdf" in metadata else {}
+    return pdf_meta
 
 
 def secure_filename(filename):

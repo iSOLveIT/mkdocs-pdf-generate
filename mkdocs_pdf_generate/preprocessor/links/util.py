@@ -1,4 +1,5 @@
 import os
+import re
 
 from weasyprint import urls
 from bs4 import BeautifulSoup
@@ -19,15 +20,33 @@ def is_doc(href: str):
     return True
 
 
-def rel_pdf_href(href: str):
-    head, tail = os.path.split(href)
-    filename, _ = os.path.splitext(tail)
+# def rel_pdf_href(href: str):
+#     head, tail = os.path.split(href)
+#     filename, _ = os.path.splitext(tail)
+#
+#     internal = href.startswith("#")
+#     if not is_doc(href) or internal:
+#         return href
+#
+#     return urls.iri_to_uri(os.path.join(head, filename + ".pdf"))
+
+
+def rel_html_href(base_url: str, href: str, site_url: str):
+    base_url = os.path.dirname(base_url)
+    rel_url = base_url.replace("file://", "")
 
     internal = href.startswith("#")
     if not is_doc(href) or internal:
         return href
 
-    return urls.iri_to_uri(os.path.join(head, filename + ".pdf"))
+    abs_html_href = normalize_href(href, rel_url + "/")
+    path_to_htmlfile = re.sub(
+        r"^(/tmp|tmp)/mkdocs_[\w\d]+", site_url.rstrip("/"), abs_html_href
+    )
+
+    if path_to_htmlfile != abs_html_href:
+        return urls.iri_to_uri(path_to_htmlfile)
+    return href
 
 
 def abs_asset_href(href: str, base_url: str):
@@ -48,9 +67,16 @@ def replace_asset_hrefs(soup: BeautifulSoup, base_url: str):
     return soup
 
 
-# normalize href to site root
 def normalize_href(href: str, rel_url: str):
-    # foo/bar/baz/../../index.html -> foo/index.html
+    """
+    Method to normalize a relative href to its absolute path.
+    Example: If href = ../../index.html and rel_url = foo/bar/baz/, then we get -> foo/index.html
+
+    :param href: Relative path to a file
+    :param rel_url: Current directory to use in looking for the path to the relative file
+    :return: Absolute path to the relative file
+    """
+
     def reduce_rel(x):
         try:
             i = x.index("..")
@@ -66,7 +92,6 @@ def normalize_href(href: str, rel_url: str):
     rel_dir = os.path.dirname(rel_url)
     href = str.split(os.path.join(rel_dir, href), "/")
     href = reduce_rel(href)
-    href[-1], _ = os.path.splitext(href[-1])
 
     return os.path.join(*href)
 
