@@ -1,4 +1,4 @@
-# MkDocs PDF Generate Plugin 
+# MkDocs PDF Generate 
 
 *An MkDocs plugin to generate individual PDF files from content pages.*
 
@@ -24,7 +24,7 @@ The exported documents support many advanced features such as table of contents,
 Install the package with pip:
 
 ```bash
-pip install mkdocs-pdf-generate-plugin
+pip install mkdocs-pdf-generate
 ```
 > **Note:** Package is not published to PyPI yet, so we recommend installing from source
 
@@ -32,8 +32,8 @@ Install from source repository:
 
 ```bash
 cd [YOUR_PROJECT_DIRECTORY]
-git clone https://github.com/iSOLveIT/mkdocs-pdf-generate-plugin
-cd mkdocs-pdf-generate-plugin
+git clone https://github.com/iSOLveIT/mkdocs-pdf-generate
+cd mkdocs-pdf-generate
 pip install -e .
 ```
 
@@ -59,7 +59,7 @@ In your `site_dir` you should now have a PDF file for every markdown page.
 
 ## Options
 
-For more information on options, visit the [plugin's documentation](https://isolveit.github.io/mkdocs-pdf-generate-plugin/).
+For more information on options, visit the [plugin's documentation](https://isolveit.github.io/mkdocs-pdf-generate/).
 
 ## Adjusting the output
 
@@ -95,7 +95,7 @@ If you want to contribute to the code of this project, please read the [Contribu
 ### **Special thanks**
 - [Terry Zhao][terry] the author of the [MkDocs PDF Export Plugin][mkdocs-pdf-export-plugin] the source of our inspiration. We've used some of his code in this project.
 
-[github-issues]: https://github.com/iSOLveIT/mkdocs-pdf-generate-plugin/issues
+[github-issues]: https://github.com/iSOLveIT/mkdocs-pdf-generate/issues
 [terry]: https://github.com/zhaoterryy
 [mkdocs-pdf-export-plugin]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin
 [weasyprint-linux]: https://weasyprint.readthedocs.io/en/latest/install.html#linux

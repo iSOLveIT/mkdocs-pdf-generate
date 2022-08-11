@@ -29,7 +29,7 @@ support for CSS paged media module [CSS paged media module](https://developer.mo
 Install the package with pip:
 
 ```bash
-pip install mkdocs-pdf-generate-plugin
+pip install mkdocs-pdf-generate
 ```
 > **Note:** Package is not published to PyPI yet, so we recommend installing from source
 
@@ -37,8 +37,8 @@ Install from source repository:
 
 ```bash
 cd [YOUR_PROJECT_DIRECTORY]
-git clone https://github.com/iSOLveIT/mkdocs-pdf-generate-plugin
-cd mkdocs-pdf-generate-plugin
+git clone https://github.com/iSOLveIT/mkdocs-pdf-generate
+cd mkdocs-pdf-generate
 pip install -e .
 ```
 
@@ -63,7 +63,7 @@ If you want to contribute to the code of this project, please read the [Contribu
 ### **Special thanks**
 - [Terry Zhao][terry] the author of the [MkDocs PDF Export Plugin][mkdocs-pdf-export-plugin] the source of our inspiration. We've used some of his code in this project.
 
-[github-issues]: https://github.com/iSOLveIT/mkdocs-pdf-generate-plugin/issues
-[contributing]: https://github.com/iSOLveIT/mkdocs-pdf-generate-plugin/blob/main/CONTRIBUTING.md
+[github-issues]: https://github.com/iSOLveIT/mkdocs-pdf-generate/issues
+[contributing]: https://github.com/iSOLveIT/mkdocs-pdf-generate/blob/main/CONTRIBUTING.md
 [terry]: https://github.com/zhaoterryy
 [mkdocs-pdf-export-plugin]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin
