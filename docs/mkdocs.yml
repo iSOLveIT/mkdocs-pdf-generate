@@ -58,7 +58,7 @@ plugins:
   - minify:
       minify_html: true
   - pdf-generate:
-      copyright: "Copyright © 2022 Breadboard Mates"
+      copyright: Copyright &copy; 2022 iSOLveIT
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
       cover_images:
         default: img/home-banner.svg
