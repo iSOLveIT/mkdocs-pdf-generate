@@ -25,6 +25,7 @@ class Options(object):
         ("cover_subtitle", config_options.Type(str, default=None)),
         ("custom_template_path", config_options.Type(str, default="templates")),
         ("toc", config_options.Type(bool, default=True)),
+        ("toc_numbering", config_options.Type(bool, default=True)),
         ("toc_title", config_options.Type(str, default="Table of Contents")),
         ("toc_level", config_options.Type(int, default=2)),
         ("cover_images", config_options.Type(dict, default=None)),
@@ -69,6 +70,7 @@ class Options(object):
         if self.toc:
             self.toc_title = local_config["toc_title"]
             self.toc_level = local_config["toc_level"]
+            self.toc_ordering = local_config["toc_numbering"]
 
         # Theming
         self.theme_name = config["theme"].name

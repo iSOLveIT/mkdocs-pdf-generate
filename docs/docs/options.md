@@ -25,6 +25,7 @@ The global options are passed to the plugin through `mkdocs.yml`:
 plugins:
     - pdf-generate:
         #author: "Randy Duodu"
+        #author: img/logo.svg
         #copyright: "Copyright © 2022 - Ghana"
         #disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
         #toc_level: 3

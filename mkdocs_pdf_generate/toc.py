@@ -24,7 +24,8 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
     """
 
     # Step 1: (re)ordered headings
-    _inject_heading_order(soup, options)
+    if options.toc_ordering:
+        _inject_heading_order(soup, options)
 
     # Step 2: generate toc page
     level = options.toc_level
