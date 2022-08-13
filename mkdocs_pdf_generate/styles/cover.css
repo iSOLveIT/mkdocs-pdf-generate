@@ -34,7 +34,7 @@
         flex: 1 1 auto;
         max-height: 30vh;
     }
-    article#doc-cover .wrapper.upper .logo{
+    article#doc-cover .wrapper .logo{
         width: 100%;
         height: 100%;
         background-position: center bottom;
@@ -58,15 +58,18 @@
         text-align: right;
         float: right!important
         padding: 0 2rem;
+        background-color: initial;
     }
 
     article#doc-cover .reserved_rights{
         flex: 0 0 auto;
         text-align: left;
         padding: 0 2rem;
+        background-color: initial;
     }
     article#doc-cover .reserved_rights p#disclaimer{
         font-size: 80%;
         color:#3144b7;
+        background-color: initial;
     }
 }

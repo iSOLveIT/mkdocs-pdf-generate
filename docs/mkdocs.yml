@@ -60,6 +60,8 @@ plugins:
   - pdf-generate:
       copyright: Copyright &copy; 2022 iSOLveIT
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
+      custom_template_path: cover_template
+      toc_numbering: false
       cover_images:
         default: img/home-banner.svg
         home: img/manual-banner.svg

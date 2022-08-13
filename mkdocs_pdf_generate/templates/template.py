@@ -20,7 +20,6 @@ class Template(object):
         "cover_title",
         "cover_subtitle",
         "site_url",
-        "repo_url",
     ]
 
     def __init__(self, options: object, config: Config):
