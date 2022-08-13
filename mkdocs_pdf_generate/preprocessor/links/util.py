@@ -14,6 +14,9 @@ def is_doc(href: str):
     absurl = urls.url_is_absolute(href)
     abspath = os.path.isabs(href)
     htmlfile = ext.startswith(".html")
+    relative_link = re.search(r"^\.{1,2}?[\w\-.~$&+,/:;=?@%#*]*?$", href)
+    if relative_link is not None:
+        return True
     if absurl or abspath or not htmlfile:
         return False
 
@@ -41,7 +44,7 @@ def rel_html_href(base_url: str, href: str, site_url: str):
 
     abs_html_href = normalize_href(href, rel_url + "/")
     path_to_htmlfile = re.sub(
-        r"^(/tmp|tmp)/(mkdocs|pages)(_|-)[\w\d]+", site_url.rstrip("/"), abs_html_href
+        r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+", site_url.rstrip("/"), abs_html_href
     )
 
     if path_to_htmlfile != abs_html_href:
