@@ -175,7 +175,7 @@ div.md-typeset__table table{
     border-spacing: 0;
 }
 
-tr, h3[id] {
+tr{
     page-break-after: avoid !important;
     page-break-before: avoid !important;
 }
