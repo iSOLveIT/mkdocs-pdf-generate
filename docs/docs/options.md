@@ -55,7 +55,7 @@ Set the title text in cover page.
 
 !!! note
   
-    The following rule is applied when setting the value for cover title.
+    The following rule is applied when setting the value for cover title text in cover page.
 
     Cover Title precedence:
 
@@ -72,7 +72,7 @@ Set the subtitle text in cover page.
 
 !!! note
   
-    The following rule is applied when setting the value for cover subtitle.
+    The following rule is applied when setting the value for cover subtitle text in cover page.
 
     Cover Subtitle precedence:
 
@@ -93,7 +93,7 @@ Provide a logo image which you can use in the cover page. <br>
 
 !!! tip
     
-    Using SVG images as the value for author logo is recommended.
+    Using an SVG image as the value for author logo is recommended.
 
 **default**: use `theme.logo` in your project's `mkdocs.yml`
 
@@ -157,6 +157,12 @@ Set the level of _Table of Contents_. This value is enabled in the range of from
 
     The developers are working on extending the range for `toc_level` option from a value between
     `1-3` to a value between `1-6`.
+
+#### `toc_numbering`
+
+Set the value to `false` if you don't want your table of contents to be numbered in the PDF document. <br>  
+**default**: `true`
+
 
 ### ... and more
 

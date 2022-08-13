@@ -107,4 +107,4 @@ extra_css:
     - css/custom.css
 ```
 
-Since your stylesheet is appended to the default ones, you can override a rule from using the `!important` CSS rule.
+Since your stylesheet is appended to the default ones, you can override a rule by using the `!important` CSS keyword.
