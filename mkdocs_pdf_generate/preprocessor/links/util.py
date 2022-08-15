@@ -1,5 +1,5 @@
 import os
-from pathlib import Path
+from pathlib import Path, PosixPath, WindowsPath
 import re
 
 from weasyprint import urls
@@ -40,16 +40,26 @@ def rel_html_href(base_url: str, href: str, site_url: str):
     rel_url = base_url.replace("file://", "")
 
     internal = href.startswith("#")
-    if not is_doc(href) or internal:
+    if internal or not is_doc(href):
         return href
 
-    abs_html_href = normalize_href(href, rel_url + "/")
-    path_to_htmlfile = re.sub(
-        r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+", site_url.rstrip("/"), abs_html_href
-    )
+    abs_html_href = Path(rel_url).joinpath(href).resolve()
+    if isinstance(abs_html_href, PosixPath):
+        abs_html_href = re.sub(
+            r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+",
+            site_url.rstrip("/"),
+            str(abs_html_href),
+        )
+    elif isinstance(abs_html_href, WindowsPath):
+        abs_html_href = re.sub(
+            r"^[\w\-:\\]+\\+(temp|Temp)\\+(mkdocs|pages)[\w\-]+",
+            site_url.rstrip("/"),
+            str(abs_html_href),
+        )
+        abs_html_href = abs_html_href.replace("\\", "/")
 
-    if path_to_htmlfile != abs_html_href:
-        return urls.iri_to_uri(path_to_htmlfile)
+    if abs_html_href:
+        return urls.iri_to_uri(abs_html_href)
     return href
 
 
@@ -71,33 +81,34 @@ def replace_asset_hrefs(soup: BeautifulSoup, base_url: str):
     return soup
 
 
-def normalize_href(href: str, rel_url: str):
-    """
-    Method to normalize a relative href to its absolute path.
-    Example: If href = ../../index.html and rel_url = foo/bar/baz/, then we get -> foo/index.html
-
-    :param href: Relative path to a file
-    :param rel_url: Current directory to use in looking for the path to the relative file
-    :return: Absolute path to the relative file
-    """
-
-    def reduce_rel(x):
-        try:
-            i = x.index("..")
-            if i == 0:
-                return x
-
-            del x[i]
-            del x[i - 1]
-            return reduce_rel(x)
-        except ValueError:
-            return x
-
-    rel_dir = os.path.dirname(rel_url)
-    href = str.split(os.path.join(rel_dir, href), "/")
-    href = reduce_rel(href)
-
-    return os.path.join(*href)
+#
+# def normalize_href(href: str, rel_url: str):
+#     """
+#     Method to normalize a relative href to its absolute path.
+#     Example: If href = ../../index.html and rel_url = foo/bar/baz/, then we get -> foo/index.html
+#
+#     :param href: Relative path to a file
+#     :param rel_url: Current directory to use in looking for the path to the relative file
+#     :return: Absolute path to the relative file
+#     """
+#
+#     def reduce_rel(x):
+#         try:
+#             i = x.index("..")
+#             if i == 0:
+#                 return x
+#
+#             del x[i]
+#             del x[i - 1]
+#             return reduce_rel(x)
+#         except ValueError:
+#             return x
+#
+#     rel_dir = os.path.dirname(rel_url)
+#     href = str.split(os.path.join(rel_dir, href), "/")
+#     href = reduce_rel(href)
+#
+#     return os.path.join(*href)
 
 
 # def get_body_id(url: str):

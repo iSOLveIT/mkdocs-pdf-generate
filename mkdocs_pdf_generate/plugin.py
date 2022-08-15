@@ -99,7 +99,7 @@ class PdfGeneratePlugin(BasePlugin):
 
         dest_path = abs_dest_path.parent
         if not dest_path.is_dir():
-            dest_path.mkdir(exist_ok=True)
+            dest_path.mkdir(parents=True, exist_ok=True)
 
         filename = Path(src_path.name).stem
 

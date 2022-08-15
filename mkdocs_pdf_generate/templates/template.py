@@ -43,7 +43,9 @@ class Template(object):
             # )
             custom_template_path = Path(self._options.custom_template_path)
             if not custom_template_path.is_absolute():
-                custom_template_path = docs_src_dir.joinpath(self._options.custom_template_path)
+                custom_template_path = docs_src_dir.joinpath(
+                    self._options.custom_template_path
+                )
                 # custom_template_path = os.path.join(
                 #     docs_src_dir, self._options.custom_template_path
                 # )
