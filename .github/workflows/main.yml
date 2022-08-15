@@ -26,7 +26,7 @@ jobs:
         # 3.9.8 seems to be broken with type_ast
         # https://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg1829077.html
         python-version: ["3.9", "3.10"]
-        include:
+        exclude:
           # Check only newest setups for win server
           - os: "windows-latest"
             python-version: "3.9"
