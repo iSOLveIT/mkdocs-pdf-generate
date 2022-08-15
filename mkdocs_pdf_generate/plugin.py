@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from timeit import default_timer as timer
 import logging
 
@@ -89,21 +90,20 @@ class PdfGeneratePlugin(BasePlugin):
             self._options.site_url = site_url[0]
 
         try:
-            abs_dest_path = page.file.abs_dest_path
-            src_path = page.file.src_path
+            abs_dest_path = Path(page.file.abs_dest_path)
+            src_path = Path(page.file.src_path)
         except AttributeError:
             # Support for mkdocs <1.0
-            abs_dest_path = page.abs_output_path
-            src_path = page.input_path
+            abs_dest_path = Path(page.abs_output_path)
+            src_path = Path(page.input_path)
 
-        path = os.path.dirname(abs_dest_path)
-        os.makedirs(path, exist_ok=True)
+        dest_path = abs_dest_path.parent
+        if not dest_path.is_dir():
+            dest_path.mkdir(exist_ok=True)
 
-        filename = os.path.splitext(os.path.basename(src_path))[0]
+        filename = Path(src_path.name).stem
 
-        from weasyprint import urls
-
-        base_url = urls.path2url(os.path.join(path, filename))
+        base_url = dest_path.joinpath(filename).as_uri()
         pdf_file = filename + ".pdf"
 
         pdf_meta = get_pdf_metadata(page.meta)
@@ -121,7 +121,7 @@ class PdfGeneratePlugin(BasePlugin):
                 self.renderer.write_pdf(
                     output_content,
                     base_url,
-                    os.path.join(path, pdf_file),
+                    dest_path.joinpath(pdf_file),
                     pdf_metadata=pdf_meta,
                 )
                 # Generate a secure filename
@@ -159,9 +159,3 @@ class PdfGeneratePlugin(BasePlugin):
             self._logger.error(
                 "{} conversion errors occurred (see above)".format(self.num_errors)
             )
-
-    # def get_path_to_pdf_from(self, start):
-    #     pdf_split = os.path.split(self.config['combined_output_path'])
-    #     start_dir = os.path.split(start)[0]
-    #     pdf_dir = pdf_split[0] if pdf_split[0] else '.'
-    #     return os.path.join(os.path.relpath(pdf_dir, start_dir), pdf_split[1])

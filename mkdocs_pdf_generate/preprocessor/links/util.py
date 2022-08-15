@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import re
 
 from weasyprint import urls
@@ -8,8 +9,8 @@ from bs4 import BeautifulSoup
 # check if href is relative --
 # if it is relative it *should* be an HTML that generates a PDF doc
 def is_doc(href: str):
-    tail = os.path.basename(href)
-    _, ext = os.path.splitext(tail)
+    tail = Path(href).name
+    ext = Path(tail).suffix
 
     absurl = urls.url_is_absolute(href)
     abspath = os.path.isabs(href)
@@ -53,7 +54,7 @@ def rel_html_href(base_url: str, href: str, site_url: str):
 
 
 def abs_asset_href(href: str, base_url: str):
-    if urls.url_is_absolute(href) or os.path.isabs(href):
+    if urls.url_is_absolute(href) or Path(href).is_absolute():
         return href
 
     return urls.iri_to_uri(urls.urljoin(base_url, href))

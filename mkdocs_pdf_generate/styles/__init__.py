@@ -1,5 +1,5 @@
 import html
-import os
+from pathlib import Path
 from typing import Dict
 
 # import sass
@@ -52,17 +52,16 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[CSS]:
     )
     css_files = [CSS(string=css_string)]
 
-    base_path = os.path.abspath(os.path.dirname(__file__))
-
-    filename = os.path.join(base_path, "pdf-print.css")
+    base_path = Path(Path(__file__).parent).resolve()
+    filename = base_path.joinpath("pdf-print.css")
     css_files.append(CSS(filename=filename))
 
     if options.toc:
-        filename = os.path.join(base_path, "toc.css")
+        filename = base_path.joinpath("toc.css")
         css_files.append(CSS(filename=filename))
 
     if options.cover:
-        filename = os.path.join(base_path, "cover.css")
+        filename = base_path.joinpath("cover.css")
         css_files.append(CSS(filename=filename))
 
     # docs_src_dir = os.path.abspath(os.path.dirname(self._config["config_file_path"]))

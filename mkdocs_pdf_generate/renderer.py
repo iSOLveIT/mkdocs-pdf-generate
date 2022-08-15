@@ -1,5 +1,5 @@
 import logging
-import os
+from pathlib import Path
 import sys
 from importlib import import_module
 from importlib.util import spec_from_file_location, module_from_spec
@@ -103,7 +103,7 @@ class Renderer(object):
         if custom_handler_path:
             try:
                 spec = spec_from_file_location(
-                    module_name, os.path.join(os.getcwd(), custom_handler_path)
+                    module_name, Path.cwd().joinpath(custom_handler_path)
                 )
                 mod = module_from_spec(spec)
                 spec.loader.exec_module(mod)

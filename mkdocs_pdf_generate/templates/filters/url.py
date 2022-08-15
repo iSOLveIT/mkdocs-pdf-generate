@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from urllib.parse import urlparse
 
 from . import _FilterBase
@@ -18,18 +19,18 @@ class URLFilter(_FilterBase):
 
         # Search image file in below directories:
         dirs = [
-            os.path.abspath(os.path.dirname(self.config["config_file_path"])),
+            Path(Path(self.config["config_file_path"]).parent).resolve(),
             getattr(self.config["theme"], "custom_dir", None),
-            self.config["docs_dir"],
-            ".",
+            Path(self.config["docs_dir"]),
+            Path("."),
         ]
 
         for d in dirs:
             if not d:
                 continue
-            path = os.path.abspath(os.path.join(d, pathname))
-            if os.path.isfile(path):
-                return "file://" + path
+            path = Path(Path.joinpath(d, pathname)).resolve()
+            if path.is_file():
+                return path.as_uri()
         # return path
 
         # not found?

@@ -11,25 +11,35 @@ on:
   push:
     branches:
       - main
+      - dev
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   docs:
-    runs-on: ubuntu-latest
+    name: "${{ matrix.os }}: py${{ matrix.python-version }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true  # Set on "false" to get the results of ALL builds
+      matrix:
+        os: [ "ubuntu-latest" ]
+        # 3.9.8 seems to be broken with type_ast
+        # https://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg1829077.html
+        python-version: ["3.9.7", "3.10"]
+        include:
+          # Check only newest setups for win server
+          - os: "windows-latest"
+            python-version: "3.9.7"
     env:
       ENABLE_PDF_EXPORT: '1'
     steps:
-    - name: Set Up Python 3.9
-      uses: actions/setup-python@v3
+    - name: Set Up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.9.7
+        python-version: ${{ matrix.python-version }}
     - uses: actions/checkout@master
       with:
         fetch-depth: 0 # otherwise, you will fail to push refs to destination repo
-    - name: Required packages for WeasyPrint
-      run: |
-        sudo apt install libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libffi-dev libjpeg-dev libopenjp2-7-dev
     - name: Update pip
       run: |
         pip install -U wheel
@@ -46,6 +56,12 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
+    - name: Install required packages for WeasyPrint on Linux
+      run: |
+        sudo apt install libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libffi-dev libjpeg-dev libopenjp2-7-dev
+      if: runner.os == 'Linux'
+
     - name: Install PDF generator
       run: |
         pip install -e .
