@@ -111,13 +111,13 @@ class PdfGeneratePlugin(BasePlugin):
 
         if build_pdf_document:
             try:
-                self._logger.info("Converting {} to PDF".format(src_path))
                 download_name = (
                     pdf_meta.get("filename")
                     or pdf_meta.get("title")
                     or h1_title(output_content)
                     or None
                 )
+                self._logger.info("Converting {} to {}".format(src_path, download_name+".pdf"))
                 self.renderer.write_pdf(
                     output_content,
                     base_url,

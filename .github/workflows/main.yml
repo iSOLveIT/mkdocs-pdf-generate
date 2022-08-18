@@ -85,3 +85,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: docs-build
         force: true
+      if: matrix.python-version == '3.9'

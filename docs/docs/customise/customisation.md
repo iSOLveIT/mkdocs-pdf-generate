@@ -75,7 +75,7 @@ _Example of a cover template file using Jinja2 syntax:_
             {% if author %}
                 <p id="author">{{ author | e }}</p>
             {% endif %}
-            <a href="https://resources.breadboardmates.com" id="project_logo" title="Resource Centre">
+            <a href="{{ site_url }}" id="project_logo" title="Resource Centre">
                 <img src="{{ author_logo }}" alt="Company Logo"
                 style="width:80px;height:30px"/>
             </a>
