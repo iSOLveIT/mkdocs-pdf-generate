@@ -152,7 +152,7 @@ def _inject_heading_order(soup: Tag, options: Options):
         if h.name == "h2" and level >= 2:
             h2n += 1
             h3n = h4n = h5n = h6n = 0
-            prefix = f"{h2n} "
+            prefix = f"{h2n}. "
 
             # exclude_lv3 = _is_exclude(h.get("id", None), options)
 
