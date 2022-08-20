@@ -1,0 +1,32 @@
+<article id="doc-cover" style="background-color: #f7f2e9!important;">
+    <div class="wrapper upper">
+        <h1>{{ cover_title | e }}</h1>
+        <h2>{{ cover_subtitle | e }}</h2>
+        {% if revision %}
+            <h3>Revision {{ revision | e }}</h3>
+        {% endif %}
+    </div>
+
+    <div class="properties" style="margin-bottom: 20px;">
+        <address>
+            {% if author %}
+                <p id="cover_author">{{ author | e }}</p>
+            {% endif %}
+            <a href="{{ site_url }}" id="project_logo" title="Documentation Website">
+                <img src="{{ author_logo }}" alt="Company Logo"
+                style="width:80px;height:30px"/>
+            </a>
+        </address>
+    </div>
+
+    <div class="reserved_rights">
+        <address>
+            {% if disclaimer %}
+                <p id="cover_disclaimer" style="display:inline;">{{ disclaimer | e }}</p> |
+            {% endif %}
+            {% if copyright %}
+                <p id="cover_copyright" style="display:inline;">{{ copyright | e }}</p>
+            {% endif %}
+        </address>
+    </div>
+</article>

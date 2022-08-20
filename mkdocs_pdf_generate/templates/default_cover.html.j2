@@ -1,0 +1,37 @@
+<article id="doc-cover">
+    {% if cover_image is defined %}
+        <div class="wrapper upper">
+            <div class="logo" style="background-image: url('{{ cover_image | to_url }}');"></div>
+        </div>
+    {% else %}
+        <div class="wrapper"></div>
+    {% endif %}
+    <div class="wrapper">
+        <h1>{{ cover_title | e }}</h1>
+        <h2>{{ cover_subtitle | e }}</h2>
+        {% if revision %}
+            <h3>Revision {{ revision | e }}</h3>
+        {% endif %}
+    </div>
+    <div class="properties">
+        <address>
+            {% if author %}
+                <p id="author">{{ author | e }}</p>
+            {% endif %}
+            <a href="{{ site_url }}" id="project_logo" title="Resource Centre">
+                <img src="{{ author_logo }}" alt="Company Logo"
+                style="width:80px;height:30px"/>
+            </a>
+        </address>
+    </div>
+    <div class="reserved_rights">
+        <address>
+            {% if copyright %}
+                <p id="cover_copyright">{{ copyright | e }}</p>
+            {% endif %}
+            {% if disclaimer %}
+                <p id="cover_disclaimer">{{ disclaimer | e }}</p>
+            {% endif %}
+        </address>
+    </div>
+</article>
