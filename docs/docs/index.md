@@ -1,6 +1,6 @@
 ---
 pdf:
-  build: false  
+  build: true  
   filename: Welcome Page
   title: Introduction for MkDocs PDF Generate Plugin
   subtitle: Overview   
@@ -24,14 +24,22 @@ support for CSS paged media module [CSS paged media module](https://developer.mo
 
 ## Installation
 
-Install the package with pip:
+**Install package with pip**  
 
-```bash
-pip install mkdocs-pdf-generate
-```
-> **Note:** Package is not published to PyPI yet, so we recommend installing from source
+=== "Linux & MacOS"
 
-Install from source repository:
+    ```bash
+    python -m pip install -e "git+https://github.com/iSOLveIT/mkdocs-pdf-generate/#egg=mkdocs-pdf-generate"
+    ```
+
+=== "Windows"
+
+    ```powershell
+    C:> python -m pip install -e "git+https://github.com/iSOLveIT/mkdocs-pdf-generate/#egg=mkdocs-pdf-generate"
+    ```
+
+
+**Install from source repository in a virtual environment**
 
 ```bash
 cd [YOUR_PROJECT_DIRECTORY]
@@ -40,7 +48,7 @@ cd mkdocs-pdf-generate
 pip install -e .
 ```
 
-Enable the plugin in your `mkdocs.yml`:
+**Enable the plugin in your `mkdocs.yml`:**
 
 ```yaml
 plugins:

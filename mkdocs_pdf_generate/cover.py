@@ -1,10 +1,10 @@
+import re
 from typing import Dict, Optional
 
 from bs4 import PageElement, BeautifulSoup, Tag
 
 from .options import Options
 from .templates.filters.url import URLFilter
-from .utils import h1_title
 
 
 def make_cover(
@@ -29,7 +29,7 @@ def _make_cover(
         keywords = options.template.keywords
         # Set cover title
         keywords["cover_title"] = (
-            pdf_metadata.get("title") or h1_title(soup) or keywords["cover_title"]
+            pdf_metadata.get("title") or options.body_title or keywords["cover_title"]
         )
         # Set cover image
         document_type: str = pdf_metadata.get("type", "Documentation")
@@ -64,6 +64,9 @@ def _make_cover(
 
         cover_template = str(template.render(keywords))
         cover_html = str_to_bs4(cover_template)
+
+        # Remove h1 content
+        soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")}).decompose()
 
         soup.body.insert(0, cover_html)
     except Exception as e:

@@ -102,10 +102,12 @@ class PdfGeneratePlugin(BasePlugin):
         pdf_meta = get_pdf_metadata(page.meta)
         build_pdf_document = pdf_meta.get("build", True)
 
+        self._options.body_title = h1_title(output_content)
+
         file_name = (
                 pdf_meta.get("filename")
                 or pdf_meta.get("title")
-                or h1_title(output_content)
+                or self._options.body_title
                 or None
         )
 

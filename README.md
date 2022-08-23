@@ -23,12 +23,17 @@ The exported documents support many advanced features such as table of contents,
 
 Install the package with pip:
 
+**Linux & MacOS**
 ```bash
-pip install mkdocs-pdf-generate
+python -m pip install -e "git+https://github.com/iSOLveIT/mkdocs-pdf-generate/#egg=mkdocs-pdf-generate"
 ```
-> **Note:** Package is not published to PyPI yet, so we recommend installing from source
 
-Install from source repository:
+**Windows**
+```powershell
+C:> python -m pip install -e "git+https://github.com/iSOLveIT/mkdocs-pdf-generate/#egg=mkdocs-pdf-generate"
+```
+
+Install from source repository in a virtual environment:
 
 ```bash
 cd [YOUR_PROJECT_DIRECTORY]
@@ -88,7 +93,7 @@ For this to take effect, use the `extra_css` directive in mkdocs.yml, as describ
 
 ### Contributing
 
-From reporting a bug to submitting a pull request: every contribution is appreciated and welcome. Report bugs, ask questions and request features using [Github issues][github-issues].
+From reporting a bug to submitting a pull request: every contribution is appreciated and welcome. Report bugs, ask questions and request features using [GitHub issues][github-issues].
 
 If you want to contribute to the code of this project, please read the [Contribution Guidelines][contributing].
 

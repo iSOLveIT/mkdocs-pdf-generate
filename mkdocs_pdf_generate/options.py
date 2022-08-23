@@ -72,6 +72,9 @@ class Options(object):
             self.toc_level = local_config["toc_level"]
             self.toc_ordering = local_config["toc_numbering"]
 
+        # H1 Title of the document
+        self._body_title = ""
+
         # Theming
         self.theme_name = config["theme"].name
         self.theme_handler_path = local_config.get("theme_handler_path", None)
@@ -100,6 +103,14 @@ class Options(object):
     @site_url.setter
     def site_url(self, url):
         self._site_url = url
+
+    @property
+    def body_title(self):
+        return self._body_title
+
+    @body_title.setter
+    def body_title(self, text):
+        self._body_title = text
 
     @property
     def author(self) -> str:

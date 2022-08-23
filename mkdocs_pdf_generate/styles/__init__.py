@@ -35,10 +35,9 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[CSS]:
         --revision: '{}';
         --filename: '{}';
         --site-url: '{}';
+        --chapter: '{}';
     }}
-    h1 {{
-        string-set: chapter content();
-    }}
+    
     """.format(
         _css_escape(options.author),
         _css_escape(options.author_logo),
@@ -49,6 +48,7 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[CSS]:
         _css_escape(pdf_metadata.get("revision", "")),
         _css_escape(pdf_metadata.get("filename", "")),
         _css_escape(options.site_url),
+        _css_escape(options.body_title)
     )
     css_files = [CSS(string=css_string)]
 

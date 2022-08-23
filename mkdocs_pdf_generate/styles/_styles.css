@@ -25,62 +25,62 @@ div.new_tabbed_block {
 }
 
 /* Admonitions */
-.note summary::before{
+.md-typeset :is(.note)>:is(.admonition-title,summary):before{
     color: #448aff!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--note)!important;
 }
-.abstract summary::before{
+.md-typeset :is(.abstract)>:is(.admonition-title,summary):before{
     color: #00b0ff!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--abstract)!important;
 }
-.info summary::before{
+.md-typeset :is(.info)>:is(.admonition-title,summary):before{
     color: #00b8d4!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--info)!important;
 }
-.tip summary::before{
+.md-typeset :is(.tip)>:is(.admonition-title,summary):before{
     color: #00bfa5!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--tip)!important;
 }
-.success summary::before{
+.md-typeset :is(.success)>:is(.admonition-title,summary):before{
     color: #00c853!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--success)!important;
 }
-.question summary::before{
+.md-typeset :is(.question)>:is(.admonition-title,summary):before{
     color: #64dd17!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--question)!important;
 }
-.warning summary::before{
+.md-typeset :is(.warning)>:is(.admonition-title,summary):before{
     color: #ff9100!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--warning)!important;
 }
-.failure summary::before{
+.md-typeset :is(.failure)>:is(.admonition-title,summary):before{
     color: #ff5252!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--failure)!important;
 }
-.danger summary::before{
+.md-typeset :is(.danger)>:is(.admonition-title,summary):before{
     color: #ff1744!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--danger)!important;
 }
-.bug summary::before{
+.md-typeset :is(.bug)>:is(.admonition-title,summary):before{
     color: #f50057!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--bug)!important;
 }
-.example summary::before{
+.md-typeset :is(.example)>:is(.admonition-title,summary):before{
     color: #7c4dff!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--example)!important;
 }
-.quote summary::before{
+.md-typeset :is(.quote)>:is(.admonition-title,summary):before{
     color: #9e9e9e!important;
     background-color: transparent!important;
     content: var(--md-admonition-icon--quote)!important;
@@ -212,10 +212,4 @@ tr th, tr td{
     box-shadow: none;
 }
 
-h2{
-    string-set: section content();
-}
-h3{
-    string-set: sub-section content();
-}
 
