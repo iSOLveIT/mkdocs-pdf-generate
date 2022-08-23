@@ -1,9 +1,9 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
 setup(
     name="mkdocs-pdf-generate",
-    version="0.1.0",
+    version="0.1.1",
     description="An MkDocs plugin to generate individual PDF files from content pages.",
     long_description="The pdf-generate plugin will generate separate PDF files for each markdown page "
     "in your MkDocs repository using WeasyPrint. "
@@ -34,7 +34,18 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ],
-    packages=find_packages(),
+    packages=["mkdocs_pdf_generate"],
+    package_dir={"mkdocs_pdf_generate": "mkdocs_pdf_generate"},
+    package_data={
+        "mkdocs_pdf_generate": [
+            "styles/*",
+            "preprocessor/*",
+            "templates/*",
+            "themes/*",
+            "preprocessor/*/*",
+            "templates/*/*",
+        ]
+    },
     entry_points={
         "mkdocs.plugins": [
             "pdf-generate = mkdocs_pdf_generate.plugin:PdfGeneratePlugin"
