@@ -105,16 +105,14 @@ class PdfGeneratePlugin(BasePlugin):
         self._options.body_title = h1_title(output_content)
 
         file_name = (
-                pdf_meta.get("filename")
-                or pdf_meta.get("title")
-                or self._options.body_title
-                or None
+            pdf_meta.get("filename")
+            or pdf_meta.get("title")
+            or self._options.body_title
+            or None
         )
 
         if file_name is None:
-            self._logger.error(
-                "You must provide a filename for the PDF document."
-            )
+            self._logger.error("You must provide a filename for the PDF document.")
 
         # Generate a secure filename
         file_name = secure_filename(file_name)
@@ -131,9 +129,7 @@ class PdfGeneratePlugin(BasePlugin):
                     dest_path.joinpath(pdf_file),
                     pdf_metadata=pdf_meta,
                 )
-                output_content = self.renderer.add_link(
-                    output_content, pdf_file
-                )
+                output_content = self.renderer.add_link(output_content, pdf_file)
                 self.num_files += 1
             except Exception as e:
                 self._logger.error("Error converting {} to PDF: {}".format(src_path, e))

@@ -48,7 +48,7 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
             else:
                 a.append(_clone_element(el))
         if h.name == "h1":
-            a.attrs = {'style': 'display: none'}
+            a.attrs = {"style": "display: none"}
         li.append(a)
         options.logger.debug(f"| [{h.get_text(separator=' ')}]({ref})")
         return li
