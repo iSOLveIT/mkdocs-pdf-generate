@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import Dict
 
 from mkdocs.config import config_options
@@ -14,6 +15,7 @@ class Options(object):
     config_scheme = (
         ("media_type", config_options.Type(str, default=DEFAULT_MEDIA_TYPE)),
         ("verbose", config_options.Type(bool, default=False)),
+        ("debug", config_options.Type(bool, default=False)),
         ("enabled_if_env", config_options.Type(str)),
         ("theme_handler_path", config_options.Type(str)),
         ("author", config_options.Type(str, default=None)),
@@ -34,6 +36,7 @@ class Options(object):
     def __init__(self, local_config, config, logger: logging):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
+        self.debug = local_config["debug"]
         # user_configs in mkdocs.yml
         self._user_config: Config = config
         self._site_url = config["site_url"]
@@ -147,3 +150,11 @@ class Options(object):
     @property
     def template(self) -> Template:
         return self._template
+
+    def debug_dir(self) -> Path:
+        if self.debug:
+            docs_src_dir = Path(Path(self.user_config["config_file_path"]).parent).resolve()
+            debug_folder_path = docs_src_dir.joinpath("pdf_html_debug")
+            if not debug_folder_path.is_dir():
+                debug_folder_path.mkdir(parents=True, exist_ok=True)
+            return debug_folder_path

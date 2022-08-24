@@ -214,6 +214,23 @@ INFO    -  Documentation built in 2.29 seconds
 Setting this to `true` will show all WeasyPrint debug messages during the build. <br> 
 **default**: `false`
 
+#### `debug` (for development purposes only)
+
+Setting this to `true` enables the debug mode which saves the HTML content used in generating the PDF files 
+into a folder called **`pdf_html_debug`**. 
+The **`pdf_html_debug`** folder is relative to the documentation source directory.
+
+This option is intended to help users in writing appropriate CSS styles for the HTML 
+content used to generate the PDF documents.
+ 
+**default**: `false`
+
+!!! note
+
+    * The `debug` option only works with the `mkdocs build` command.
+    * It is recommended to add the **`pdf_html_debug`** folder to your ignored files when using a version control system.
+    
+
 #### `media_type` 
 
 Allows you to use a different CSS media type (or a custom one like `pdf-generate`) for the PDF export. <br>

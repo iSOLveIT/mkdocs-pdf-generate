@@ -15,7 +15,7 @@ def is_doc(href: str):
     absurl = urls.url_is_absolute(href)
     abspath = os.path.isabs(href)
     htmlfile = ext.startswith(".html")
-    relative_link = re.search(r"^\.{1,2}?[\w\-.~$&+,/:;=?@%#*]*?$", href)
+    relative_link = re.search(r"^\.{,2}?[\w\-.~$&+,/:;=?@%#*]*?$", href)
     if relative_link is not None:
         return True
     if absurl or abspath or not htmlfile:
@@ -48,13 +48,13 @@ def rel_html_href(base_url: str, href: str, site_url: str):
         abs_html_href = re.sub(
             r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+",
             site_url.rstrip("/"),
-            str(abs_html_href),
+            str(abs_html_href)
         )
     elif isinstance(abs_html_href, WindowsPath):
         abs_html_href = re.sub(
             r"^[\w\-:\\]+\\+(temp|Temp)\\+(mkdocs|pages)[\w\-]+",
             site_url.rstrip("/"),
-            str(abs_html_href),
+            str(abs_html_href)
         )
         abs_html_href = abs_html_href.replace("\\", "/")
 

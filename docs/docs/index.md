@@ -1,6 +1,6 @@
 ---
 pdf:
-  build: true  
+  build: false  
   filename: Welcome Page
   title: Introduction for MkDocs PDF Generate Plugin
   subtitle: Overview   

@@ -1,4 +1,5 @@
 import logging
+import re
 from pathlib import Path
 import sys
 from importlib import import_module
@@ -50,6 +51,17 @@ class Renderer(object):
         soup = prep_separate(soup, base_url, self._options.site_url)
         toc.make_toc(soup, self._options)
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
+
+        if self._options.debug:
+            debug_folder_path = self._options.debug_dir()
+            rel_url = base_url.replace("file://", "")
+            regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#*]+/site")
+            pdf_html_file = regex_pattern.sub(str(debug_folder_path), str(rel_url)) + ".html"
+            pdf_html_dir = Path(pdf_html_file).parent
+            if not pdf_html_dir.is_dir():
+                pdf_html_dir.mkdir(parents=True, exist_ok=True)
+            with open(pdf_html_file, "a+") as f:
+                f.write(str(soup.prettify()))
 
         html = HTML(string=str(soup))
         return html.render()
