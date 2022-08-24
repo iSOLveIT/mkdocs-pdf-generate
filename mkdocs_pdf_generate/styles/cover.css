@@ -44,6 +44,7 @@
     article#doc-cover .wrapper h1{
         font-size: 36pt;
         line-height: 1.4;
+        bookmark-level: none;
     }
     article#doc-cover .wrapper h2{
         border: none;
@@ -56,11 +57,10 @@
     article#doc-cover .properties{
         flex: 0 0 auto;
         text-align: right;
-        float: right!important
+        float: right!important;
         padding: 0 2rem;
         background-color: initial;
     }
-
     article#doc-cover .reserved_rights{
         flex: 0 0 auto;
         text-align: left;

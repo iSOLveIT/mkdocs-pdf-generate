@@ -164,7 +164,7 @@ Set the value to `false` if you don't want your table of contents to be numbered
 #### `custom_template_path`
 
 A relative path inside your projects' directory.
-The folder should contain the custom cover template (e.g. `cover.html`) is located.<br>
+This folder is where you put both the custom cover template and custom plugin CSS file (`cover.html and custom.css`).<br>
 
 !!! info
 
@@ -173,7 +173,7 @@ The folder should contain the custom cover template (e.g. `cover.html`) is locat
     Example: `cover.html.j2`, `cover.html.jinja2`, `cover.html`, `cover.htm`
 
     You can refer to this [example](customise/customisation.md#using-custom-cover-template) 
-    about how to use a custom cover template. 
+    about how to use a custom cover template and custom CSS. 
 
 **default**: `use default plugin template`  
 

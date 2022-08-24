@@ -66,31 +66,6 @@ In your `site_dir` you should now have a PDF file for every markdown page.
 
 For more information on options, visit the [plugin's documentation](https://isolveit.github.io/mkdocs-pdf-generate/).
 
-## Adjusting the output
-
-The resulting PDF can be customized easily by adding a custom stylesheet such as the following:
-
-```
-@page {
-    size: a4 portrait;
-    margin: 25mm 10mm 25mm 10mm;
-    counter-increment: page;
-    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
-    white-space: pre;
-    color: grey;
-    @top-left {
-        content: '© 2018 My Company';
-    }
-    @top-center {
-        content: string(chapter);
-    }
-    @top-right {
-        content: 'Page ' counter(page);
-    }
-}
-```
-For this to take effect, use the `extra_css` directive in mkdocs.yml, as described in the [MkDocs user guide][extra-css].
-
 ### Contributing
 
 From reporting a bug to submitting a pull request: every contribution is appreciated and welcome. Report bugs, ask questions and request features using [GitHub issues][github-issues].

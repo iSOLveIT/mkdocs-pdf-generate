@@ -97,14 +97,52 @@ _Example of a cover template file using Jinja2 syntax:_
 
 Save the file changes and rebuild your MkDocs project. 
 
-**Step 4 (optional)**
 
-You can style the cover page using CSS. The CSS rules can be written in a custom CSS file which you can add using 
-the `extra_css` setting in the `mkdocs.yml` file.
+## Adjusting the output
 
-```yaml
-extra_css:
-    - css/custom.css
+The resulting PDF can be customized easily by adding a custom stylesheet such as the following:
+
 ```
+@page {
+    size: a4 portrait;
+    margin: 25mm 10mm 25mm 10mm;
+    counter-increment: page;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    white-space: pre;
+    color: grey;
+    @top-left {
+        content: '© 2018 My Company';
+    }
+    @top-center {
+        content: string(chapter);
+    }
+    @top-right {
+        content: 'Page ' counter(page);
+    }
+}
+```
+For this to take effect, you need to create a `custom.css` file.
 
-Since your stylesheet is appended to the default ones, you can override a rule by using the `!important` CSS keyword.
+!!! note
+
+    You should store the `custom.css` file in the directory used for 
+    the [custom_template_path](../options.md#custom_template_path).
+
+The plugin provides the following CSS variables which you can use in your `custom.css` file:
+
+* --title
+* --subtitle
+* --author
+* --author-logo
+* --copyright
+* --type
+* --site_url
+* --revision
+* --filename
+* --chapter (i.e. the H1 element in body content)
+
+Using the `var()` CSS function, you can access all the data above.
+E.g. use `var(--author)` to get the value for the [author](../options.md#author) option.
+
+The custom CSS is appended to the MkDocs stylesheets so, you can override rules by using the `!important` CSS keyword
+but be cautious about it.

@@ -31,11 +31,6 @@ def get_stylesheet() -> str:
     opacity: 1;
 }
 
-.md-typeset a::after {
-    color: inherit;
-    content: none;
-}
-
 """
 
 

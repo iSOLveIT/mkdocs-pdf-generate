@@ -40,6 +40,8 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
 
     def makeLink(h: Tag) -> Tag:
         li = soup.new_tag("li")
+        if h.name == "h1":
+            return li
         ref = h.get("id", "")
         a = soup.new_tag("a", href=f"#{ref}")
         for el in h.contents:
@@ -47,8 +49,6 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
                 a.append(el.contents[0])
             else:
                 a.append(_clone_element(el))
-        if h.name == "h1":
-            a.attrs = {"style": "display: none"}
         li.append(a)
         options.logger.debug(f"| [{h.get_text(separator=' ')}]({ref})")
         return li
@@ -152,7 +152,7 @@ def _inject_heading_order(soup: Tag, options: Options):
         if h.name == "h2" and level >= 2:
             h2n += 1
             h3n = h4n = h5n = h6n = 0
-            prefix = f"{h2n}. "
+            prefix = f"{h2n} "
 
             # exclude_lv3 = _is_exclude(h.get("id", None), options)
 

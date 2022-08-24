@@ -45,7 +45,6 @@
     article#doc-toc li a{
         color: inherit;
         text-decoration: none;
-
         padding-top: 0.4rem;
         border-bottom: 1px dotted #ddd;
         display: inline-block;

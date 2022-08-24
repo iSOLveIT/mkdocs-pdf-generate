@@ -34,21 +34,14 @@ class Template(object):
     def _env(self) -> jinja2.Environment:
         def generate():
             base_path = Path(Path(__file__).parent).resolve()
-            # base_path = os.path.abspath(os.path.dirname(__file__))
             template_paths = []
 
             docs_src_dir = Path(Path(self._config["config_file_path"]).parent).resolve()
-            # docs_src_dir = os.path.abspath(
-            #     os.path.dirname(self._config["config_file_path"])
-            # )
             custom_template_path = Path(self._options.custom_template_path)
             if not custom_template_path.is_absolute():
                 custom_template_path = docs_src_dir.joinpath(
                     self._options.custom_template_path
                 )
-                # custom_template_path = os.path.join(
-                #     docs_src_dir, self._options.custom_template_path
-                # )
 
             if custom_template_path.is_dir():
                 template_paths.append(custom_template_path)

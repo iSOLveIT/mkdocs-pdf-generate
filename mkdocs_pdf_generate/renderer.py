@@ -5,8 +5,8 @@ from importlib import import_module
 from importlib.util import spec_from_file_location, module_from_spec
 from typing import Dict, Optional
 
-from bs4 import BeautifulSoup
-from weasyprint import HTML, CSS
+from bs4 import BeautifulSoup, Tag
+from weasyprint import HTML
 
 from . import cover
 from . import toc
@@ -41,15 +41,18 @@ class Renderer(object):
 
         self.inject_pgnum(soup)
 
-        css = style_for_print(self._options, pdf_metadata)
-        css.append(CSS(string=self.theme.get_stylesheet()))
+        style_tags: list[Tag] = style_for_print(self._options, pdf_metadata)
+        style_tags[0].append(self.theme.get_stylesheet())  # Add theme CSS
+
+        for style_tag in style_tags:
+            soup.head.append(style_tag)
 
         soup = prep_separate(soup, base_url, self._options.site_url)
         toc.make_toc(soup, self._options)
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
         html = HTML(string=str(soup))
-        return html.render(stylesheets=css)
+        return html.render()
 
     # def add_doc(self, content: str, base_url: str, rel_url: str):
     #     pos = self.page_order.index(rel_url)

@@ -1,14 +1,7 @@
 @media print {
-  body {
-    background: none;
-    background-color: #fff;
-    font-family: Montserrat!important;
-  }
-
   @page {
     counter-increment: page;
-    size: a4 portrait;
-    margin: 10mm 10mm 15mm 10mm!important;
+    size: A4 portrait;
 
     @top-right {
         content: var(--author-logo);
@@ -18,35 +11,35 @@
     }
 
     @top-left {
-        content: var(--chapter)!important;
+        content: var(--chapter);
         font-size: 9pt;
-        font-family: Montserrat!important;
+        font-family: Montserrat;
     }
     @bottom-center {
-        content: var(--type)!important;
+        content: var(--type);
         font-size: 10pt;
         font-weight: 600;
-        font-family: Montserrat!important;
+        font-family: Montserrat;
     }
     @bottom-right {
-        content: "Page " counter(page) " of " counter(pages)!important;
+        content: "Page " counter(page) " of " counter(pages);
         font-size: 8pt;
-        font-family: Montserrat!important;
+        font-family: Montserrat;
     }
     @bottom-left {
         content: var(--site-url);
         font-size: 8pt;
-        font-family: Montserrat!important;
+        font-family: Montserrat;
     }
   }
-
+/*
   h2[id], h3[id] {
     page-break-after: avoid !important;
   }
   h4[id], h5[id], h6[id] {
     page-break-before: avoid !important;
     page-break-after: avoid !important;
-  }
+  }*/
 
   img[src$=".png"], img[src$=".jpg"], img[src$=".jpeg"]{
     width: 70%;
@@ -54,7 +47,7 @@
     margin: auto;
     max-width: 100% !important;
   }
-
+/*
   img {
     page-break-after: avoid !important;
     break-after: avoid !important;
@@ -64,18 +57,19 @@
     page-break-before: avoid !important;
     page-break-after: avoid !important;
   }
-
+*/
   code,
   kbd,
   pre {
      font-family: 'Fira Mono', monospace!important;
-     page-break-inside: avoid !important;
+     /*page-break-inside: avoid !important;*/
      margin-top: 0 !important;
   }
+  /*
   ul,
   ol {
      page-break-inside: avoid !important;
-  }
+  }*/
 
   div[data-md-component="skip"],
   div[data-md-component="announce"],

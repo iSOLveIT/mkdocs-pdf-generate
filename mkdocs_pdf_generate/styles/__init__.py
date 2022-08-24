@@ -6,7 +6,7 @@ from typing import Dict
 
 from ..options import Options
 
-from weasyprint import CSS
+from bs4 import Tag
 
 
 def _css_escape(text: str) -> str:
@@ -23,7 +23,9 @@ def _css_escape(text: str) -> str:
     return text.replace("'", "\\27")
 
 
-def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[CSS]:
+def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
+    base_path = Path(Path(__file__).parent).resolve()
+
     css_string = """
     :root {{
         --author: '{}';
@@ -48,24 +50,43 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[CSS]:
         _css_escape(options.site_url),
         _css_escape(options.body_title),
     )
-    css_files = [CSS(string=css_string)]
-
-    base_path = Path(Path(__file__).parent).resolve()
-    filename = base_path.joinpath("pdf-print.css")
-    css_files.append(CSS(filename=filename))
+    css_tag = Tag(name="style", attrs={"class": "plugin-default-css"})
+    css_tag.append(css_string)
+    css_files = ["_styles.css", "_paging.css"]
 
     if options.toc:
-        filename = base_path.joinpath("toc.css")
-        css_files.append(CSS(filename=filename))
+        css_files.append("toc.css")
 
     if options.cover:
-        filename = base_path.joinpath("cover.css")
-        css_files.append(CSS(filename=filename))
+        css_files.append("cover.css")
 
-    # docs_src_dir = os.path.abspath(os.path.dirname(self._config["config_file_path"]))
-    # custom_template_path = self._options.custom_template_path
-    # filename = os.path.join(options.custom_template_path, "custom.css")
-    # if os.path.exists(filename):
-    #     css_files.append(CSS(filename=filename))
+    docs_src_dir = Path(Path(options.user_config["config_file_path"]).parent).resolve()
+    custom_template_path = Path(options.custom_template_path)
+    if not custom_template_path.is_absolute():
+        custom_template_path = docs_src_dir.joinpath(options.custom_template_path)
 
-    return css_files
+    if custom_template_path.is_dir():
+        css_files.append("custom.css")  # Add plugin custom CSS
+
+    css_styles_list: list[Tag] = []
+    for css_file in css_files:
+        filename = (
+            base_path.joinpath(css_file)
+            if css_file != "custom.css"
+            else custom_template_path.joinpath(css_file)
+        )
+        if filename.is_file():
+            with open(filename, "r") as f:
+                css_rules = f.read()
+                if css_file in ["_styles.css", "_paging.css"]:
+                    css_tag.append(css_rules)
+                else:
+                    style_tag = Tag(
+                        name="style",
+                        attrs={"class": "plugin-{}".format(css_file.replace(".", "-"))},
+                    )
+                    style_tag.append(css_rules)
+                    css_styles_list.append(style_tag)
+
+    css_styles_list.insert(0, css_tag)  # Insert default CSS tag at the start
+    return css_styles_list

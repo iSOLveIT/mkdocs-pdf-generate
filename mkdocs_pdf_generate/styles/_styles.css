@@ -14,6 +14,12 @@
 
 }
 
+body {
+    background: none;
+    background-color: #fff;
+    font-family: Montserrat;
+  }
+
 div.tabbed-content {
   display: none!important;
 }
@@ -90,9 +96,8 @@ div.new_tabbed_block {
    border-style: solid !important;
    display: block !important;
 }
-.note summary::after, .abstract summary::after, .info summary::after, .tip summary::after,
-.success summary::after, .question summary::after, .warning summary::after, .failure summary::after,
-.danger summary::after, .bug summary::after, .example summary::after, .quote summary::after {
+:is(.note, .abstract, .info, .tip, .success, .question, .warning,
+.failure, .danger, .bug, .example, .quote) summary::after{
     display:none;
 }
 
@@ -161,24 +166,24 @@ nav.md-tags{
     display: none;
 }
 table {
-    max-width: 100%!important;
-    margin: 5px auto !important;
+    max-width: 100%;
+    margin: 5px auto;
 }
 
 div.md-typeset__table table{
     border-radius: .1rem;
-    display: table!important;
+    display: table;
     font-size: .64rem;
     max-width: 100%;
     overflow: auto;
     border-collapse: initial;
     border-spacing: 0;
 }
-
+/*
 tr{
     page-break-after: avoid !important;
     page-break-before: avoid !important;
-}
+}*/
 tr th, tr td{
     border: 1px solid #000!important;
     padding: 2px !important;
