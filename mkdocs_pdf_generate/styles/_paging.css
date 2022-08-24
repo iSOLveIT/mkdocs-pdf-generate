@@ -2,6 +2,7 @@
   @page {
     counter-increment: page;
     size: A4 portrait;
+    margin: 10mm 10mm 15mm 10mm;
 
     @top-right {
         content: var(--author-logo);
