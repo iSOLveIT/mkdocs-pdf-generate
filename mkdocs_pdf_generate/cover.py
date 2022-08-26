@@ -59,7 +59,7 @@ def _make_cover(
 
         def str_to_bs4(html_like_str: str) -> Tag:
             html_soup = BeautifulSoup(html_like_str, "html5lib")
-            html_tags = html_soup.find("article", id="doc-cover")
+            html_tags = html_soup.body.find()
             return html_tags
 
         cover_template = str(template.render(keywords))

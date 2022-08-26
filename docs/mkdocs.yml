@@ -7,14 +7,14 @@ copyright: Copyright &copy; 2022 iSOLveIT
 # Repository information
 repo_name: iSOLveIT/mkdocs-pdf-generate
 repo_url: https://github.com/iSOLveIT/mkdocs-pdf-generate
-edit_uri: edit/main/docs/
+edit_uri: edit/main/docs/docs/
 
 theme:
   name: material
   logo: img/plugin_icon.svg
   favicon: img/plugin_favicon.png
   font:
-    text: Montserrat
+    text: Barlow
     code: Fira Mono
     features:
       - navigation.instant
@@ -58,17 +58,13 @@ plugins:
   - minify:
       minify_html: true
   - pdf-generate:
-#      debug: true
       copyright: Copyright &copy; 2022 iSOLveIT
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
       custom_template_path: cover_template
       toc_numbering: true
       toc_level: 6
       cover_images:
-        default: img/home-banner.svg
-        home: img/manual-banner.svg
-        options: img/project-banner.svg
-        customize: img/tutorial-banner.svg
+        default: img/cover.png
       enabled_if_env: ENABLE_PDF_EXPORT
       
 

@@ -6,9 +6,9 @@
 
     @top-right {
         content: var(--author-logo);
-        height: 25px!important;
-        width: 50px!important;
-        max-width: 70px!important;
+        height: 25px;
+        width: 50px;
+        max-width: 70px;
     }
 
     @top-left {
@@ -46,7 +46,7 @@
     width: 70%;
     display: block;
     margin: auto;
-    max-width: 100% !important;
+    max-width: 100%;
   }
 /*
   img {
@@ -62,9 +62,9 @@
   code,
   kbd,
   pre {
-     font-family: 'Fira Mono', monospace!important;
+     font-family: 'Fira Mono', monospace;
      /*page-break-inside: avoid !important;*/
-     margin-top: 0 !important;
+     margin-top: 0;
   }
   /*
   ul,

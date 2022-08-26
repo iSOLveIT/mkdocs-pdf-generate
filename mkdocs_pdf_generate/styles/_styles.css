@@ -21,80 +21,80 @@ body {
   }
 
 div.tabbed-content {
-  display: none!important;
+  display: none;
 }
 div.tabbed-labels {
-  display: block!important;
+  display: block;
 }
 div.new_tabbed_block {
-  display: block!important;
+  display: block;
 }
 
 /* Admonitions */
 .md-typeset :is(.note)>:is(.admonition-title,summary):before{
-    color: #448aff!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--note)!important;
+    color: #448aff;
+    background-color: transparent;
+    content: var(--md-admonition-icon--note);
 }
 .md-typeset :is(.abstract)>:is(.admonition-title,summary):before{
-    color: #00b0ff!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--abstract)!important;
+    color: #00b0ff;
+    background-color: transparent;
+    content: var(--md-admonition-icon--abstract);
 }
 .md-typeset :is(.info)>:is(.admonition-title,summary):before{
-    color: #00b8d4!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--info)!important;
+    color: #00b8d4;
+    background-color: transparent;
+    content: var(--md-admonition-icon--info);
 }
 .md-typeset :is(.tip)>:is(.admonition-title,summary):before{
-    color: #00bfa5!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--tip)!important;
+    color: #00bfa5;
+    background-color: transparent;
+    content: var(--md-admonition-icon--tip);
 }
 .md-typeset :is(.success)>:is(.admonition-title,summary):before{
-    color: #00c853!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--success)!important;
+    color: #00c853;
+    background-color: transparent;
+    content: var(--md-admonition-icon--success);
 }
 .md-typeset :is(.question)>:is(.admonition-title,summary):before{
-    color: #64dd17!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--question)!important;
+    color: #64dd17;
+    background-color: transparent;
+    content: var(--md-admonition-icon--question);
 }
 .md-typeset :is(.warning)>:is(.admonition-title,summary):before{
-    color: #ff9100!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--warning)!important;
+    color: #ff9100;
+    background-color: transparent;
+    content: var(--md-admonition-icon--warning);
 }
 .md-typeset :is(.failure)>:is(.admonition-title,summary):before{
-    color: #ff5252!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--failure)!important;
+    color: #ff5252;
+    background-color: transparent;
+    content: var(--md-admonition-icon--failure);
 }
 .md-typeset :is(.danger)>:is(.admonition-title,summary):before{
-    color: #ff1744!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--danger)!important;
+    color: #ff1744;
+    background-color: transparent;
+    content: var(--md-admonition-icon--danger);
 }
 .md-typeset :is(.bug)>:is(.admonition-title,summary):before{
-    color: #f50057!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--bug)!important;
+    color: #f50057;
+    background-color: transparent;
+    content: var(--md-admonition-icon--bug);
 }
 .md-typeset :is(.example)>:is(.admonition-title,summary):before{
-    color: #7c4dff!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--example)!important;
+    color: #7c4dff;
+    background-color: transparent;
+    content: var(--md-admonition-icon--example);
 }
 .md-typeset :is(.quote)>:is(.admonition-title,summary):before{
-    color: #9e9e9e!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--quote)!important;
+    color: #9e9e9e;
+    background-color: transparent;
+    content: var(--md-admonition-icon--quote);
 }
 .md-typeset :is(.admonition, details) {
-   border-width: 0.5px 0.5px 0.5px .2rem !important;
-   border-style: solid !important;
-   display: block !important;
+   border-width: 0.5px 0.5px 0.5px .2rem ;
+   border-style: solid ;
+   display: block ;
 }
 :is(.note, .abstract, .info, .tip, .success, .question, .warning,
 .failure, .danger, .bug, .example, .quote) summary::after{
@@ -102,64 +102,64 @@ div.new_tabbed_block {
 }
 
 .admonition.note .admonition-title::before {
-    color: #448aff!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--note)!important;
+    color: #448aff;
+    background-color: transparent;
+    content: var(--md-admonition-icon--note);
 }
 .admonition.abstract .admonition-title::before {
-    color: #00b0ff!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--abstract)!important;
+    color: #00b0ff;
+    background-color: transparent;
+    content: var(--md-admonition-icon--abstract);
 }
 .admonition.info .admonition-title::before {
-    color: #00b8d4!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--info)!important;
+    color: #00b8d4;
+    background-color: transparent;
+    content: var(--md-admonition-icon--info);
 }
 .admonition.tip .admonition-title::before {
-    color: #00bfa5!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--tip)!important;
+    color: #00bfa5;
+    background-color: transparent;
+    content: var(--md-admonition-icon--tip);
 }
 .admonition.success .admonition-title::before {
-    color: #00c853!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--success)!important;
+    color: #00c853;
+    background-color: transparent;
+    content: var(--md-admonition-icon--success);
 }
 .admonition.question .admonition-title::before {
-    color: #64dd17!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--question)!important;
+    color: #64dd17;
+    background-color: transparent;
+    content: var(--md-admonition-icon--question);
 }
 .admonition.warning .admonition-title::before {
-    color: #ff9100!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--warning)!important;
+    color: #ff9100;
+    background-color: transparent;
+    content: var(--md-admonition-icon--warning);
 }
 .admonition.failure .admonition-title::before {
-    color: #ff5252!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--failure)!important;
+    color: #ff5252;
+    background-color: transparent;
+    content: var(--md-admonition-icon--failure);
 }
 .admonition.danger .admonition-title::before {
-    color: #ff1744!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--danger)!important;
+    color: #ff1744;
+    background-color: transparent;
+    content: var(--md-admonition-icon--danger);
 }
 .admonition.bug .admonition-title::before {
-    color: #f50057!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--bug)!important;
+    color: #f50057;
+    background-color: transparent;
+    content: var(--md-admonition-icon--bug);
 }
 .admonition.example .admonition-title::before {
-    color: #7c4dff!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--example)!important;
+    color: #7c4dff;
+    background-color: transparent;
+    content: var(--md-admonition-icon--example);
 }
 .admonition.quote .admonition-title::before {
-    color: #9e9e9e!important;
-    background-color: transparent!important;
-    content: var(--md-admonition-icon--quote)!important;
+    color: #9e9e9e;
+    background-color: transparent;
+    content: var(--md-admonition-icon--quote);
 }
 
 nav.md-tags{
@@ -181,27 +181,27 @@ div.md-typeset__table table{
 }
 /*
 tr{
-    page-break-after: avoid !important;
-    page-break-before: avoid !important;
+    page-break-after: avoid ;
+    page-break-before: avoid ;
 }*/
 tr th, tr td{
-    border: 1px solid #000!important;
-    padding: 2px !important;
+    border: 1px solid #000;
+    padding: 2px ;
 }
 .md-typeset table:not([class]) {
-    font-size: 14px!important;
-    line-height: 1.5!important;
+    font-size: 14px;
+    line-height: 1.5;
 }
 .md-typeset .tabbed-set{
-    display: block!important;
+    display: block;
 }
 .md-typeset .tabbed-set .tabbed-content--wrap {
-    display: inline-block!important;
+    display: inline-block;
     width: 100%;
     margin-bottom: 0.25rem;
 }
 .md-typeset .tabbed-set .tabbed-content--wrap input{
-    display: none!important;
+    display: none;
 }
 .md-typeset .tabbed-set .tabbed-content--wrap label{
     background-color: #aaa;
@@ -213,7 +213,7 @@ tr th, tr td{
     border-bottom-color: transparent;
 }
 .md-typeset .tabbed-set .tabbed-content--wrap .tabbed-content{
-    display: block!important;
+    display: block;
     box-shadow: none;
 }
 

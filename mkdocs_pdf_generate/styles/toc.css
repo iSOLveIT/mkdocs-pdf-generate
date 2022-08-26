@@ -2,13 +2,13 @@
 @media print{
     @page toc {
         @top-left {
-            content: normal !important;
+            content: normal ;
         }
     }
 
     article#doc-toc{
-        page-break-after: always !important;
-        break-after: always !important;
+        page-break-after: always ;
+        break-after: always ;
         margin: 0 .8rem 1.2rem;
         padding-top: .6rem;
         line-height: 1.6;
@@ -24,7 +24,7 @@
         page-break-inside: auto;
         bookmark-level: none;
         border-bottom: 2px solid #3144b7;
-        padding-bottom: 2px!important;
+        padding-bottom: 2px;
     }
     article#doc-toc h1::before{
         display: block;
@@ -37,7 +37,7 @@
         padding-left: 0;
         margin-left: 1em;
         font-size: 10.5pt;
-        page-break-inside: auto !important;
+        page-break-inside: auto ;
     }
     article#doc-toc li{
         list-style: none;

@@ -1,6 +1,6 @@
 ---
 pdf:
-  revision: 0.1.2    
+  revision: 0.1.3    
 ---
 
 # Customisation
@@ -59,6 +59,7 @@ E.g. `cover.html` or `cover.html.j2`.
 In the cover template file, write your preferred template syntax into it.
 
 _Example of a cover template file using Jinja2 syntax:_
+
 ```html
 <article id="doc-cover">
     {% if cover_image is defined %}
@@ -98,6 +99,7 @@ _Example of a cover template file using Jinja2 syntax:_
     </div>
 </article>
 ```
+
 **Step 3**
 
 Save the file changes and rebuild your MkDocs project. 

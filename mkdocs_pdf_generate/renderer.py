@@ -60,7 +60,7 @@ class Renderer(object):
             pdf_html_dir = Path(pdf_html_file).parent
             if not pdf_html_dir.is_dir():
                 pdf_html_dir.mkdir(parents=True, exist_ok=True)
-            with open(pdf_html_file, "a+", encoding="UTF-8") as f:
+            with open(pdf_html_file, "w", encoding="UTF-8") as f:
                 f.write(soup.prettify())
 
         html = HTML(string=str(soup))

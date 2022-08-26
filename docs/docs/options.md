@@ -3,7 +3,7 @@ pdf:
   filename: Plugin Options
   title: Options for MkDocs PDF Generate Plugin
   type: Options
-  revision: 0.1.2    
+  revision: 0.1.3   
 ---
 
 # Options
@@ -12,7 +12,7 @@ The plugin allows users to pass in both global and local options.
 
 !!! note
 
-    Local options has a higher precedence than global options.
+    Local options have higher precedence than global options.
 
 
 ## Global Options

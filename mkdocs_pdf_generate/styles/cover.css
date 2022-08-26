@@ -2,28 +2,28 @@
 @media print {
     @page :first {
         @top-right {
-            content: normal!important;
+            content: normal;
         }
         @top-left{
-            content: normal!important;
+            content: normal;
         }
         @bottom-center {
-            content: normal!important;
+            content: normal;
         }
         @bottom-right {
-            content: normal!important;
+            content: normal;
         }
 
         @bottom-left {
-            content: normal!important;
+            content: normal;
         }
     }
     article#doc-cover{
         display: flex;
         flex-direction: column;
         height: 100vh;
-        page-break-after: always !important;
-        break-after: always !important;
+        page-break-after: always ;
+        break-after: always ;
     }
     article#doc-cover .wrapper{
         flex: 1 0 auto;
@@ -57,7 +57,7 @@
     article#doc-cover .properties{
         flex: 0 0 auto;
         text-align: right;
-        float: right!important;
+        float: right;
         padding: 0 2rem;
         background-color: initial;
     }
