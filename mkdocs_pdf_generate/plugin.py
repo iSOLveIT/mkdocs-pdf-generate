@@ -39,6 +39,9 @@ class PdfGeneratePlugin(BasePlugin):
                     )
                     return
 
+        if self.config["debug"]:
+            self._logger.info("PDF debug option is enabled.")
+
         self._options = Options(self.config, config, self._logger)
 
         from weasyprint.logger import LOGGER

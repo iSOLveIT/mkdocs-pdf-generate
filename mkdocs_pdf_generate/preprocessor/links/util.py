@@ -48,13 +48,13 @@ def rel_html_href(base_url: str, href: str, site_url: str):
         abs_html_href = re.sub(
             r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+",
             site_url.rstrip("/"),
-            str(abs_html_href)
+            str(abs_html_href),
         )
     elif isinstance(abs_html_href, WindowsPath):
         abs_html_href = re.sub(
             r"^[\w\-:\\]+\\+(temp|Temp)\\+(mkdocs|pages)[\w\-]+",
             site_url.rstrip("/"),
-            str(abs_html_href)
+            str(abs_html_href),
         )
         abs_html_href = abs_html_href.replace("\\", "/")
 

@@ -153,7 +153,9 @@ class Options(object):
 
     def debug_dir(self) -> Path:
         if self.debug:
-            docs_src_dir = Path(Path(self.user_config["config_file_path"]).parent).resolve()
+            docs_src_dir = Path(
+                Path(self.user_config["config_file_path"]).parent
+            ).resolve()
             debug_folder_path = docs_src_dir.joinpath("pdf_html_debug")
             if not debug_folder_path.is_dir():
                 debug_folder_path.mkdir(parents=True, exist_ok=True)

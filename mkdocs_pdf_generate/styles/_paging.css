@@ -14,23 +14,23 @@
     @top-left {
         content: var(--chapter);
         font-size: 9pt;
-        font-family: Montserrat;
+        font-family: 'Barlow', sans-serif;
     }
     @bottom-center {
         content: var(--type);
         font-size: 10pt;
         font-weight: 600;
-        font-family: Montserrat;
+        font-family: 'Barlow', sans-serif;
     }
     @bottom-right {
         content: "Page " counter(page) " of " counter(pages);
         font-size: 8pt;
-        font-family: Montserrat;
+        font-family: 'Barlow', sans-serif;
     }
     @bottom-left {
         content: var(--site-url);
         font-size: 8pt;
-        font-family: Montserrat;
+        font-family: 'Barlow', sans-serif;
     }
   }
 /*

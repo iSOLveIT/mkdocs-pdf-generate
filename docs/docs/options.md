@@ -3,7 +3,7 @@ pdf:
   filename: Plugin Options
   title: Options for MkDocs PDF Generate Plugin
   type: Options
-  revision: 0.2    
+  revision: 0.1.2    
 ---
 
 # Options

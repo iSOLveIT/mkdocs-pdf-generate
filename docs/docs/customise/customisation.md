@@ -1,3 +1,8 @@
+---
+pdf:
+  revision: 0.1.2    
+---
+
 # Customisation
 
 ## Custom cover page

@@ -53,38 +53,18 @@ class Renderer(object):
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
         if self._options.debug:
-            debug_folder_path = self._options.debug_dir()
-            rel_url = base_url.replace("file://", "")
+            debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
+            rel_url = re.sub(r"^file:/{,3}", "", base_url)
             regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
-            pdf_html_file = regex_pattern.sub(str(debug_folder_path), str(rel_url)) + ".html"
+            pdf_html_file = regex_pattern.sub(debug_folder_path, rel_url) + ".html"
             pdf_html_dir = Path(pdf_html_file).parent
             if not pdf_html_dir.is_dir():
                 pdf_html_dir.mkdir(parents=True, exist_ok=True)
-            with open(pdf_html_file, "a+") as f:
-                f.write(str(soup.prettify()))
+            with open(pdf_html_file, "a+", encoding="UTF-8") as f:
+                f.write(soup.prettify())
 
         html = HTML(string=str(soup))
         return html.render()
-
-    # def add_doc(self, content: str, base_url: str, rel_url: str):
-    #     pos = self.page_order.index(rel_url)
-    #     self.pages[pos] = (content, base_url, rel_url)
-    #
-    # def write_combined_pdf(self, output_path: str):
-    #     rendered_pages = []
-    #     for p in self.pages:
-    #         if p is None:
-    #             self.logger.error('Unexpected error - not all pages were rendered properly')
-    #             continue
-    #
-    #         render = self.render_doc(p[0], p[1], p[2])
-    #         self.pgnum += len(render.pages)
-    #         rendered_pages.append(render)
-    #
-    #     flatten = lambda l: [item for sublist in l for item in sublist]
-    #     all_pages = flatten([p.pages for p in rendered_pages if p is not None])
-    #
-    #     rendered_pages[0].copy(all_pages).write_pdf(output_path)
 
     def add_link(self, content: str, file_name: str = None):
         return self.theme.modify_html(content, file_name)
@@ -93,7 +73,7 @@ class Renderer(object):
         pgnum_counter = soup.new_tag("style")
         pgnum_counter.string = """
         @page :first {{
-            counter-reset: __pgnum__ {};    #noqa W291
+            counter-reset: __pgnum__ {};
         }}
         @page {{
             counter-increment: __pgnum__;

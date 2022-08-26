@@ -2,8 +2,6 @@ import html
 from pathlib import Path
 from typing import Dict
 
-# import sass
-
 from ..options import Options
 
 from bs4 import Tag
@@ -27,6 +25,7 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
     base_path = Path(Path(__file__).parent).resolve()
 
     css_string = """
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,200;0,400;0,700;1,400;1,600&display=swap');
     :root {{
         --author: '{}';
         --author-logo: url('{}');
@@ -76,7 +75,7 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
             else custom_template_path.joinpath(css_file)
         )
         if filename.is_file():
-            with open(filename, "r") as f:
+            with open(filename, "r", encoding="UTF-8") as f:
                 css_rules = f.read()
                 if css_file in ["_styles.css", "_paging.css"]:
                     css_tag.append(css_rules)
