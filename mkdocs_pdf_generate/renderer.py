@@ -55,7 +55,7 @@ class Renderer(object):
         if self._options.debug:
             debug_folder_path = self._options.debug_dir()
             rel_url = base_url.replace("file://", "")
-            regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#*]+/site")
+            regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
             pdf_html_file = regex_pattern.sub(str(debug_folder_path), str(rel_url)) + ".html"
             pdf_html_dir = Path(pdf_html_file).parent
             if not pdf_html_dir.is_dir():

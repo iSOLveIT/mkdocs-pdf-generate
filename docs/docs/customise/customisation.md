@@ -102,7 +102,8 @@ Save the file changes and rebuild your MkDocs project.
 
 The resulting PDF can be customized easily by adding a custom stylesheet such as the following:
 
-```
+
+```css
 @page {
     size: a4 portrait;
     margin: 25mm 10mm 25mm 10mm;
