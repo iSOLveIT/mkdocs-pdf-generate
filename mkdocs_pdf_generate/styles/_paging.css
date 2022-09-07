@@ -71,11 +71,4 @@
   ol {
      page-break-inside: avoid !important;
   }*/
-
-  div[data-md-component="skip"],
-  div[data-md-component="announce"],
-  div[data-md-component="header"],
-  label[class="md-overlay"] {
-     display: none;
-  }
 }
