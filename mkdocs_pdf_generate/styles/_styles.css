@@ -16,7 +16,7 @@
 body {
     background: none;
     background-color: #fff;
-    font-family: 'Barlow', sans-serif;
+    font-family: var(--md-text-font), sans-serif;
   }
 
 div.tabbed-content {
@@ -91,13 +91,13 @@ div.new_tabbed_block {
     content: var(--md-admonition-icon--quote);
 }
 .md-typeset :is(.admonition, details) {
-   border-width: 0.5px 0.5px 0.5px .2rem ;
-   border-style: solid ;
-   display: block ;
+   border-width: 0.5px 0.5px 0.5px .2rem;
+   border-style: solid;
+   display: block;
 }
 :is(.note, .abstract, .info, .tip, .success, .question, .warning,
 .failure, .danger, .bug, .example, .quote) summary::after{
-    display:none;
+   display:none;
 }
 
 .admonition.note .admonition-title::before {
@@ -225,3 +225,6 @@ label[class="md-overlay"] {
     display: none;
 }
 
+h2 {
+    string-set: chapter content();
+}

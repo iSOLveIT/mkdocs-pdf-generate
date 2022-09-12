@@ -83,7 +83,8 @@ class PdfGeneratePlugin(BasePlugin):
         # the address of the local server. But if we are hosting the documentation on a remote server,
         # we would want the `site_url` to be the remote server, so we need to set `site_url` variable
         # in our `mkdocs.yml` configuration file.
-        # The plugin will then pick the user defined `site_url` variable and set the `site_url` in `config` to it.
+        # The plugin will then pick the user defined `site_url` variable and set it as the value
+        # for the `site_url` under `config`.
         # We are doing this because we want the plugin to be able to determine where project links in the PDF
         # will lead to.
         site_url = [i["site_url"] for i in config.user_configs if "site_url" in i]
@@ -117,7 +118,7 @@ class PdfGeneratePlugin(BasePlugin):
             )
 
             if file_name is None:
-                file_name = str(src_path).split("/")[-1].rstrip('.md')
+                file_name = str(src_path).split("/")[-1].rstrip(".md")
                 self._logger.error(
                     "You must provide a filename for the PDF document. "
                     "The source filename is used as fallback."
@@ -140,8 +141,11 @@ class PdfGeneratePlugin(BasePlugin):
                 output_content = self.renderer.add_link(output_content, pdf_file)
                 self.num_files += 1
             except Exception as e:
-                self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
                 self.num_errors += 1
+                raise PDFPluginException(
+                    "Error converting {} to PDF: {}".format(src_path, e)
+                )
+                # self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
         else:
             self._logger.info("Skipped: PDF conversion for {}".format(src_path))
 
@@ -162,3 +166,7 @@ class PdfGeneratePlugin(BasePlugin):
             self._logger.error(
                 "{} conversion errors occurred (see above)".format(self.num_errors)
             )
+
+
+class PDFPluginException(Exception):
+    pass

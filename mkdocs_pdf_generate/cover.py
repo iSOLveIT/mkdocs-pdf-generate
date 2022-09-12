@@ -27,6 +27,7 @@ def _make_cover(
 
     try:
         keywords = options.template.keywords
+        keywords["site_url"] = re.sub(r"http://|https://", "", keywords["site_url"])
         # Set cover title
         keywords["cover_title"] = (
             pdf_metadata.get("title") or options.body_title or keywords["cover_title"]

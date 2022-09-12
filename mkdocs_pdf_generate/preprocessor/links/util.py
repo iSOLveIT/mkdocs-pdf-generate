@@ -66,7 +66,6 @@ def rel_html_href(base_url: str, href: str, site_url: str):
 def abs_asset_href(href: str, base_url: str):
     if urls.url_is_absolute(href) or Path(href).is_absolute():
         return href
-
     return urls.iri_to_uri(urls.urljoin(base_url, href))
 
 
@@ -77,40 +76,4 @@ def replace_asset_hrefs(soup: BeautifulSoup, base_url: str):
 
     for asset in soup.find_all(src=True):
         asset["src"] = abs_asset_href(asset["src"], base_url)
-
     return soup
-
-
-#
-# def normalize_href(href: str, rel_url: str):
-#     """
-#     Method to normalize a relative href to its absolute path.
-#     Example: If href = ../../index.html and rel_url = foo/bar/baz/, then we get -> foo/index.html
-#
-#     :param href: Relative path to a file
-#     :param rel_url: Current directory to use in looking for the path to the relative file
-#     :return: Absolute path to the relative file
-#     """
-#
-#     def reduce_rel(x):
-#         try:
-#             i = x.index("..")
-#             if i == 0:
-#                 return x
-#
-#             del x[i]
-#             del x[i - 1]
-#             return reduce_rel(x)
-#         except ValueError:
-#             return x
-#
-#     rel_dir = os.path.dirname(rel_url)
-#     href = str.split(os.path.join(rel_dir, href), "/")
-#     href = reduce_rel(href)
-#
-#     return os.path.join(*href)
-
-
-# def get_body_id(url: str):
-#     section, _ = os.path.splitext(url)
-#     return '{}:'.format(section)

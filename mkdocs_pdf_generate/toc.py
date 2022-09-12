@@ -43,7 +43,12 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
         if h.name == "h1":
             return li
         ref = h.get("id", "")
-        a = soup.new_tag("a", href=f"#{ref}")
+        prefix = h.get("data-numbering", None)
+        a = (
+            soup.new_tag("a", href=f"#{ref}", attrs={"data-numbering": prefix})
+            if prefix is not None
+            else soup.new_tag("a", href=f"#{ref}")
+        )
         for el in h.contents:
             if el.name == "a":
                 a.append(el.contents[0])
@@ -178,11 +183,7 @@ def _inject_heading_order(soup: Tag, options: Options):
         else:
             continue
 
-        options.logger.debug(f"| [{prefix} {h.text}]({h.get('id', '(none)')})")
-
-        nm_tag = soup.new_tag("span", **{"class": "pdf-order"})
-        nm_tag.append(prefix)
-        h.insert(0, nm_tag)
+        h["data-numbering"] = prefix
 
 
 # def _is_exclude(url: str, options: Options) -> bool:

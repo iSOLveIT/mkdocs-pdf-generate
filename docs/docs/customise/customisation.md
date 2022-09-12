@@ -110,7 +110,6 @@ Save the file changes and rebuild your MkDocs project.
 
 The resulting PDF can be customized easily by adding a custom stylesheet such as the following:
 
-
 ```css
 @page {
     size: a4 portrait;
@@ -137,7 +136,7 @@ For this to take effect, you need to create a `custom.css` file.
     You should store the `custom.css` file in the directory used for 
     the [custom_template_path](../options.md#custom_template_path).
 
-The plugin provides the following CSS variables which you can use in your `custom.css` file:
+The plugin provides the following CSS variables and named strings which you can use in your `custom.css` file:
 
 * --title
 * --subtitle
@@ -148,9 +147,14 @@ The plugin provides the following CSS variables which you can use in your `custo
 * --site_url
 * --revision
 * --filename
+* chapter
 
-Using the `var()` CSS function, you can access all the data above.
+Using the `var()` CSS function, you can access all the CSS variables provided by the plugin.
 E.g. use `var(--author)` to get the value for the [author](../options.md#author) option.
+
+You can also use the `string()` function to access the value of a named string.
+E.g. use `string(chapter)` to get the value for a chapter.
+
 
 The custom CSS is appended to the MkDocs stylesheets so, you can override rules by using the `!important` CSS keyword
 but be cautious about it.

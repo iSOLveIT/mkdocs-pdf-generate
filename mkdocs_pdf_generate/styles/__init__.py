@@ -1,4 +1,5 @@
 import html
+import re
 from pathlib import Path
 from typing import Dict
 
@@ -25,7 +26,6 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
     base_path = Path(Path(__file__).parent).resolve()
 
     css_string = """
-    @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,200;0,400;0,700;1,400;1,600&display=swap');
     :root {{
         --author: '{}';
         --author-logo: url('{}');
@@ -40,12 +40,14 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
         _css_escape(options.author),
         _css_escape(options.author_logo),
         _css_escape(options.copyright),
-        _css_escape(pdf_metadata.get("title", options.body_title or options.cover_title)),
+        _css_escape(
+            pdf_metadata.get("title", options.body_title or options.cover_title)
+        ),
         _css_escape(pdf_metadata.get("subtitle", options.cover_subtitle)),
         _css_escape(pdf_metadata.get("type", "Documentation")),
         _css_escape(pdf_metadata.get("revision", "")),
         _css_escape(pdf_metadata.get("filename", "")),
-        _css_escape(options.site_url),
+        _css_escape(re.sub(r"http://|https://", "", options.site_url)),
     )
     css_tag = Tag(name="style", attrs={"class": "plugin-default-css"})
     css_tag.append(css_string)

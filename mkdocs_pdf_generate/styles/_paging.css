@@ -9,28 +9,29 @@
         height: 25px;
         width: 50px;
         max-width: 70px;
+        font-family: var(--md-text-font), sans-serif;
     }
 
     @top-left {
-        content: var(--title);
+        content: string(chapter);
         font-size: 9pt;
-        font-family: 'Barlow', sans-serif;
+        font-family: var(--md-text-font), sans-serif;
     }
     @bottom-center {
         content: var(--type);
         font-size: 10pt;
         font-weight: 600;
-        font-family: 'Barlow', sans-serif;
+        font-family: var(--md-text-font), sans-serif;
     }
     @bottom-right {
         content: "Page " counter(page) " of " counter(pages);
         font-size: 8pt;
-        font-family: 'Barlow', sans-serif;
+        font-family: var(--md-text-font), sans-serif;
     }
     @bottom-left {
         content: var(--site-url);
         font-size: 8pt;
-        font-family: 'Barlow', sans-serif;
+        font-family: var(--md-text-font), sans-serif;
     }
   }
 /*
@@ -62,7 +63,7 @@
   code,
   kbd,
   pre {
-     font-family: 'Fira Mono', monospace;
+     font-family: var(--md-code-font), monospace;
      /*page-break-inside: avoid !important;*/
      margin-top: 0;
   }

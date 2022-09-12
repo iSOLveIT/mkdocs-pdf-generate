@@ -57,4 +57,12 @@
         float: right;
         content: target-counter(attr(href), page);
     }
+
+    h2::before, h3::before,  h4::before, h5::before, h6::before {
+        content: attr(data-numbering);
+    }
+
+    article#doc-toc li a::before {
+        content: attr(data-numbering);
+    }
 }
