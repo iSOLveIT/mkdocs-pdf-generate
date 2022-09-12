@@ -36,18 +36,16 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
         --revision: '{}';
         --filename: '{}';
         --site-url: '{}';
-        --chapter: '{}';
     }}""".format(
         _css_escape(options.author),
         _css_escape(options.author_logo),
         _css_escape(options.copyright),
-        _css_escape(pdf_metadata.get("title", options.cover_title)),
+        _css_escape(pdf_metadata.get("title", options.body_title or options.cover_title)),
         _css_escape(pdf_metadata.get("subtitle", options.cover_subtitle)),
         _css_escape(pdf_metadata.get("type", "Documentation")),
         _css_escape(pdf_metadata.get("revision", "")),
         _css_escape(pdf_metadata.get("filename", "")),
         _css_escape(options.site_url),
-        _css_escape(options.body_title),
     )
     css_tag = Tag(name="style", attrs={"class": "plugin-default-css"})
     css_tag.append(css_string)

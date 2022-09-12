@@ -66,7 +66,9 @@ def _make_cover(
         cover_html = str_to_bs4(cover_template)
 
         # Remove h1 content
-        soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")}).decompose()
+        h1_title = soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")})
+        if h1_title is not None:
+            h1_title.decompose()
 
         soup.body.insert(0, cover_html)
     except Exception as e:

@@ -1,4 +1,5 @@
 ---
+title: Customize Plugin
 pdf:
   revision: 0.1.3    
 ---
@@ -147,7 +148,6 @@ The plugin provides the following CSS variables which you can use in your `custo
 * --site_url
 * --revision
 * --filename
-* --chapter (i.e. the H1 element in body content)
 
 Using the `var()` CSS function, you can access all the data above.
 E.g. use `var(--author)` to get the value for the [author](../options.md#author) option.

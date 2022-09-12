@@ -328,8 +328,9 @@ Set the filename to use for a specific page when downloading the PDF document.
     Filename precedence: 
 
     1. [filename](#filename) (local pdf metadata) - formatted such that all are valid characters
-    2. [title](#title) (local pdf metadata) - formatted such that all are valid characters 
-    3. H1 - formatted such that all are valid characters
+    2. [title](#title) (local pdf metadata) - formatted such that all are valid characters
+    3. title (local metadata) - formatted such that all are valid characters
+    4. H1 - formatted such that all are valid characters
 
 ### `revision`
 

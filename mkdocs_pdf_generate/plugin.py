@@ -105,25 +105,30 @@ class PdfGeneratePlugin(BasePlugin):
         pdf_meta = get_pdf_metadata(page.meta)
         build_pdf_document = pdf_meta.get("build", True)
 
-        self._options.body_title = h1_title(output_content)
-
-        file_name = (
-            pdf_meta.get("filename")
-            or pdf_meta.get("title")
-            or self._options.body_title
-            or None
-        )
-
-        if file_name is None:
-            self._logger.error("You must provide a filename for the PDF document.")
-
-        # Generate a secure filename
-        file_name = secure_filename(file_name)
-
-        base_url = dest_path.joinpath(file_name).as_uri()
-        pdf_file = file_name + ".pdf"
-
         if build_pdf_document:
+            self._options.body_title = h1_title(output_content)
+
+            file_name = (
+                pdf_meta.get("filename")
+                or pdf_meta.get("title")
+                or page.meta.get("title")
+                or self._options.body_title
+                or None
+            )
+
+            if file_name is None:
+                file_name = str(src_path).split("/")[-1].rstrip('.md')
+                self._logger.error(
+                    "You must provide a filename for the PDF document. "
+                    "The source filename is used as fallback."
+                )
+
+            # Generate a secure filename
+            file_name = secure_filename(file_name)
+
+            base_url = dest_path.joinpath(file_name).as_uri()
+            pdf_file = file_name + ".pdf"
+
             try:
                 self._logger.info("Converting {} to {}".format(src_path, pdf_file))
                 self.renderer.write_pdf(
@@ -142,7 +147,6 @@ class PdfGeneratePlugin(BasePlugin):
 
         end = timer()
         self.total_time += end - start
-
         return output_content
 
     def on_post_build(self, config):

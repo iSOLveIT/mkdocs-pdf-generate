@@ -12,7 +12,7 @@
     }
 
     @top-left {
-        content: var(--chapter);
+        content: var(--title);
         font-size: 9pt;
         font-family: 'Barlow', sans-serif;
     }

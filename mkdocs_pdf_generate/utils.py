@@ -2,7 +2,7 @@ import os
 
 from bs4 import BeautifulSoup, PageElement
 import re
-from typing import Union
+from typing import Union, Optional
 
 
 def get_pdf_metadata(metadata):
@@ -67,10 +67,12 @@ def secure_filename(filename):
     return filename
 
 
-def h1_title(content: Union[str, PageElement]) -> str:
+def h1_title(content: Union[str, PageElement]) -> Optional[str]:
     soup = content
     if isinstance(soup, str):
         soup = BeautifulSoup(soup, "html5lib")
     title = soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")})
+    if title is None:
+        return None
     title = re.sub(r"^[\d.]+ ", "", title.text)
     return title
