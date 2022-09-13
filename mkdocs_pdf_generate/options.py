@@ -57,23 +57,21 @@ class Options(object):
 
         # Cover
         self.cover = local_config["cover"]
-        if self.cover:
-            self._cover_title = (
-                local_config["cover_title"]
-                if local_config["cover_title"]
-                else config["site_name"]
-            )
-            self._cover_subtitle = local_config["cover_subtitle"]
+        self._cover_title = (
+            local_config["cover_title"]
+            if local_config["cover_title"]
+            else config["site_name"]
+        )
+        self._cover_subtitle = local_config["cover_subtitle"]
 
         # path to custom template 'cover.html' and 'custom.css'
         self.custom_template_path = local_config["custom_template_path"]
 
         # TOC and Chapter heading
         self.toc = local_config["toc"]
-        if self.toc:
-            self.toc_title = local_config["toc_title"]
-            self.toc_level = local_config["toc_level"]
-            self.toc_ordering = local_config["toc_numbering"]
+        self.toc_title = local_config["toc_title"]
+        self.toc_level = local_config["toc_level"]
+        self.toc_ordering = local_config["toc_numbering"]
 
         # H1 Title of the document
         self._body_title = ""
