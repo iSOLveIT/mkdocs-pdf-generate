@@ -45,7 +45,13 @@
     page-break-after: always;
   }
 
+    .md-typeset h1 {
+        display: none;
+    }
 
+    .md-typeset h2 {
+        break-before: always;
+    }
 /*
   h2[id], h3[id] {
     page-break-after: avoid !important;

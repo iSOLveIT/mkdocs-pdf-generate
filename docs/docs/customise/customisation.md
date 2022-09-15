@@ -4,7 +4,6 @@ pdf:
   revision: 0.1.3    
 ---
 
-# Customisation
 
 ## Custom cover page
 

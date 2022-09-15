@@ -157,28 +157,28 @@ def _inject_heading_order(soup: Tag, options: Options):
         if h.name == "h2" and level >= 2:
             h2n += 1
             h3n = h4n = h5n = h6n = 0
-            prefix = f"{h2n} "
+            prefix = f"{h2n}. "
 
             # exclude_lv3 = _is_exclude(h.get("id", None), options)
 
         elif h.name == "h3" and level >= 3:
             h3n += 1
             h4n = h5n = h6n = 0
-            prefix = f"{h2n}.{h3n} "
+            prefix = f"{h2n}.{h3n}. "
 
         elif h.name == "h4" and level >= 4:
             h4n += 1
             h5n = h6n = 0
-            prefix = f"{h2n}.{h3n}.{h4n} "
+            prefix = f"{h2n}.{h3n}.{h4n}. "
 
         elif h.name == "h5" and level >= 5:
             h5n += 1
             h6n = 0
-            prefix = f"{h2n}.{h3n}.{h4n}.{h5n} "
+            prefix = f"{h2n}.{h3n}.{h4n}.{h5n}. "
 
         elif h.name == "h6" and level >= 6:
             h6n += 1
-            prefix = f"{h2n}.{h3n}.{h4n}.{h5n}.{h6n} "
+            prefix = f"{h2n}.{h3n}.{h4n}.{h5n}.{h6n}. "
 
         else:
             continue
