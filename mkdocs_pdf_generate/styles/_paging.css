@@ -1,7 +1,7 @@
 @media print {
   @page {
     counter-increment: page;
-    size: A4 portrait;
+    size: var(--base-page-orientation);
     margin: 10mm 10mm 15mm 10mm;
 
     @top-right {
@@ -34,6 +34,18 @@
         font-family: var(--md-text-font), sans-serif;
     }
   }
+
+  @page rotated {
+    size: var(--rotated-page-orientation);
+  }
+
+  .rotated-page {
+    page: rotated;
+    page-break-before: always;
+    page-break-after: always;
+  }
+
+
 /*
   h2[id], h3[id] {
     page-break-after: avoid !important;
@@ -41,14 +53,14 @@
   h4[id], h5[id], h6[id] {
     page-break-before: avoid !important;
     page-break-after: avoid !important;
-  }*/
+  }
 
   img[src$=".png"], img[src$=".jpg"], img[src$=".jpeg"]{
     width: 70%;
     display: block;
     margin: auto;
     max-width: 100%;
-  }
+  }*/
 /*
   img {
     page-break-after: avoid !important;

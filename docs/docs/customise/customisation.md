@@ -158,3 +158,92 @@ E.g. use `string(chapter)` to get the value for a chapter.
 
 The custom CSS is appended to the MkDocs stylesheets so, you can override rules by using the `!important` CSS keyword
 but be cautious about it.
+
+### Changing the orientation of a page 
+
+The plugin allows you to change the orientation of a page to fit the content on that page.
+
+For example, if you have a table on a page, and it is too wide to fit the current orientation used by the page, 
+you can change the page orientation of the individual page by doing the following:
+
+* Wrap the markdown content in a `div` html element. The `div` element should have a `markdown` attribute and 
+  a `class` attribute set to `"rotated-page"`. E.g. `<div markdown class="rotated-page">PLACE CONTENT HERE</div>`
+* Create a `custom.css` file and set these CSS variables under a `:root {}` CSS selector: 
+    * `--base-page-orientation` - default page orientation to use and
+    * `--rotated-page-orientation` - page orientation to use for rotated pages. <br> E.g. `:root {--base-page-orientation: a4 portrait; --rotated-page-orientation: a4 landscape;}`
+
+<div markdown class="rotated-page">
+
+#### Example
+
+In this example, we are going to change the page orientation for [this subsection](#example).
+
+!!! note
+
+    Download the generated pdf to see the result.
+
+| Header / Pin | Symbol  | Type  | Description                                          |
+|:-------------|:-------:|:-----:|:-----------------------------------------------------|
+| Header1 - 1  |   GND   | Power | Module / System GND                                  |
+| Header1 - 2  |   IO3   |  I/O  | GPIO – Capabilities are Module Dependent             |
+| Header1 - 3  |   IO2   |  I/O  | GPIO – Capabilities are Module Dependent             |
+| Header1 - 4  |   IO1   |  I/O  | GPIO – Capabilities are Module Dependent             |
+| Header1 - 5  | 3V3 OUT | Power | 3.3V Power Output for User                           |
+| Header2 - 1  |  RESET  |   I   | System Reset, Active Low                             |
+
+</div>
+
+In the example above, the [example section](#example) is wrapped inside a `div` like below:
+
+```markdown
+<div markdown class="rotated-page">
+
+#### Example
+
+In this example, we are going to change the page orientation for [this subsection](#example).
+
+!!! note
+
+    Download the generated pdf to see the result.
+
+| Header / Pin | Symbol  | Type  | Description                                          |
+|:-------------|:-------:|:-----:|:-----------------------------------------------------|
+| Header1 - 1  |   GND   | Power | Module / System GND                                  |
+| Header1 - 2  |   IO3   |  I/O  | GPIO – Capabilities are Module Dependent             |
+| Header1 - 3  |   IO2   |  I/O  | GPIO – Capabilities are Module Dependent             |
+| Header1 - 4  |   IO1   |  I/O  | GPIO – Capabilities are Module Dependent             |
+| Header1 - 5  | 3V3 OUT | Power | 3.3V Power Output for User                           |
+| Header2 - 1  |  RESET  |   I   | System Reset, Active Low                             |
+| Header2 - 2  |   GND   | Power | Module / System GND                                  |
+| Header2 - 3  |   RX    |   I   | Asynchronous Serial UART Receive Pin (TX from Host)  |
+| Header2 - 4  |   TX    |   O   | Asynchronous Serial UART Transmit Pin (RX from Host) |
+| Header2 - 5  |   5V    | Power | Module 5V Input, Main Power                          |
+
+</div>
+```
+
+and the `custom.css` file contains this code:
+
+```css
+:root {
+    --base-page-orientation: a4 portrait;
+    --rotated-page-orientation: a4 landscape;
+}
+```
+
+!!! note 
+
+    You can write your own custom CSS to handle page orientation but you must use the __named page__ approach like below:
+    
+    ```css
+    /* Named page ↓ */
+    @page rotated {
+      size: A3 landscape;
+    }
+
+    .rotated-page {
+      page: rotated;
+      page-break-before: always;
+      page-break-after: always;
+    }
+    ```

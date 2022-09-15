@@ -22,10 +22,18 @@ from bs4 import BeautifulSoup
 
 def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
     # transforms all relative hrefs pointing to other html docs
-    # into relative pdf hrefs
+    # into relative html hrefs
     for a in soup.find_all("a", href=True):
         a["href"] = rel_html_href(base_url, a["href"], site_url)
 
     soup = replace_asset_hrefs(soup, base_url)
     soup = restructure_tabbed_content(soup)
+    return soup
+
+
+def get_content(soup: BeautifulSoup):
+    content = soup.find("article", attrs={"class": "md-content__inner"})
+    new_content = [content]
+    soup.body.clear()
+    soup.body.extend(new_content)
     return soup

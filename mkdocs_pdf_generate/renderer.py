@@ -11,7 +11,7 @@ from weasyprint import HTML
 
 from . import cover
 from . import toc
-from .preprocessor import get_separate as prep_separate
+from .preprocessor import get_separate as prep_separate, get_content
 from .styles import style_for_print
 from .themes import generic as generic_theme
 from .options import Options
@@ -39,7 +39,7 @@ class Renderer(object):
 
     def render_doc(self, content: str, base_url: str, pdf_metadata: Dict = None):
         soup = BeautifulSoup(content, "html5lib")
-
+        soup = get_content(soup)
         self.inject_pgnum(soup)
 
         style_tags: list[Tag] = style_for_print(self._options, pdf_metadata)

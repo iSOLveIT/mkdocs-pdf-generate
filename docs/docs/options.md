@@ -208,7 +208,7 @@ $ ENABLE_PDF_EXPORT=1 mkdocs build
 INFO    -  Converting 2 files to PDF took 1.82s
 INFO    -  Documentation built in 2.29 seconds
 ```
-  
+
 #### `verbose`
 
 Setting this to `true` will show all WeasyPrint debug messages during the build. <br> 
@@ -244,9 +244,8 @@ Allows you to specify a custom theme handler module. This path must be ***relati
 `mkdocs.yml`:
 ```yaml
 plugins:
-	- pdf-generate:
-		theme_handler_path: theme-handler
-
+  - pdf-generate:
+      theme_handler_path: theme-handler
 ```
 
 ```bash

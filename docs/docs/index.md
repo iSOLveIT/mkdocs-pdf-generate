@@ -12,8 +12,9 @@ pdf:
 
 The pdf-generate plugin will generate separate PDF files for each markdown page
 in your MkDocs repository using [WeasyPrint](http://weasyprint.org/). 
-The exported documents support many advanced features such as table of contents, customisable cover page,  
-support for CSS paged media module [CSS paged media module](https://developer.mozilla.org/en-US/docs/Web/CSS/@page)
+The exported documents support many advanced features such as table of contents, customisable cover page, 
+ability to control page orientation, support for CSS paged media module 
+[CSS paged media module](https://developer.mozilla.org/en-US/docs/Web/CSS/@page)
 , and using MkDocs page metadata to generate cover page.
 
 ## Requirements

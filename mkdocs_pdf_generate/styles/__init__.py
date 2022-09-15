@@ -36,6 +36,8 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
         --revision: '{}';
         --filename: '{}';
         --site-url: '{}';
+        --base-page-orientation: a4 portrait;
+        --rotated-page-orientation: a4 landscape;
     }}""".format(
         _css_escape(options.author),
         _css_escape(options.author_logo),

@@ -66,6 +66,7 @@
         text-align: left;
         padding: 0 2rem;
         background-color: initial;
+        font-size: 9pt;
     }
     article#doc-cover .reserved_rights p#disclaimer{
         font-size: 80%;

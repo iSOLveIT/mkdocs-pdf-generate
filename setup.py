@@ -3,12 +3,12 @@ from setuptools import setup
 
 setup(
     name="mkdocs-pdf-generate",
-    version="0.1.4",
+    version="0.1.5",
     description="An MkDocs plugin to generate individual PDF files from content pages.",
     long_description="The pdf-generate plugin will generate separate PDF files for each markdown page "
     "in your MkDocs repository using WeasyPrint. "
     "The exported documents support many advanced features such as "
-    "table of contents, customisable cover page, "
+    "table of contents, customisable cover page, ability to control page orientation, "
     "support for CSS paged media module, and using MkDocs page metadata to generate cover page.",
     keywords="mkdocs pdf export generate weasyprint",
     url="https://github.com/iSOLveIT/mkdocs-pdf-generate",
