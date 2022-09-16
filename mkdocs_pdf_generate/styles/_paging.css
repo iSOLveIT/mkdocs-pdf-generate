@@ -45,49 +45,22 @@
     page-break-after: always;
   }
 
-    .md-typeset h1 {
-        display: none;
-    }
-
-    .md-typeset h2 {
-        break-before: always;
-    }
-/*
-  h2[id], h3[id] {
-    page-break-after: avoid !important;
-  }
-  h4[id], h5[id], h6[id] {
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
+  .md-typeset h1 {
+    display: none;
   }
 
-  img[src$=".png"], img[src$=".jpg"], img[src$=".jpeg"]{
-    width: 70%;
-    display: block;
-    margin: auto;
-    max-width: 100%;
-  }*/
-/*
-  img {
-    page-break-after: avoid !important;
-    break-after: avoid !important;
+  .md-typeset h2 {
+    break-before: always;
   }
 
-  .md-typeset :is(.admonition, details){
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
+  .page-break {
+    break-before: always;
   }
-*/
+
   code,
   kbd,
   pre {
-     font-family: var(--md-code-font), monospace;
-     /*page-break-inside: avoid !important;*/
-     margin-top: 0;
+    font-family: var(--md-code-font), monospace;
+    margin-top: 0;
   }
-  /*
-  ul,
-  ol {
-     page-break-inside: avoid !important;
-  }*/
 }

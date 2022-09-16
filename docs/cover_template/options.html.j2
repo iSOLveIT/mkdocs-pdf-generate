@@ -1,0 +1,24 @@
+<article id="option-cover">
+    <div id="option-cover-content">
+        <h1>{{ cover_title | e }}</h1>
+        <h2>{{ cover_subtitle | e }}</h2>
+
+        <div class="properties">
+            <address>
+                {% if author %}
+                    <p id="author" style="text-align: right">{{ author | e }}</p>
+                {% endif %}
+            </address>
+        </div>
+        <div class="reserved_rights">
+            <address>
+                {% if copyright %}
+                    <p id="cover_copyright">{{ copyright | e }}</p>
+                {% endif %}
+                {% if disclaimer %}
+                    <p id="cover_disclaimer">{{ disclaimer | e }}</p>
+                {% endif %}
+            </address>
+        </div>
+    <div>
+</article>

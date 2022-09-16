@@ -54,7 +54,8 @@ def _make_cover(
         keywords.update(pdf_metadata)
 
         # Select cover template
-        template = options.template.select(["cover", "default_cover"])
+        cover_template_files = [document_type.lower(), "cover", "default_cover"]
+        template = options.template.select(cover_template_files)
 
         options.logger.info(f'Generate a cover page with "{template.name}".')
 

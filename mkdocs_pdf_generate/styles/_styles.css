@@ -183,15 +183,7 @@ div.md-typeset__table table{
     border-collapse: initial;
     border-spacing: 0;
 }
-/*
-tr{
-    page-break-after: avoid ;
-    page-break-before: avoid ;
-}
-tr th, tr td{
-    border: 1px solid #000;
-    padding: 2px ;
-}*/
+
 .md-typeset table:not([class]) {
     font-size: 14px;
     line-height: 1.5;

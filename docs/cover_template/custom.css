@@ -2,3 +2,26 @@
     --base-page-orientation: a4 portrait;
     --rotated-page-orientation: a4 landscape;
 }
+
+@page:first {
+        margin: 0;
+}
+
+#option-cover {
+    position: relative;
+    background: rgb(0,0,51);
+    background: linear-gradient(180deg, rgba(0,0,51,1) 0%, rgba(9,9,121,1) 36%, rgba(0,172,207,1) 82%);
+    background-size: cover;
+    height: 297mm;
+    padding: 0;
+}
+
+#option-cover-content {
+    position: absolute;
+    display: block;
+    background: #ffffcc;
+    bottom: 150mm;
+    right: 0;
+    left: 0;
+    padding: 0 10mm;
+}
