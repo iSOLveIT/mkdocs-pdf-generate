@@ -6,7 +6,7 @@ from typing import Union, Optional
 
 
 def get_pdf_metadata(metadata):
-    pdf_meta = metadata["pdf"] if "pdf" in metadata else {}
+    pdf_meta = metadata.get("pdf", {}) if "pdf" in metadata else {}
     return pdf_meta
 
 
