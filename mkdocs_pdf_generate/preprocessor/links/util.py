@@ -40,7 +40,8 @@ def rel_html_href(base_url: str, href: str, site_url: str):
     rel_url = base_url.replace("file://", "")
 
     internal = href.startswith("#")
-    if internal or not is_doc(href):
+    web_url = re.search(r"^(https://|http://)", href)
+    if web_url or internal or not is_doc(href):
         return href
 
     abs_html_href = Path(rel_url).joinpath(href).resolve()

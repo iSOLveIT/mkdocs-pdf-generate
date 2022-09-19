@@ -53,8 +53,9 @@ plugins:
 
 **Step 2**
 
-In the directory you set as `custom_template_path`, create a template file which the name `cover`. 
-E.g. `cover.html` or `cover.html.j2`.
+Under the directory you set as `custom_template_path`, create a custom template file.
+The custom template's filename can either be `cover` or the [document type](../options.md#type). <br>
+E.g. `cover.html`, `cover.html.j2`, or if the document type is `manual` then `manual.html`, `manual.html.j2`.
 
 In the cover template file, write your preferred template syntax into it.
 

@@ -168,9 +168,11 @@ This folder is where you put both the custom cover template and custom plugin CS
 
 !!! info
 
-    The custom template's filename should be `cover` with any of these file extensions
+    The custom template's filename can either be `cover` or the [document type](#type) with any of these file extensions
     `.html.j2`, `.html.jinja2`, `.html`, or `.htm`.
-    Example: `cover.html.j2`, `cover.html.jinja2`, `cover.html`, `cover.htm`
+    Example: `cover.html.j2`, `cover.html.jinja2`, `cover.html`, `cover.htm` OR 
+    Example: if document type is `manual` then you can create a template file called `manual.html` or `manual.html.j2`
+    or `manual.html.jinja2` or `manual.htm`.
 
     You can refer to this [example](customise/customisation.md#using-custom-cover-template) 
     about how to use a custom cover template and custom CSS. 
@@ -315,8 +317,11 @@ Set the subtitle text in cover page.
 ### `type`
 
 Set the document type. <br>
-**NB:** We use the value for this option in selecting the document's cover image from 
-the [cover_images](#cover_images) option.
+!!! note
+    
+    + We use the value, of this option, in selecting the document's cover image from 
+      the [cover_images](#cover_images) option.
+    + Also, we use the value, of this option, in selecting the custom cover template.
 
 ### `filename`
 
