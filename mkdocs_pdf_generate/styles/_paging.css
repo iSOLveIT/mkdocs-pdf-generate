@@ -49,7 +49,7 @@
     display: none;
   }
 
-  .md-typeset h2 {
+  .md-typeset h2:first-of-type {
     break-before: always;
   }
 
