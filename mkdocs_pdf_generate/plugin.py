@@ -8,6 +8,7 @@ from mkdocs.plugins import BasePlugin
 
 from .options import Options
 from .renderer import Renderer
+from .templates.filters.url import URLFilter
 from .utils import get_pdf_metadata, secure_filename, h1_title
 
 
@@ -41,6 +42,10 @@ class PdfGeneratePlugin(BasePlugin):
 
         if self.config["debug"]:
             self._logger.info("PDF debug option is enabled.")
+        if self.config["debug_target"]:
+            self._logger.info(
+                "Debug Target File: {}".format(self.config["debug_target"])
+            )
 
         self._options = Options(self.config, config, self._logger)
 
@@ -99,12 +104,24 @@ class PdfGeneratePlugin(BasePlugin):
             abs_dest_path = Path(page.abs_output_path)
             src_path = Path(page.input_path)
 
+        self._options.md_src_path = src_path
+
         dest_path = abs_dest_path.parent
         if not dest_path.is_dir():
             dest_path.mkdir(parents=True, exist_ok=True)
 
         pdf_meta = get_pdf_metadata(page.meta)
         build_pdf_document = pdf_meta.get("build", True)
+
+        if self._options.debug and self._options.debug_target is not None:
+            # Debugging only the debug target file
+            path_filter = URLFilter(self._options, self._options.user_config)
+            debug_target_file = path_filter(pathname=str(self._options.debug_target))
+            doc_src_path = path_filter(pathname=str(self._options.md_src_path))
+            if doc_src_path == debug_target_file:
+                build_pdf_document = True
+            else:
+                build_pdf_document = False
 
         if build_pdf_document:
             self._options.body_title = h1_title(output_content)

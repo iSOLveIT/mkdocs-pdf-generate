@@ -16,6 +16,7 @@ class Options(object):
         ("media_type", config_options.Type(str, default=DEFAULT_MEDIA_TYPE)),
         ("verbose", config_options.Type(bool, default=False)),
         ("debug", config_options.Type(bool, default=False)),
+        ("debug_target", config_options.Type(str, default="")),
         ("enabled_if_env", config_options.Type(str)),
         ("theme_handler_path", config_options.Type(str)),
         ("author", config_options.Type(str, default=None)),
@@ -37,6 +38,13 @@ class Options(object):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
         self.debug = local_config["debug"]
+        self.debug_target = (
+            None
+            if len(local_config["debug_target"]) == 0
+            else local_config["debug_target"]
+        )
+        self._src_path = None
+
         # user_configs in mkdocs.yml
         self._user_config: Config = config
         self._site_url = config["site_url"]
@@ -148,6 +156,14 @@ class Options(object):
     @property
     def template(self) -> Template:
         return self._template
+
+    @property
+    def md_src_path(self):
+        return self._src_path
+
+    @md_src_path.setter
+    def md_src_path(self, input_path):
+        self._src_path = input_path
 
     def debug_dir(self) -> Path:
         if self.debug:

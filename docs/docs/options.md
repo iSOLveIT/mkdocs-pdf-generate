@@ -233,6 +233,22 @@ content used to generate the PDF documents.
     * It is recommended to add the **`pdf_html_debug`** folder to your ignored files when using a version control system.
     
 
+#### `debug_target` (for development purposes only)
+
+This option helps you to generate a PDF file for a single target document.
+The value for `debug_target` should be the relative path to the target document. 
+Example: `debug_target: customise/customisation.md`.
+
+This option is intended to help reduce the time spent by users in debugging a single document used to generate a PDF file.
+ 
+**default**: `null`
+
+!!! note
+
+    * The `debug_target` option only works with the `mkdocs build` command.
+    * You must set the [debug](#debug-for-development-purposes-only) option to `true`, if you want to use the `debug_target` option.
+    
+
 #### `media_type` 
 
 Allows you to use a different CSS media type (or a custom one like `pdf-generate`) for the PDF export. <br>

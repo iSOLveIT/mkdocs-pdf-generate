@@ -15,6 +15,7 @@ from .preprocessor import get_separate as prep_separate, get_content
 from .styles import style_for_print
 from .themes import generic as generic_theme
 from .options import Options
+from .templates.filters.url import URLFilter
 
 
 class Renderer(object):
@@ -52,7 +53,27 @@ class Renderer(object):
         toc.make_toc(soup, self._options)
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
-        if self._options.debug:
+        # Enable Debugging
+        if self._options.debug and self._options.debug_target is not None:
+            # Debug a single PDF build file
+            path_filter = URLFilter(self._options, self._options.user_config)
+            debug_target_file = path_filter(pathname=str(self._options.debug_target))
+            doc_src_path = path_filter(pathname=str(self._options.md_src_path))
+
+            if doc_src_path == debug_target_file:
+                debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
+                rel_url = re.sub(r"^file:/{,3}", "", base_url)
+                regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
+                pdf_html_file = regex_pattern.sub(debug_folder_path, rel_url) + ".html"
+                pdf_html_dir = Path(pdf_html_file).parent
+                if not pdf_html_dir.is_dir():
+                    pdf_html_dir.mkdir(parents=True, exist_ok=True)
+                with open(pdf_html_file, "w", encoding="UTF-8") as f:
+                    f.write(soup.prettify())
+                html = HTML(string=str(soup))
+                return html.render()
+        elif self._options.debug and self._options.debug_target is None:
+            # Debug every PDF build file
             debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
             rel_url = re.sub(r"^file:/{,3}", "", base_url)
             regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
