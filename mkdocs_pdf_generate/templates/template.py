@@ -1,6 +1,6 @@
 # import os
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 import jinja2
 from mkdocs.config.base import Config

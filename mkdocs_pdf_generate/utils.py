@@ -1,8 +1,8 @@
 import os
+import re
+from typing import Optional, Union
 
 from bs4 import BeautifulSoup, PageElement
-import re
-from typing import Union, Optional
 
 
 def get_pdf_metadata(metadata):

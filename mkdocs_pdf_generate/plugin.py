@@ -1,7 +1,7 @@
+import logging
 import os
 from pathlib import Path
 from timeit import default_timer as timer
-import logging
 
 from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
@@ -9,7 +9,7 @@ from mkdocs.plugins import BasePlugin
 from .options import Options
 from .renderer import Renderer
 from .templates.filters.url import URLFilter
-from .utils import get_pdf_metadata, secure_filename, h1_title
+from .utils import get_pdf_metadata, h1_title, secure_filename
 
 
 class PdfGeneratePlugin(BasePlugin):

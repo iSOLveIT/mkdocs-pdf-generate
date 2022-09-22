@@ -1,6 +1,5 @@
 from setuptools import setup
 
-
 setup(
     name="mkdocs-pdf-generate",
     version="0.1.6",

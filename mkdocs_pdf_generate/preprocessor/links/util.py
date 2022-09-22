@@ -1,9 +1,9 @@
 import os
-from pathlib import Path, PosixPath, WindowsPath
 import re
+from pathlib import Path, PosixPath, WindowsPath
 
-from weasyprint import urls
 from bs4 import BeautifulSoup
+from weasyprint import urls
 
 
 # check if href is relative --

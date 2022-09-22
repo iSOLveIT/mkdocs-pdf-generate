@@ -1,4 +1,4 @@
-from bs4 import PageElement, Tag, NavigableString
+from bs4 import NavigableString, PageElement, Tag
 
 from .options import Options
 

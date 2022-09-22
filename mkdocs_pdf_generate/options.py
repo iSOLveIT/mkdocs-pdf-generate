@@ -5,8 +5,8 @@ from typing import Dict
 from mkdocs.config import config_options
 from mkdocs.config.base import Config
 
-from .templates.template import Template
 from .templates.filters.url import URLFilter
+from .templates.template import Template
 
 
 class Options(object):

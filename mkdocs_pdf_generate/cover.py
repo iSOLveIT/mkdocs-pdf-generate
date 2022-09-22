@@ -1,7 +1,7 @@
 import re
 from typing import Dict, Optional
 
-from bs4 import PageElement, BeautifulSoup, Tag
+from bs4 import BeautifulSoup, PageElement, Tag
 
 from .options import Options
 from .templates.filters.url import URLFilter

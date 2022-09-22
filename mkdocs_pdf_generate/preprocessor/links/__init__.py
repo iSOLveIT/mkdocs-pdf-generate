@@ -1,1 +1,1 @@
-from .util import replace_asset_hrefs, rel_html_href  # noqa: F401
+from .util import rel_html_href, replace_asset_hrefs  # noqa: F401

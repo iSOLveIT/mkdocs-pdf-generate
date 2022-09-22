@@ -1,10 +1,9 @@
 import re
 
-from .links import replace_asset_hrefs, rel_html_href
-from .content import restructure_tabbed_content
-
 from bs4 import BeautifulSoup
 
+from .content import restructure_tabbed_content
+from .links import rel_html_href, replace_asset_hrefs
 
 # def get_combined(soup: BeautifulSoup, base_url: str, rel_url: str):
 #     for id in soup.find_all(id=True):

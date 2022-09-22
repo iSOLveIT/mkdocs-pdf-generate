@@ -3,9 +3,9 @@ import re
 from pathlib import Path
 from typing import Dict
 
-from ..options import Options
-
 from bs4 import Tag
+
+from ..options import Options
 
 
 def _css_escape(text: str) -> str:

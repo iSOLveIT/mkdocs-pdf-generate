@@ -1,21 +1,21 @@
 import logging
 import re
-from pathlib import Path
 import sys
 from importlib import import_module
-from importlib.util import spec_from_file_location, module_from_spec
+from importlib.util import module_from_spec, spec_from_file_location
+from pathlib import Path
 from typing import Dict, Optional
 
 from bs4 import BeautifulSoup, Tag
 from weasyprint import HTML
 
-from . import cover
-from . import toc
-from .preprocessor import get_separate as prep_separate, get_content
-from .styles import style_for_print
-from .themes import generic as generic_theme
+from . import cover, toc
 from .options import Options
+from .preprocessor import get_content
+from .preprocessor import get_separate as prep_separate
+from .styles import style_for_print
 from .templates.filters.url import URLFilter
+from .themes import generic as generic_theme
 
 
 class Renderer(object):
