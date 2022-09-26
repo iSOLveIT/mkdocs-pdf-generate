@@ -6,7 +6,9 @@ from bs4 import BeautifulSoup, PageElement
 
 
 def get_pdf_metadata(metadata):
-    pdf_meta = metadata.get("pdf", {}) if "pdf" in metadata else {}
+    pdf_meta = (
+        metadata.get("pdf") if "pdf" in metadata and metadata["pdf"] is not None else {}
+    )
     return pdf_meta
 
 
