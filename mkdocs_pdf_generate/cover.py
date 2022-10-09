@@ -50,6 +50,7 @@ def _make_cover(
             or keywords["cover_subtitle"]
         )
         keywords["revision"] = pdf_metadata.get("revision") or None
+        keywords["tags"] = options.md_tags
         # Populate local options into template keywords
         keywords.update(pdf_metadata)
 

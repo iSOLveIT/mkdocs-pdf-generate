@@ -8,7 +8,8 @@ copyright: Copyright &copy; 2022 iSOLveIT
 repo_name: iSOLveIT/mkdocs-pdf-generate
 repo_url: https://github.com/iSOLveIT/mkdocs-pdf-generate
 edit_uri: edit/main/docs/docs/
-
+extra_css:
+  - css/custom.css
 theme:
   name: material
   logo: img/plugin_icon.svg

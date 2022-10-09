@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
 from mkdocs.config import config_options
 from mkdocs.config.base import Config
@@ -84,6 +84,9 @@ class Options(object):
         # H1 Title of the document
         self._body_title = ""
 
+        # Markdown document tags
+        self._md_tags = []
+
         # Theming
         self.theme_name = config["theme"].name
         self.theme_handler_path = local_config.get("theme_handler_path", None)
@@ -120,6 +123,14 @@ class Options(object):
     @body_title.setter
     def body_title(self, text):
         self._body_title = text
+
+    @property
+    def md_tags(self):
+        return self._md_tags
+
+    @md_tags.setter
+    def md_tags(self, tags: List):
+        self._md_tags = tags
 
     @property
     def author(self) -> str:

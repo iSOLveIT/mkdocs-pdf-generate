@@ -27,6 +27,11 @@ def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
     for a in soup.find_all("a", href=True):
         a["href"] = rel_html_href(base_url, a["href"], site_url)
 
+    # Remove tags metadata
+    tags_metadata = soup.find("nav", attrs={"class": "md-tags"})
+    if tags_metadata is not None:
+        tags_metadata.decompose()
+
     soup = replace_asset_hrefs(soup, base_url)
     soup = restructure_tabbed_content(soup)
     return soup

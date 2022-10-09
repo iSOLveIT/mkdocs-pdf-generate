@@ -25,6 +25,7 @@ The plugin provides the following variables which you can use in your custom Jin
 * disclaimer
 * site_url
 * revision
+* all the tags you specify under the `tags` metadata of a Markdown document
 * custom variables from the [`extra:`](https://www.mkdocs.org/user-guide/configuration/#extra) setting in your `mkdocs.yml`
 * and all the options you provide under [local pdf metadata](../options.md#local-options) of a Markdown file.
 

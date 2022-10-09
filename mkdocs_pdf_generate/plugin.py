@@ -110,7 +110,14 @@ class PdfGeneratePlugin(BasePlugin):
         if not dest_path.is_dir():
             dest_path.mkdir(parents=True, exist_ok=True)
 
-        pdf_meta = get_pdf_metadata(page.meta)
+        md_metadata = page.meta
+        self._options.md_tags = (
+            md_metadata.get("tags")
+            if "tags" in md_metadata and md_metadata["pdf"] is not None
+            else []
+        )
+
+        pdf_meta = get_pdf_metadata(md_metadata)
         build_pdf_document = pdf_meta.get("build", True)
 
         if self._options.debug and self._options.debug_target is not None:
