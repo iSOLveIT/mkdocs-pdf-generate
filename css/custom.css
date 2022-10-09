@@ -17,7 +17,7 @@ body[data-md-color-scheme="slate"] a#pdf_download svg path{
 }
 
 body[data-md-color-scheme="slate"] a#pdf_download span{
-	font-size: 0.8rem;
+	font-size: -0.2rem;
 	color: #fff;
 }
 
@@ -34,7 +34,6 @@ body[data-md-color-scheme="slate"] a#pdf_download:hover svg path{
 }
 
 body[data-md-color-scheme="slate"] a#pdf_download:hover span{
-	font-size: 0.8rem;
 	color: red;
 	transition: all ease-in-out 0.25s;
 }
@@ -59,7 +58,7 @@ body[data-md-color-scheme="default"] a#pdf_download svg path{
 }
 
 body[data-md-color-scheme="default"] a#pdf_download span{
-	font-size: 0.8rem;
+	font-size: -0.2rem;
 	color: red;
 }
 
@@ -76,7 +75,6 @@ body[data-md-color-scheme="default"] a#pdf_download:hover svg path{
 }
 
 body[data-md-color-scheme="default"] a#pdf_download:hover span{
-	font-size: 0.8rem;
 	color: white;
 	transition: all ease-in-out 0.25s;
 }
