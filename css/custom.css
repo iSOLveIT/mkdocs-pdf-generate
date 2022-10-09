@@ -1,0 +1,80 @@
+/* Slate */
+body[data-md-color-scheme="slate"] a#pdf_download{
+	border: solid 2px red;
+	padding: 5px;
+	font-weight: 600;
+	border-radius: 5px;
+	background-color: red;
+}
+
+body[data-md-color-scheme="slate"] a#pdf_download svg{
+  width: 0.8rem;
+}
+
+body[data-md-color-scheme="slate"] a#pdf_download svg path{
+	fill: white;
+}
+
+body[data-md-color-scheme="slate"] a#pdf_download span{
+	font-size: 0.8rem;
+	color: #fff;
+}
+
+/* Hover */
+body[data-md-color-scheme="slate"] a#pdf_download:hover{
+	border: solid 2px red;
+	background-color: transparent;
+	transition: all ease-in-out 0.25s;
+}
+
+body[data-md-color-scheme="slate"] a#pdf_download:hover svg path{
+	fill: red;
+	transition: all ease-in-out 0.25s;
+}
+
+body[data-md-color-scheme="slate"] a#pdf_download:hover span{
+	font-size: 0.8rem;
+	color: red;
+	transition: all ease-in-out 0.25s;
+}
+
+
+/* Default */
+body[data-md-color-scheme="default"] a#pdf_download{
+	border: solid 2px red;
+	padding: 5px;
+	font-weight: 600;
+	border-radius: 5px;
+	background-color: transparent;
+}
+
+body[data-md-color-scheme="default"] a#pdf_download svg{
+  width: 0.8rem;
+}
+
+body[data-md-color-scheme="default"] a#pdf_download svg path{
+	fill: red;
+}
+
+body[data-md-color-scheme="default"] a#pdf_download span{
+	font-size: 0.8rem;
+	color: red;
+}
+
+/* Hover */
+body[data-md-color-scheme="default"] a#pdf_download:hover{
+	border: solid 2px red;
+	background-color: red;
+	transition: all ease-in-out 0.25s;
+}
+
+body[data-md-color-scheme="default"] a#pdf_download:hover svg path{
+	fill: white;
+	transition: all ease-in-out 0.25s;
+}
+
+body[data-md-color-scheme="default"] a#pdf_download:hover span{
+	font-size: 0.8rem;
+	color: white;
+	transition: all ease-in-out 0.25s;
+}
