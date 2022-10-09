@@ -27,7 +27,7 @@ The plugin provides the following variables which you can use in your custom Jin
 * revision
 * all the tags you specify under the `tags` metadata of a Markdown document
 * custom variables from the [`extra:`](https://www.mkdocs.org/user-guide/configuration/#extra) setting in your `mkdocs.yml`
-* and all the options you provide under [local pdf metadata](../options.md#local-options) of a Markdown file.
+* and all the options you provide under [local pdf metadata](../options.md#local-options) of a Markdown document.
 
 Using [jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) syntax, you can access all the data above.
 E.g. use `{{ author }}` to get the value for the [author](../options.md#author) option:
