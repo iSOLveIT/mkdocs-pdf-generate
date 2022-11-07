@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Optional, Union
+from typing import Optional, Union, Dict
 
 from bs4 import BeautifulSoup, PageElement
 
@@ -69,12 +69,12 @@ def secure_filename(filename):
     return filename
 
 
-def h1_title(content: Union[str, PageElement]) -> Optional[str]:
+def h1_title_tag(content: Union[str, PageElement], page_metadata: Dict) -> Optional[str]:
     soup = content
     if isinstance(soup, str):
         soup = BeautifulSoup(soup, "html5lib")
     title = soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")})
     if title is None:
-        return None
+        return page_metadata.get("title", default=None)
     title = re.sub(r"^[\d.]+ ", "", title.text)
     return title
