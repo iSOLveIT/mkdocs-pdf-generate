@@ -75,6 +75,6 @@ def h1_title_tag(content: Union[str, PageElement], page_metadata: Dict) -> Optio
         soup = BeautifulSoup(soup, "html5lib")
     title = soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")})
     if title is None:
-        return page_metadata.get("title", default=None)
+        return page_metadata.get("title")
     title = re.sub(r"^[\d.]+ ", "", title.text)
     return title
