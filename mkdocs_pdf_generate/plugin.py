@@ -9,7 +9,7 @@ from mkdocs.plugins import BasePlugin
 from .options import Options
 from .renderer import Renderer
 from .templates.filters.url import URLFilter
-from .utils import get_pdf_metadata, h1_title, secure_filename
+from .utils import get_pdf_metadata, h1_title_tag, secure_filename
 
 
 class PdfGeneratePlugin(BasePlugin):
@@ -124,12 +124,11 @@ class PdfGeneratePlugin(BasePlugin):
                 build_pdf_document = False
 
         if build_pdf_document:
-            self._options.body_title = h1_title(output_content)
+            self._options.body_title = h1_title_tag(output_content, page.meta)
 
             file_name = (
                 pdf_meta.get("filename")
                 or pdf_meta.get("title")
-                or page.meta.get("title")
                 or self._options.body_title
                 or None
             )
