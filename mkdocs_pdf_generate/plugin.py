@@ -13,7 +13,6 @@ from .utils import get_pdf_metadata, h1_title_tag, secure_filename
 
 
 class PdfGeneratePlugin(BasePlugin):
-
     config_scheme = Options.config_scheme
 
     def __init__(self):

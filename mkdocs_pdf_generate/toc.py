@@ -96,7 +96,6 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
             h4ul = h4li = h5ul = h5li = h6ul = None
 
         elif h.name == "h4" and level >= 4:
-
             if not h3li:
                 continue
             if not h4ul:
@@ -107,7 +106,6 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
             h5ul = h5li = h6ul = None
 
         elif h.name == "h5" and level >= 5:
-
             if not h4li:
                 continue
             if not h5ul:
@@ -118,7 +116,6 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
             h6ul = None
 
         elif h.name == "h6" and level >= 6:
-
             if not h5li:
                 continue
             if not h6ul:
@@ -146,7 +143,6 @@ def _inject_heading_order(soup: Tag, options: Options):
 
     headings = soup.find_all(["h2", "h3", "h4", "h5", "h6"])
     for h in headings:
-
         # if h.name == "h1":
         #     h1n += 1
         #     h2n = h3n = 0
