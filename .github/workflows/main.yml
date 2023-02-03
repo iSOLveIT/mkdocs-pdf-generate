@@ -25,11 +25,11 @@ jobs:
         os: [ "ubuntu-latest" ]
         # 3.9.8 seems to be broken with type_ast
         # https://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg1829077.html
-        python-version: ["3.9", "3.10"]
+        python-version: ["3.10", "3.11"]
         exclude:
           # Check only newest setups for win server
           - os: "windows-latest"
-            python-version: "3.9"
+            python-version: "3.10"
     env:
       ENABLE_PDF_EXPORT: '1'
     steps:
@@ -48,9 +48,9 @@ jobs:
     - name: Get pip cache dir
       id: pip-cache
       run: |
-        echo "::set-output name=dir::$(pip cache dir)"
+        echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
     - name: Pip cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -66,7 +66,7 @@ jobs:
       run: |
         pip install -e .
     - name: MkDocs Link Check
-      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
       with:
         use-verbose-mode: 'yes'
         folder-path: 'docs/'
@@ -78,11 +78,11 @@ jobs:
         documentation_path: docs/
         requirements_path: requirements.txt
         target_branch: docs-build
-        mkdocs_version: '1.3.1'
+        mkdocs_version: '1.4.2'
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: docs-build
         force: true
-      if: matrix.python-version == '3.9'
+      if: matrix.python-version == '3.10'
