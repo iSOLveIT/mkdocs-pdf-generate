@@ -5,7 +5,7 @@ pdf:
   title: Introduction for MkDocs PDF Generate Plugin
   subtitle: Overview   
   type: Home
-  revision: 0.2    
+  revision: 0.1.8    
 ---
 
 # MkDocs PDF Generate Plugin 
