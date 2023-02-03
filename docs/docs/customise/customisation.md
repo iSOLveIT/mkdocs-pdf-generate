@@ -1,7 +1,7 @@
 ---
 title: Customize Plugin
 pdf:
-  revision: 0.1.3    
+  revision: 0.1.8    
 ---
 
 
