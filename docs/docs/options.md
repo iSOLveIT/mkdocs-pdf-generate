@@ -3,19 +3,18 @@ pdf:
   filename: Plugin Options
   title: Options for MkDocs PDF Generate Plugin
   type: Options
-  revision: 0.1.3   
+  revision: 0.1.8   
 ---
 
 # Options
+
+## Global Options
 
 The plugin allows users to pass in both global and local options.
 
 !!! note
 
     Local options have higher precedence than global options.
-
-
-## Global Options
 
 Some of these global options are used as default options when local options are not set.
 The global options are passed to the plugin through `mkdocs.yml`:
@@ -42,7 +41,7 @@ plugins:
         enabled_if_env: ENABLE_PDF_EXPORT
 ```
 
-### for Cover
+### for Cover {: class="page-break"}
 
 #### `cover`
 
@@ -179,7 +178,7 @@ This folder is where you put both the custom cover template and custom plugin CS
 
 **default**: `use default plugin template`  
 
-#### `enabled_if_env`
+#### `enabled_if_env` {: class="page-break"}
 
 Setting this option will generate PDF files only if there is an environment variable set to 1. 
 The environment variable must match the value of `enabled_if_env`.
@@ -216,7 +215,7 @@ INFO    -  Documentation built in 2.29 seconds
 Setting this to `true` will show all WeasyPrint debug messages during the build. <br> 
 **default**: `false`
 
-#### `debug` (for development purposes only)
+#### `debug` (for development purposes only) 
 
 Setting this to `true` enables the debug mode which saves the HTML content used in generating the PDF files 
 into a folder called **`pdf_html_debug`**. 
@@ -233,7 +232,7 @@ content used to generate the PDF documents.
     * It is recommended to add the **`pdf_html_debug`** folder to your ignored files when using a version control system.
     
 
-#### `debug_target` (for development purposes only)
+#### `debug_target` (for development purposes only) {: class="page-break"}
 
 This option helps you to generate a PDF file for a single target document.
 The value for `debug_target` should be the relative path to the target document. 
@@ -283,7 +282,7 @@ project-root
 
 ```
 
-## Local Options
+## Local Options {: class="page-break"}
 
 The plugin allows you to set document specific options using the Markdown page metadata. 
 If a page metadata is specified, it has higher precedence than the [global options](#global-options).

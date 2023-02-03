@@ -24,7 +24,6 @@ def make_cover(
 def _make_cover(
     soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None
 ):
-
     try:
         keywords = options.template.keywords
         keywords["site_url"] = re.sub(r"http://|https://", "", keywords["site_url"])

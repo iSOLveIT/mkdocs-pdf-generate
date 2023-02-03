@@ -69,7 +69,9 @@ def secure_filename(filename):
     return filename
 
 
-def h1_title_tag(content: Union[str, PageElement], page_metadata: Dict) -> Optional[str]:
+def h1_title_tag(
+    content: Union[str, PageElement], page_metadata: Dict
+) -> Optional[str]:
     soup = content
     if isinstance(soup, str):
         soup = BeautifulSoup(soup, "html5lib")

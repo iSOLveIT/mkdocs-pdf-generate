@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 def restructure_tabbed_content(soup: BeautifulSoup):
-    labels = soup.find_all("label", attrs={"for": re.compile(r"__tabbed_\d_\d")})
+    labels = soup.find_all("label", attrs={"for": re.compile(r"^__tabbed_[\d_]+$")})
     blocks = soup.find_all("div", attrs={"class": "tabbed-block"})
     tab_content = soup.find_all("div", attrs={"class": "tabbed-content"})
 

@@ -51,6 +51,8 @@ plugins:
         custom_template_path: TEMPLATES PATH
 ```
 
+<p class="page-break"></p>
+
 **Step 2**
 
 Under the directory you set as `custom_template_path`, create a custom template file.
@@ -106,7 +108,7 @@ _Example of a cover template file using Jinja2 syntax:_
 Save the file changes and rebuild your MkDocs project. 
 
 
-## Adjusting the output
+## Adjusting the output {: class="page-break"}
 
 The resulting PDF can be customized easily by adding a custom stylesheet such as the following:
 
@@ -149,12 +151,13 @@ The plugin provides the following CSS variables and named strings which you can 
 * --filename
 * chapter
 
+<p class="page-break"></p>
+
 Using the `var()` CSS function, you can access all the CSS variables provided by the plugin.
 E.g. use `var(--author)` to get the value for the [author](../options.md#author) option.
 
 You can also use the `string()` function to access the value of a named string.
 E.g. use `string(chapter)` to get the value for a chapter.
-
 
 The custom CSS is appended to the MkDocs stylesheets so, you can override rules by using the `!important` CSS keyword
 but be cautious about it.
