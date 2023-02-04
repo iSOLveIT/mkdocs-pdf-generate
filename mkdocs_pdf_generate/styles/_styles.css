@@ -33,7 +33,7 @@ div.tabbed-content {
 div.tabbed-labels {
     display: block !important;
 }
-div.tabbed-labels label, div.new_tabbed_block {
+div.new_tabbed_block {
   display: block;
 }
 
