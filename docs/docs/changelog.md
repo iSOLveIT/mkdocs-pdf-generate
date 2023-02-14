@@ -1,3 +1,15 @@
+---
+pdf:
+  filename: Changelog
+  title: Changelog & License for MkDocs PDF Generate Plugin
+  type: Changelog
+  revision: 0.2.0   
+---
+
+# Changelog & License
+
+## License
+
 MIT License
 
 Copyright (c) 2022 Randy Duodu
@@ -19,3 +31,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+# Changelog
+
+0.2.0
+-----
+Released: 14-02-2023
+
+* Package setup: Changed package from using setuptools to pyproject.toml
+

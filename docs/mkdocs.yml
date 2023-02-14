@@ -68,6 +68,7 @@ nav:
   - Intro: index.md
   - Options: options.md
   - Customizations: customise/customisation.md
+  - Changelog: changelog.md
 
 markdown_extensions:
   - meta
