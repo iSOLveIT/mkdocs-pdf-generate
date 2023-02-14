@@ -2,17 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://isolveit.github.io/mkdocs-pdf-generate/</loc>
-         <lastmod>2023-02-04</lastmod>
+         <lastmod>2023-02-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://isolveit.github.io/mkdocs-pdf-generate/changelog/</loc>
+         <lastmod>2023-02-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://isolveit.github.io/mkdocs-pdf-generate/options/</loc>
-         <lastmod>2023-02-04</lastmod>
+         <lastmod>2023-02-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://isolveit.github.io/mkdocs-pdf-generate/customise/customisation/</loc>
-         <lastmod>2023-02-04</lastmod>
+         <lastmod>2023-02-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
