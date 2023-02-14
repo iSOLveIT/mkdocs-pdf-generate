@@ -44,6 +44,7 @@ class Options(object):
             else local_config["debug_target"]
         )
         self._src_path = None
+        self._dest_path = None
 
         # user_configs in mkdocs.yml
         self._user_config: Config = config
@@ -158,12 +159,20 @@ class Options(object):
         return self._template
 
     @property
-    def md_src_path(self):
+    def md_src_path(self) -> Path:
         return self._src_path
 
     @md_src_path.setter
     def md_src_path(self, input_path):
         self._src_path = input_path
+
+    @property
+    def out_dest_path(self) -> Path:
+        return self._dest_path
+
+    @out_dest_path.setter
+    def out_dest_path(self, input_path):
+        self._dest_path = input_path
 
     def debug_dir(self) -> Path:
         if self.debug:

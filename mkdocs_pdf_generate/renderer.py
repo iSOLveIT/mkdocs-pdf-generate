@@ -9,7 +9,7 @@ from typing import Dict, Optional
 from bs4 import BeautifulSoup, Tag
 from weasyprint import HTML
 
-from . import cover, toc
+from . import cover, toc, generate_txt
 from .options import Options
 from .preprocessor import get_content
 from .preprocessor import get_separate as prep_separate
@@ -50,8 +50,9 @@ class Renderer(object):
             soup.head.append(style_tag)
 
         soup = prep_separate(soup, base_url, self._options.site_url)
-        toc.make_toc(soup, self._options)
-        cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
+        generate_txt.make_txt_toc(soup, self._options, pdf_metadata=pdf_metadata)
+        # toc.make_toc(soup, self._options)
+        # cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
         # Enable Debugging
         if self._options.debug and self._options.debug_target is not None:

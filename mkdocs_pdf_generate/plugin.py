@@ -108,6 +108,7 @@ class PdfGeneratePlugin(BasePlugin):
         dest_path = abs_dest_path.parent
         if not dest_path.is_dir():
             dest_path.mkdir(parents=True, exist_ok=True)
+        self._options.out_dest_path = dest_path
 
         pdf_meta = get_pdf_metadata(page.meta)
         build_pdf_document = pdf_meta.get("build", True)
