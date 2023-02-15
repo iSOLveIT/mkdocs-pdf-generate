@@ -37,9 +37,7 @@ def get_stylesheet() -> str:
 def modify_html(html: str, href: str) -> str:
     # SVG 'file-download' size 2x from fontawesome: https://fontawesome.com/icons/file-download?style=solid
     # resized to 16px width * height
-    a_tag = '<a class="md-content__button md-icon" href="{}" download title="Download PDF">'.format(
-        href
-    )
+    a_tag = '<a class="md-content__button md-icon" href="{}" download title="Download PDF">'.format(href)
 
     icon = (
         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" '

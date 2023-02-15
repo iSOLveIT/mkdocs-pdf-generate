@@ -38,11 +38,7 @@ class Options(object):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
         self.debug = local_config["debug"]
-        self.debug_target = (
-            None
-            if len(local_config["debug_target"]) == 0
-            else local_config["debug_target"]
-        )
+        self.debug_target = None if len(local_config["debug_target"]) == 0 else local_config["debug_target"]
         self._src_path = None
         self._dest_path = None
 
@@ -66,11 +62,7 @@ class Options(object):
 
         # Cover
         self.cover = local_config["cover"]
-        self._cover_title = (
-            local_config["cover_title"]
-            if local_config["cover_title"]
-            else config["site_name"]
-        )
+        self._cover_title = local_config["cover_title"] if local_config["cover_title"] else config["site_name"]
         self._cover_subtitle = local_config["cover_subtitle"]
 
         # path to custom template 'cover.html' and 'custom.css'
@@ -176,9 +168,7 @@ class Options(object):
 
     def debug_dir(self) -> Path:
         if self.debug:
-            docs_src_dir = Path(
-                Path(self.user_config["config_file_path"]).parent
-            ).resolve()
+            docs_src_dir = Path(Path(self.user_config["config_file_path"]).parent).resolve()
             debug_folder_path = docs_src_dir.joinpath("pdf_html_debug")
             if not debug_folder_path.is_dir():
                 debug_folder_path.mkdir(parents=True, exist_ok=True)

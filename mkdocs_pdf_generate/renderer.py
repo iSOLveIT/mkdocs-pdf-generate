@@ -9,7 +9,7 @@ from typing import Dict, Optional
 from bs4 import BeautifulSoup, Tag
 from weasyprint import HTML
 
-from . import cover, toc, generate_txt
+from . import cover, generate_txt, toc
 from .options import Options
 from .preprocessor import get_content
 from .preprocessor import get_separate as prep_separate
@@ -34,9 +34,7 @@ class Renderer(object):
         filename: str,
         pdf_metadata: Optional[Dict] = None,
     ):
-        self.render_doc(content, base_url, pdf_metadata=pdf_metadata).write_pdf(
-            filename
-        )
+        self.render_doc(content, base_url, pdf_metadata=pdf_metadata).write_pdf(filename)
 
     def render_doc(self, content: str, base_url: str, pdf_metadata: Dict = None):
         soup = BeautifulSoup(content, "html5lib")
@@ -50,9 +48,11 @@ class Renderer(object):
             soup.head.append(style_tag)
 
         soup = prep_separate(soup, base_url, self._options.site_url)
-        generate_txt.make_txt_toc(soup, self._options, pdf_metadata=pdf_metadata)
-        # toc.make_toc(soup, self._options)
-        # cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
+        generate_txt_document = pdf_metadata.get("build_txt", False)
+        if generate_txt_document:
+            generate_txt.make_txt_toc(soup, self._options, pdf_metadata=pdf_metadata)
+        toc.make_toc(soup, self._options)
+        cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
         # Enable Debugging
         if self._options.debug and self._options.debug_target is not None:
@@ -117,9 +117,7 @@ class Renderer(object):
 
         if custom_handler_path:
             try:
-                spec = spec_from_file_location(
-                    module_name, Path.cwd().joinpath(custom_handler_path)
-                )
+                spec = spec_from_file_location(module_name, Path.cwd().joinpath(custom_handler_path))
                 mod = module_from_spec(spec)
                 spec.loader.exec_module(mod)
                 return mod
@@ -135,7 +133,5 @@ class Renderer(object):
         try:
             return import_module(module_name, "mkdocs_pdf_generate.themes")
         except ImportError as e:
-            self.logger.error(
-                "Could not load theme handler {}: {}".format(theme, e), file=sys.stderr
-            )
+            self.logger.error("Could not load theme handler {}: {}".format(theme, e), file=sys.stderr)
             return generic_theme

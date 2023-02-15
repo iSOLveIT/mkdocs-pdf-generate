@@ -3,7 +3,8 @@ pdf:
   filename: Plugin Options
   title: Options for MkDocs PDF Generate Plugin
   type: Options
-  revision: 0.1.8   
+  revision: 0.2.1   
+  build_txt: true
 ---
 
 # Options
@@ -297,6 +298,7 @@ pdf:
   - title: Options for MkDocs PDF Generate Plugin
   - type: Manual
   - revision: 0.2
+  - build_txt: true 
 ---
 ```
 
@@ -308,6 +310,7 @@ The following options are available:
 * type
 * filename
 * revision
+* build_txt
 
 ### `build`
 
@@ -354,3 +357,13 @@ Set the filename to use for a specific page when downloading the PDF document.
 ### `revision`
 
 Set the revision text in cover page. 
+
+### `build_txt`
+
+Allows you to specify whether to build a TXT file that contains the Table of Contents of the Markdown file. Value is `true` or `false`.
+
+!!! note 
+
+    The TXT file acts as the Table of Contents lookup table for a document. 
+
+**default**: `false`

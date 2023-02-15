@@ -1,15 +1,19 @@
-from typing import Optional, Dict
+import re
+from typing import Dict, List, Optional
 
+import html2text
 from bs4 import NavigableString, PageElement, Tag
-from pathlib import Path
 
 from .options import Options
 from .utils import secure_filename
 
+remove_unwanted_str = re.compile(r"\\|`{,2}")
+text_maker = html2text.HTML2Text()
+text_maker.unicode_snob = True
+text_maker.ignore_links = True
 
-def make_txt_toc(
-        soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None
-):
+
+def make_txt_toc(soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None) -> None:
     """Generate a toc tree.
 
     Arguments:
@@ -17,18 +21,12 @@ def make_txt_toc(
         options {Options} -- the project options.
     """
 
-    file_name = (
-            pdf_metadata.get("filename")
-            or pdf_metadata.get("title")
-            or options.body_title
-            or None
-    )
+    file_name = pdf_metadata.get("filename") or pdf_metadata.get("title") or options.body_title or None
 
     if file_name is None:
         file_name = str(options.md_src_path).split("/")[-1].rstrip(".md")
         options.logger.error(
-            "You must provide a filename for the PDF document. "
-            "The source filename is used as fallback."
+            "You must provide a filename for the TXT document. " "The source filename is used as fallback."
         )
 
     # Generate a secure filename
@@ -37,10 +35,11 @@ def make_txt_toc(
     txt_file = options.out_dest_path.joinpath(f"{file_name}.txt")
 
     if options.toc:
-        html_toc = _make_txt_indexes(soup, options)
+        txt_file_content = _make_txt_indexes(soup, options)
+        txt_file.write_text(txt_file_content, encoding="UTF-8")
 
 
-def _make_txt_indexes(soup: PageElement, options: Options) -> Tag:
+def _make_txt_indexes(soup: PageElement, options: Options) -> str:
     """Generate ordered chapter number and TOC of document.
 
     Arguments:
@@ -57,31 +56,31 @@ def _make_txt_indexes(soup: PageElement, options: Options) -> Tag:
     if level < 1 or level > 6:
         return
 
-    options.logger.info(f"Generate a TXT file containing the table of contents.")
+    options.logger.info(f"Building TXT file containing the document's table of contents.")
 
     h1li = None
     h2ul = h2li = h3ul = h3li = h4ul = h4li = h5ul = h5li = h6ul = None
     # exclude_lv2 = exclude_lv3 = False
 
     def makeLink(h: Tag) -> Tag:
-        li = soup.new_tag("p")
+        item = soup.new_tag("p")
         if h.name == "h1":
-            return li
+            return item
         prefix = h.get("data-numbering", None)
-        a = soup.new_tag("p")
+        # a = soup.new_tag("p")
         if prefix is not None:
-            a.append(prefix)
+            item.append(prefix)
 
         for el in h.contents:
             if el.name == "a":
-                a.append(el.contents[0])
+                item.append(el.contents[0])
             else:
-                a.append(_clone_element(el))
-        li.append(a)
-        return li
+                item.append(_clone_element(el))
+        # li.append(a)
+        return item
 
     toc: Tag = soup.new_tag("article", id="txt-toc")
-    title = soup.new_tag("div")
+    title = soup.new_tag("p")
     title.append(soup.new_string(options.toc_title))
     toc.append(title)
 
@@ -150,7 +149,20 @@ def _make_txt_indexes(soup: PageElement, options: Options) -> Tag:
             continue
         pass
 
-    return toc
+    html_str = f"""{toc}"""
+    text_str = text_maker.handle(html_str)
+    clean_content = remove_unwanted_str.sub("", text_str)
+
+    def restructure_txt_content(text: str) -> str:
+        txt_data: List = text.splitlines()
+        new_txt_data: List = [i for i in txt_data if len(i) != 0]
+        toc_title = new_txt_data.pop(0)
+        toc_title += "\n"
+        new_txt_data.insert(0, toc_title)
+        return "\n".join(new_txt_data)
+
+    txt_content = restructure_txt_content(clean_content)
+    return txt_content
 
 
 def _inject_txt_heading_order(soup: Tag, options: Options):
@@ -200,6 +212,7 @@ def _inject_txt_heading_order(soup: Tag, options: Options):
             continue
 
         h["data-numbering"] = prefix
+
 
 def _clone_element(el: PageElement) -> PageElement:
     if isinstance(el, NavigableString):

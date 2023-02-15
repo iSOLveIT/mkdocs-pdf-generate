@@ -3,7 +3,7 @@ pdf:
   filename: Changelog
   title: Changelog & License for MkDocs PDF Generate Plugin
   type: Changelog
-  revision: 0.2.0   
+  revision: 0.2.1   
 ---
 
 # Changelog & License
@@ -33,6 +33,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 # Changelog
+
+0.2.1
+-----
+Released: Under development
+
+* Improvement: Added the `build_txt` local option that allows users to build TXT file containing the Table of Contents
+* Minor improvements: Rewrote logging messages.
 
 0.2.0
 -----

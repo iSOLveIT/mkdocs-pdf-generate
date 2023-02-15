@@ -45,17 +45,13 @@ def get_content(soup: BeautifulSoup):
         img["style"] = "float:{};".format(position)
         del img["align"]
     # Check table alignment
-    all_table_th = soup.find_all(
-        "th", attrs={"align": re.compile(r"left|right|center")}
-    )
+    all_table_th = soup.find_all("th", attrs={"align": re.compile(r"left|right|center")})
     for th in all_table_th:
         # Modify <th> tags
         position = th["align"]
         th["style"] = "text-align:{};".format(position)
         del th["align"]
-    all_table_td = soup.find_all(
-        "td", attrs={"align": re.compile(r"left|right|center")}
-    )
+    all_table_td = soup.find_all("td", attrs={"align": re.compile(r"left|right|center")})
     for td in all_table_td:
         # Modify <td> tags
         position = td["align"]

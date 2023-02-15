@@ -32,7 +32,7 @@ def _make_indexes(soup: PageElement, options: Options) -> None:
     if level < 1 or level > 6:
         return
 
-    options.logger.info(f"Generate a table of contents up to heading level {level}.")
+    options.logger.info(f"Generate table of contents up to heading level {level} for PDF document.")
 
     h1li = None
     h2ul = h2li = h3ul = h3li = h4ul = h4li = h5ul = h5li = h6ul = None

@@ -33,18 +33,14 @@ class PdfGeneratePlugin(BasePlugin):
                 self.enabled = os.environ.get(env_name) == "1"
                 if not self.enabled:
                     self._logger.info(
-                        "PDF export is disabled (set environment variable {} to 1 to enable)".format(
-                            env_name
-                        )
+                        "PDF export is disabled (set environment variable {} to 1 to enable)".format(env_name)
                     )
                     return
 
         if self.config["debug"]:
             self._logger.info("PDF debug option is enabled.")
         if self.config["debug_target"]:
-            self._logger.info(
-                "Debug Target File: {}".format(self.config["debug_target"])
-            )
+            self._logger.info("Debug Target File: {}".format(self.config["debug_target"]))
 
         self._options = Options(self.config, config, self._logger)
 
@@ -136,8 +132,7 @@ class PdfGeneratePlugin(BasePlugin):
             if file_name is None:
                 file_name = str(src_path).split("/")[-1].rstrip(".md")
                 self._logger.error(
-                    "You must provide a filename for the PDF document. "
-                    "The source filename is used as fallback."
+                    "You must provide a filename for the PDF document. " "The source filename is used as fallback."
                 )
 
             # Generate a secure filename
@@ -158,9 +153,7 @@ class PdfGeneratePlugin(BasePlugin):
                 self.num_files += 1
             except Exception as e:
                 self.num_errors += 1
-                raise PDFPluginException(
-                    "Error converting {} to PDF: {}".format(src_path, e)
-                )
+                raise PDFPluginException("Error converting {} to PDF: {}".format(src_path, e))
                 # self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
         else:
             self._logger.info("Skipped: PDF conversion for {}".format(src_path))
@@ -173,15 +166,9 @@ class PdfGeneratePlugin(BasePlugin):
         if not self.enabled:
             return
 
-        self._logger.info(
-            "Converting {} files to PDF took {:.1f}s".format(
-                self.num_files, self.total_time
-            )
-        )
+        self._logger.info("Converting {} files to PDF took {:.1f}s".format(self.num_files, self.total_time))
         if self.num_errors > 0:
-            self._logger.error(
-                "{} conversion errors occurred (see above)".format(self.num_errors)
-            )
+            self._logger.error("{} conversion errors occurred (see above)".format(self.num_errors))
 
 
 class PDFPluginException(Exception):
