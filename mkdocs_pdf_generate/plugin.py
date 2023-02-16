@@ -87,9 +87,12 @@ class PdfGeneratePlugin(BasePlugin):
         # for the `site_url` under `config`.
         # We are doing this because we want the plugin to be able to determine where project links in the PDF
         # will lead to.
-        site_url = [i["site_url"] for i in config.user_configs if "site_url" in i]
-        if len(site_url) > 0:
-            self._options.site_url = site_url[0]
+        site_url = (
+            config.site_url
+            if "site_url" in config and config.site_url is not None
+            else f"http://{config.dev_addr.host}:{config.dev_addr.port}"
+        )
+        self._options.site_url = site_url
 
         try:
             abs_dest_path = Path(page.file.abs_dest_path)
