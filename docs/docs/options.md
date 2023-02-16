@@ -358,12 +358,16 @@ Set the filename to use for a specific page when downloading the PDF document.
 
 Set the revision text in cover page. 
 
-### `build_txt`
+### `build_txt` (experimental)
 
 Allows you to specify whether to build a TXT file that contains the Table of Contents of the Markdown file. Value is `true` or `false`.
 
 !!! note 
 
     The TXT file acts as the Table of Contents lookup table for a document. 
+
+!!! warning
+
+    You must set both the [toc](#toc) and [toc_numbering](#toc_numbering) global options to `true` before using this option.
 
 **default**: `false`

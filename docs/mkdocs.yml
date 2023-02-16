@@ -54,7 +54,9 @@ plugins:
   - minify:
       minify_html: true
   - pdf-generate:
-      copyright: Copyright &copy; 2023 iSOLveIT
+#      debug: true
+#      debug_target: options.md
+      copyright: Copyright &copy; 2023 4D Systems
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
       custom_template_path: cover_template
       toc_numbering: true

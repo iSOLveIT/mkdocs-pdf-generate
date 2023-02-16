@@ -9,7 +9,7 @@ from typing import Dict, Optional
 from bs4 import BeautifulSoup, Tag
 from weasyprint import HTML
 
-from . import cover, generate_txt, toc
+from . import cover, toc
 from .options import Options
 from .preprocessor import get_content
 from .preprocessor import get_separate as prep_separate
@@ -48,9 +48,6 @@ class Renderer(object):
             soup.head.append(style_tag)
 
         soup = prep_separate(soup, base_url, self._options.site_url)
-        generate_txt_document = pdf_metadata.get("build_txt", False)
-        if generate_txt_document:
-            generate_txt.make_txt_toc(soup, self._options, pdf_metadata=pdf_metadata)
         toc.make_toc(soup, self._options)
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
@@ -85,8 +82,8 @@ class Renderer(object):
             with open(pdf_html_file, "w", encoding="UTF-8") as f:
                 f.write(soup.prettify())
 
-        html = HTML(string=str(soup))
-        return html.render()
+        html = HTML(string=str(soup)).render()
+        return html
 
     def add_link(self, content: str, file_name: str = None):
         return self.theme.modify_html(content, file_name)

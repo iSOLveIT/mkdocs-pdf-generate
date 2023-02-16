@@ -6,6 +6,7 @@ from timeit import default_timer as timer
 from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
 
+from . import generate_txt
 from .options import Options
 from .renderer import Renderer
 from .templates.filters.url import URLFilter
@@ -22,7 +23,8 @@ class PdfGeneratePlugin(BasePlugin):
         self.renderer = None
         self.enabled = True
         self.combined = False
-        self.num_files = 0
+        self.pdf_num_files = 0
+        self.txt_num_files = 0
         self.num_errors = 0
         self.total_time = 0
 
@@ -144,6 +146,7 @@ class PdfGeneratePlugin(BasePlugin):
             base_url = dest_path.joinpath(file_name).as_uri()
             pdf_file = file_name + ".pdf"
 
+
             try:
                 self._logger.info("Converting {} to {}".format(src_path, pdf_file))
                 self.renderer.write_pdf(
@@ -152,11 +155,16 @@ class PdfGeneratePlugin(BasePlugin):
                     dest_path.joinpath(pdf_file),
                     pdf_metadata=pdf_meta,
                 )
+                generate_txt_document = pdf_meta.get("build_txt", False)
+                if generate_txt_document and self._options.toc and self._options.toc_ordering:
+                    self._logger.info(f"Building TXT file containing the PDF document's table of contents.")
+                    generate_txt.pdf_txt_toc(dest_path, file_name)
+                    self.txt_num_files += 1
                 output_content = self.renderer.add_link(output_content, pdf_file)
-                self.num_files += 1
+                self.pdf_num_files += 1
             except Exception as e:
                 self.num_errors += 1
-                raise PDFPluginException("Error converting {} to PDF: {}".format(src_path, e))
+                raise PDFPluginException("Error converting {}. Reason: {}".format(src_path, e))
                 # self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
         else:
             self._logger.info("Skipped: PDF conversion for {}".format(src_path))
@@ -169,7 +177,8 @@ class PdfGeneratePlugin(BasePlugin):
         if not self.enabled:
             return
 
-        self._logger.info("Converting {} files to PDF took {:.1f}s".format(self.num_files, self.total_time))
+        self._logger.info("Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
+        self._logger.info("Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
         if self.num_errors > 0:
             self._logger.error("{} conversion errors occurred (see above)".format(self.num_errors))
 
