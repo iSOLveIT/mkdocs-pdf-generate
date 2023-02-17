@@ -360,11 +360,12 @@ Set the revision text in cover page.
 
 ### `build_txt` (experimental)
 
-Allows you to specify whether to build a TXT file that contains the Table of Contents of the Markdown file. Value is `true` or `false`.
+Set to `true` if you want to build a TXT file that contains the Table of Contents of the Markdown file. 
+Value is `true` or `false`.
 
 !!! note 
 
-    The TXT file acts as the Table of Contents lookup table for a document. 
+    The TXT file acts as the Table of Contents lookup table for a PDF document. 
 
 !!! warning
 

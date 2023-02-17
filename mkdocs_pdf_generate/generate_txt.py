@@ -63,8 +63,8 @@ def _make_pdf_txt_toc(destination_path: Path, filename: str) -> str:
     if len(toc_item_text) != len(toc_item_pgnum):
         raise TXTtocFileException("Generating TXT toc file failed.")
 
-    # Reformat TOC text and store in the TOC.txt file
-    toc_items = [f"{txt} --- {pgnum}" for txt, pgnum in zip(toc_item_text, toc_item_pgnum)]
+    # Reformat TOC text and store it in the TOC.txt file
+    toc_items = [f"{txt}\t{pgnum}" for txt, pgnum in zip(toc_item_text, toc_item_pgnum)]
     toc_items.insert(0, toc_title)
     return "\n".join(toc_items)
 

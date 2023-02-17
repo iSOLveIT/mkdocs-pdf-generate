@@ -144,6 +144,13 @@ class PdfGeneratePlugin(BasePlugin):
             file_name = secure_filename(file_name)
 
             base_url = dest_path.joinpath(file_name).as_uri()
+            doc_revision: str = pdf_meta.get("revision", False)
+            if doc_revision:
+                file_name = (
+                    f"{file_name}_R_{doc_revision.replace('.', '_')}"
+                    if isinstance(doc_revision, str)
+                    else "{}_R_{}".format(file_name, str(doc_revision).replace(".", "_"))
+                )
             pdf_file = file_name + ".pdf"
 
 
