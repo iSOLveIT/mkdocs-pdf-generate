@@ -38,11 +38,11 @@ pdf-generate = "mkdocs_pdf_generate.plugin:PdfGeneratePlugin"
 
 [tool.poetry.dependencies]
 python = ">=3.8.0,<4.0"
-mkdocs = ">=1.3.0"
+mkdocs = ">=1.4.2"
 weasyprint = ">=54.0"
 beautifulsoup4 = ">=4.6.3"
 jinja2 = ">=3.0.0"
-pdftotext = ">=2.2.2"
+PyPDF2 = ">=3.0.1"
 pathlib= ">=1.0"
 mkdocs-material = ">=8.4.0"
 

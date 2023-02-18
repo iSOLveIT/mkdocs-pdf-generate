@@ -5,10 +5,10 @@ pdf:
   title: Introduction for MkDocs PDF Generate Plugin
   subtitle: Overview   
   type: Home
-  revision: 0.1.8    
+  revision: 0.2.1    
 ---
 
-# MkDocs PDF Generate Plugin 
+# MkDocs PDF Generate Plugin
 
 The pdf-generate plugin will generate separate PDF files for each markdown page
 in your MkDocs repository using [WeasyPrint](http://weasyprint.org/). 
@@ -19,13 +19,19 @@ ability to control page orientation, support for CSS paged media module
 
 ## Requirements
 
-- MkDocs version 1.3.0 or higher
-- Python 3.8 or higher
-- WeasyPrint
+1. This package requires MkDocs version 1.0 or higher (0.17 works as well)
+2. Python 3.8 or higher
+3. WeasyPrint depends on cairo, Pango and GDK-PixBuf which need to be installed separately. Please follow the installation instructions for your platform carefully:
+    - [Linux][weasyprint-linux]
+    - [MacOS][weasyprint-macos]
+    - [Windows][weasyprint-windows]
+4. `pdftotext` depends on some packages. See the [documentation](https://pypi.org/project/pdftotext/) for more information.
+5. Explicit support for your mkdocs theme is probably required. As of now, the only supported theme is [mkdocs-material][mkdocs-material]. 
+   A generic version will just generate the PDF files and put the download link into a `<link>` tag.
 
 ## Installation
 
-**Install package with pip**  
+**Install package with pip:**  
 
 === "Linux & MacOS"
 
@@ -39,8 +45,7 @@ ability to control page orientation, support for CSS paged media module
     C:> python -m pip install -e "git+https://github.com/iSOLveIT/mkdocs-pdf-generate/#egg=mkdocs-pdf-generate"
     ```
 
-
-**Install from source repository in a virtual environment**
+**Install from source repository in a virtual environment:**
 
 ```bash
 cd [YOUR_PROJECT_DIRECTORY]
@@ -68,9 +73,14 @@ From reporting a bug to submitting a pull request: every contribution is appreci
 If you want to contribute to the code of this project, please read the [Contribution Guidelines][contributing].
 
 ### **Special thanks**
+
 - [Terry Zhao][terry] the author of the [MkDocs PDF Export Plugin][mkdocs-pdf-export-plugin] the source of our inspiration. We've used some of his code in this project.
 
 [github-issues]: https://github.com/iSOLveIT/mkdocs-pdf-generate/issues
 [contributing]: https://github.com/iSOLveIT/mkdocs-pdf-generate/blob/main/CONTRIBUTING.md
 [terry]: https://github.com/zhaoterryy
 [mkdocs-pdf-export-plugin]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin
+[weasyprint-linux]: https://weasyprint.readthedocs.io/en/latest/install.html#linux
+[weasyprint-macos]: https://weasyprint.readthedocs.io/en/latest/install.html#os-x
+[weasyprint-windows]: https://weasyprint.readthedocs.io/en/latest/install.html#windows
+[mkdocs-material]: https://github.com/squidfunk/mkdocs-material

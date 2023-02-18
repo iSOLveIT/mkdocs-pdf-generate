@@ -7,6 +7,7 @@ from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
 
 from . import generate_txt
+
 from .options import Options
 from .renderer import Renderer
 from .templates.filters.url import URLFilter
@@ -21,6 +22,7 @@ class PdfGeneratePlugin(BasePlugin):
         self._logger = logging.getLogger("mkdocs.pdf-generate")
         self._logger.setLevel(logging.INFO)
         self.renderer = None
+        self.generate_txt = None
         self.enabled = True
         self.combined = False
         self.pdf_num_files = 0
@@ -91,8 +93,8 @@ class PdfGeneratePlugin(BasePlugin):
         # will lead to.
         site_url = (
             config.site_url
-            if "site_url" in config and config.site_url is not None
-            else f"http://{config.dev_addr.host}:{config.dev_addr.port}"
+            if "site_url" in config and getattr(config, "site_url", None) is not None
+            else f"http://{getattr(config, 'dev_addr.host', '127.0.0.1')}:{getattr(config, 'dev_addr.port', '8000')}"
         )
         self._options.site_url = site_url
 
@@ -165,7 +167,8 @@ class PdfGeneratePlugin(BasePlugin):
                 generate_txt_document = pdf_meta.get("build_txt", False)
                 if generate_txt_document and self._options.toc and self._options.toc_ordering:
                     self._logger.info(f"Building TXT file containing the PDF document's table of contents.")
-                    generate_txt.pdf_txt_toc(dest_path, file_name)
+                    extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
+                    generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
                     self.txt_num_files += 1
                 output_content = self.renderer.add_link(output_content, pdf_file)
                 self.pdf_num_files += 1

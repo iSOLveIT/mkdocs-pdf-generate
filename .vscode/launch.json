@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Mkdocs Serve",
+            "type": "python",
+            "request": "launch",
+            "module": "mkdocs",
+            "args": ["serve"],
+            "justMyCode": false,
+            "env": {"ENABLE_PDF_EXPORT": "0"},
+            "cwd": "${workspaceFolder}\\docs"
+        },
+        {
+            "name": "Mkdocs Build",
+            "type": "python",
+            "request": "launch",
+            "module": "mkdocs",
+            "args": ["build"],
+            "justMyCode": false,
+            "env": {"ENABLE_PDF_EXPORT": "1"},
+            "cwd": "${workspaceFolder}\\docs"
+        }
+    ]
+}
