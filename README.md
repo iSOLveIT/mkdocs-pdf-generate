@@ -16,8 +16,7 @@ The exported documents support many advanced features such as table of contents,
     - [Linux][weasyprint-linux]
     - [MacOS][weasyprint-macos]
     - [Windows][weasyprint-windows]
-4. `pdftotext` depends on some packages. See the [documentation](https://pypi.org/project/pdftotext/) for more information.
-5. Explicit support for your mkdocs theme is probably required. As of now, the only supported theme is [mkdocs-material][mkdocs-material]. 
+4. Explicit support for your mkdocs theme is probably required. As of now, the only supported theme is [mkdocs-material][mkdocs-material]. 
    A generic version will just generate the PDF files and put the download link into a `<link>` tag.
 
 ## Installation

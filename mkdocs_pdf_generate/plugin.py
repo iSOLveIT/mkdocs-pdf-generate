@@ -127,13 +127,13 @@ class PdfGeneratePlugin(BasePlugin):
                 build_pdf_document = False
 
         if build_pdf_document:
-            self._options.body_title = h1_title_tag(output_content, page.meta)
+            self._options.body_title: str = h1_title_tag(output_content, dict(page.meta))
 
             file_name = (
-                pdf_meta.get("filename")
-                or pdf_meta.get("title")
-                or self._options.body_title
-                or None
+                    pdf_meta.get("filename")
+                    or pdf_meta.get("title")
+                    or self._options.body_title
+                    or None
             )
 
             if file_name is None:
@@ -155,7 +155,6 @@ class PdfGeneratePlugin(BasePlugin):
                 )
             pdf_file = file_name + ".pdf"
 
-
             try:
                 self._logger.info("Converting {} to {}".format(src_path, pdf_file))
                 self.renderer.write_pdf(
@@ -170,12 +169,15 @@ class PdfGeneratePlugin(BasePlugin):
                     extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
                     generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
                     self.txt_num_files += 1
+                if not self._options.toc or not self._options.toc_ordering:
+                    self._logger.info(
+                        "You can generate TXT table of contents by setting both `toc` and `toc_ordering` to `true`"
+                    )
                 output_content = self.renderer.add_link(output_content, pdf_file)
                 self.pdf_num_files += 1
             except Exception as e:
                 self.num_errors += 1
                 raise PDFPluginException("Error converting {}. Reason: {}".format(src_path, e))
-                # self._logger.error("Error converting {} to PDF: {}".format(src_path, e))
         else:
             self._logger.info("Skipped: PDF conversion for {}".format(src_path))
 
