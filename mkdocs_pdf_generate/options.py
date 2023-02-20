@@ -15,6 +15,7 @@ class Options(object):
     config_scheme = (
         ("media_type", config_options.Type(str, default=DEFAULT_MEDIA_TYPE)),
         ("verbose", config_options.Type(bool, default=False)),
+        ("enable_csv", config_options.Type(bool, default=False)),
         ("debug", config_options.Type(bool, default=False)),
         ("debug_target", config_options.Type(str, default="")),
         ("enabled_if_env", config_options.Type(str)),
@@ -37,6 +38,7 @@ class Options(object):
     def __init__(self, local_config, config, logger: logging):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
+        self.enable_csv = local_config["enable_csv"]
         self.debug = local_config["debug"]
         self.debug_target = None if len(local_config["debug_target"]) == 0 else local_config["debug_target"]
         self._src_path = None

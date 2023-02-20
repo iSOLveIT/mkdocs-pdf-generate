@@ -52,6 +52,10 @@ class Renderer(object):
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
         # Enable Debugging
+        site_dir = self._options.user_config["site_dir"].replace("\\", "/").split("/")[-1]
+        not_as_uri = re.compile(r"^file:/{,3}")
+        pattern = r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]" + site_dir
+        check_site_dir = re.compile(pattern)
         if self._options.debug and self._options.debug_target is not None:
             # Debug a single PDF build file
             path_filter = URLFilter(self._options, self._options.user_config)
@@ -60,9 +64,8 @@ class Renderer(object):
 
             if doc_src_path == debug_target_file:
                 debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
-                rel_url = re.sub(r"^file:/{,3}", "", base_url)
-                regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
-                pdf_html_file = regex_pattern.sub(debug_folder_path, rel_url) + ".html"
+                rel_url = not_as_uri.sub("", base_url)
+                pdf_html_file = check_site_dir.sub(debug_folder_path, rel_url) + ".html"
                 pdf_html_dir = Path(pdf_html_file).parent
                 if not pdf_html_dir.is_dir():
                     pdf_html_dir.mkdir(parents=True, exist_ok=True)
@@ -73,9 +76,8 @@ class Renderer(object):
         elif self._options.debug and self._options.debug_target is None:
             # Debug every PDF build file
             debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
-            rel_url = re.sub(r"^file:/{,3}", "", base_url)
-            regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
-            pdf_html_file = regex_pattern.sub(debug_folder_path, rel_url) + ".html"
+            rel_url = not_as_uri.sub("", base_url)
+            pdf_html_file = check_site_dir.sub(debug_folder_path, rel_url) + ".html"
             pdf_html_dir = Path(pdf_html_file).parent
             if not pdf_html_dir.is_dir():
                 pdf_html_dir.mkdir(parents=True, exist_ok=True)

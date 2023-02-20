@@ -56,6 +56,7 @@ plugins:
   - pdf-generate:
       # debug: true
       # debug_target: options.md
+      enable_csv: true
       copyright: Copyright &copy; 2023 4D Systems
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
       custom_template_path: cover_template

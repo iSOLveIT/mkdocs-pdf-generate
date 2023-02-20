@@ -4,7 +4,7 @@ pdf:
   title: Options for MkDocs PDF Generate Plugin
   type: Options
   revision: 0.2.1   
-  build_txt: true
+  toc_txt: true
 ---
 
 # Options
@@ -161,6 +161,20 @@ Set the value to `false` if you don't want your table of contents to be numbered
 
 ### ... and more
 
+#### `enable_csv`
+
+Set the value to `true` if you want to create a CSV file containing data about each valid document based on the format below:
+
+```csv
+title, type, revision, , , pdf_url, pdf_checksum, txt_checksum, txt_url
+```
+  
+**default**: `false`
+
+!!! note
+
+    The CSV file will contain data about documents with the [toc_txt](#toc_txt-experimental) local option set to `true`.
+
 #### `custom_template_path`
 
 A relative path inside your projects' directory.
@@ -298,7 +312,7 @@ pdf:
   - title: Options for MkDocs PDF Generate Plugin
   - type: Manual
   - revision: 0.2
-  - build_txt: true 
+  - toc_txt: true 
 ---
 ```
 
@@ -310,7 +324,7 @@ The following options are available:
 * type
 * filename
 * revision
-* build_txt
+* toc_txt
 
 ### `build`
 
@@ -358,7 +372,7 @@ Set the filename to use for a specific page when downloading the PDF document.
 
 Set the revision text in cover page. 
 
-### `build_txt` (experimental)
+### `toc_txt` (experimental)
 
 Set to `true` if you want to build a TXT file that contains the Table of Contents of the Markdown file. 
 Value is `true` or `false`.

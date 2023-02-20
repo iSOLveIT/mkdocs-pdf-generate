@@ -1,12 +1,14 @@
+import csv
 import logging
 import os
 from pathlib import Path
 from timeit import default_timer as timer
+from typing import Optional, List
 
 from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
 
-from . import generate_txt
+from . import generate_txt, generate_csv
 
 from .options import Options
 from .renderer import Renderer
@@ -29,6 +31,7 @@ class PdfGeneratePlugin(BasePlugin):
         self.txt_num_files = 0
         self.num_errors = 0
         self.total_time = 0
+        self.csv_build: List[List] = []
 
     def on_config(self, config):
         if "enabled_if_env" in self.config:
@@ -127,7 +130,7 @@ class PdfGeneratePlugin(BasePlugin):
                 build_pdf_document = False
 
         if build_pdf_document:
-            self._options.body_title: str = h1_title_tag(output_content, dict(page.meta))
+            self._options.body_title = h1_title_tag(output_content, dict(page.meta))
 
             file_name = (
                     pdf_meta.get("filename")
@@ -142,10 +145,6 @@ class PdfGeneratePlugin(BasePlugin):
                     "You must provide a filename for the PDF document. " "The source filename is used as fallback."
                 )
 
-            # Generate a secure filename
-            file_name = secure_filename(file_name)
-
-            base_url = dest_path.joinpath(file_name).as_uri()
             doc_revision: str = pdf_meta.get("revision", False)
             if doc_revision:
                 file_name = (
@@ -153,6 +152,10 @@ class PdfGeneratePlugin(BasePlugin):
                     if isinstance(doc_revision, str)
                     else "{}_R_{}".format(file_name, str(doc_revision).replace(".", "_"))
                 )
+
+            # Generate a secure filename
+            file_name = secure_filename(file_name)
+            base_url = dest_path.joinpath(file_name).as_uri()
             pdf_file = file_name + ".pdf"
 
             try:
@@ -163,15 +166,20 @@ class PdfGeneratePlugin(BasePlugin):
                     dest_path.joinpath(pdf_file),
                     pdf_metadata=pdf_meta,
                 )
-                generate_txt_document = pdf_meta.get("build_txt", False)
+                generate_txt_document = pdf_meta.get("toc_txt", False)
                 if generate_txt_document and self._options.toc and self._options.toc_ordering:
                     self._logger.info(f"Building TXT file containing the PDF document's table of contents.")
                     extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
+                    # Generate TOC_TXT file
                     generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
+                    # Gather CSV file data
+                    if self._options.enable_csv:
+                        csv_data = generate_csv.get_data(dest_path, file_name, pdf_meta, site_url)
+                        self.csv_build.append(csv_data)
                     self.txt_num_files += 1
                 if not self._options.toc or not self._options.toc_ordering:
                     self._logger.info(
-                        "You can generate TXT table of contents by setting both `toc` and `toc_ordering` to `true`"
+                        "You can generate TXT table of contents by setting both `toc` and `toc_numbering` to `true`"
                     )
                 output_content = self.renderer.add_link(output_content, pdf_file)
                 self.pdf_num_files += 1
@@ -191,6 +199,23 @@ class PdfGeneratePlugin(BasePlugin):
 
         self._logger.info("Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
         self._logger.info("Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
+
+        def csv_generate(data: List[List]):
+            rows: List[List] = data
+
+            csv_file_path = Path(getattr(config, "site_dir", config["site_dir"])).joinpath("4Dversions.csv")
+            if rows:
+                with open(csv_file_path, mode='w') as csv_file_obj:
+                    csv_writer = csv.writer(
+                        csv_file_obj, delimiter=',', quotechar='"',
+                        quoting=csv.QUOTE_MINIMAL, dialect="excel"
+                    )
+                    csv_writer.writerows(rows)
+            return len(rows)
+
+        if self._options.enable_csv:
+            csv_entry = csv_generate(self.csv_build)
+            self._logger.info("Generated '4Dversions.csv' file from {} entry(s)".format(csv_entry))
         if self.num_errors > 0:
             self._logger.error("{} conversion errors occurred (see above)".format(self.num_errors))
 

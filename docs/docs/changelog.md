@@ -4,6 +4,7 @@ pdf:
   title: Changelog & License for MkDocs PDF Generate Plugin
   type: Changelog
   revision: 0.2.1   
+  toc_txt: true
 ---
 
 # Changelog & License
@@ -38,9 +39,10 @@ SOFTWARE.
 -----
 Released: Under development
 
+* Improvement: Added feature to generate a CSV file for all documents with the `toc_txt` local option set to `true`.
 * Improvement: Added changes that appends the revision number of a document to the filename.
 * Bugfix: Added default URL to use if `site_url` is not defined in mkdocs.yml. Fix for issue [#15](https://github.com/iSOLveIT/mkdocs-pdf-generate/issues/15).
-* Improvement: Added the `build_txt` local option that allows users to build TXT file containing the Table of Contents
+* Improvement: Added the `toc_txt` local option that allows users to build TXT file containing the Table of Contents
 * Minor improvements: Rewrote logging messages.
 
 0.2.0
