@@ -163,7 +163,7 @@ class PdfGeneratePlugin(BasePlugin):
                     dest_path.joinpath(pdf_file),
                     pdf_metadata=pdf_meta,
                 )
-                generate_txt_document = pdf_meta.get("build_txt", False)
+                generate_txt_document = pdf_meta.get("toc_txt", False)
                 if generate_txt_document and self._options.toc and self._options.toc_ordering:
                     self._logger.info(f"Building TXT file containing the PDF document's table of contents.")
                     extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
