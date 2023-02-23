@@ -32,10 +32,10 @@ def get_data(destination_path: Path, filename: str, pdf_meta: Dict, site_url: st
     txt_file = destination_path.joinpath(f"{filename}.txt")
     pdf_url = rel_html_href(pdf_file, site_url)
     txt_url = rel_html_href(txt_file, site_url)
-    title = filename.split("_R_")[0]
+    title = pdf_meta.get("csv_name") or filename.split("_R_")[0]
     revision = "R_{}".format(filename.split("_R_")[1])
     pdf_checksum = get_checksum(pdf_file, algorithm="MD5").upper()
     txt_checksum = get_checksum(txt_file, algorithm="MD5").upper()
-    doc_type = pdf_meta.get("type", "None")
+    doc_type = pdf_meta.get("type", "Document")
 
-    return [title, doc_type, revision, "", "", str(pdf_url), pdf_checksum, txt_checksum, str(txt_url)]
+    return [title.replace(" ", "_"), doc_type, revision, "", "", str(pdf_url), pdf_checksum, txt_checksum, str(txt_url)]

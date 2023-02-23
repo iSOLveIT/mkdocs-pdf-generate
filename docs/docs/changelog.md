@@ -5,6 +5,7 @@ pdf:
   type: Changelog
   revision: 0.2.1   
   toc_txt: true
+  csv_name: Plugin Changelog
 ---
 
 # Changelog & License
@@ -39,6 +40,7 @@ SOFTWARE.
 -----
 Released: Under development
 
+* Added the `csv_name` local option.
 * Improvement: Added feature to generate a CSV file for all documents with the `toc_txt` local option set to `true`.
 * Improvement: Added changes that appends the revision number of a document to the filename.
 * Bugfix: Added default URL to use if `site_url` is not defined in mkdocs.yml. Fix for issue [#15](https://github.com/iSOLveIT/mkdocs-pdf-generate/issues/15).

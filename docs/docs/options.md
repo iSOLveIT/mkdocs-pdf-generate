@@ -372,6 +372,11 @@ Set the filename to use for a specific page when downloading the PDF document.
 
 Set the revision text in cover page. 
 
+### `csv_name`
+
+Set the product name for a row in the CSV file. 
+The value for this option is used as the title for a particular row in the CSV file. 
+
 ### `toc_txt` (experimental)
 
 Set to `true` if you want to build a TXT file that contains the Table of Contents of the Markdown file. 
