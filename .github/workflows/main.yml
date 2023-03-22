@@ -53,7 +53,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/docs_requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
@@ -76,7 +76,7 @@ jobs:
       with:
         config_file_path: docs/mkdocs.yml
         documentation_path: docs/
-        requirements_path: requirements.txt
+        requirements_path: docs_requirements.txt
         target_branch: docs-build
         mkdocs_version: '1.4.2'
     - name: Push changes
