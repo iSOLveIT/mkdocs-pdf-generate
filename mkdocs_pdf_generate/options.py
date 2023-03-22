@@ -15,6 +15,7 @@ class Options(object):
     config_scheme = (
         ("media_type", config_options.Type(str, default=DEFAULT_MEDIA_TYPE)),
         ("verbose", config_options.Type(bool, default=False)),
+        ("enable_csv", config_options.Type(bool, default=False)),
         ("debug", config_options.Type(bool, default=False)),
         ("debug_target", config_options.Type(str, default="")),
         ("enabled_if_env", config_options.Type(str)),
@@ -37,13 +38,11 @@ class Options(object):
     def __init__(self, local_config, config, logger: logging):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
+        self.enable_csv = local_config["enable_csv"]
         self.debug = local_config["debug"]
-        self.debug_target = (
-            None
-            if len(local_config["debug_target"]) == 0
-            else local_config["debug_target"]
-        )
+        self.debug_target = None if len(local_config["debug_target"]) == 0 else local_config["debug_target"]
         self._src_path = None
+        self._dest_path = None
 
         # user_configs in mkdocs.yml
         self._user_config: Config = config
@@ -65,11 +64,7 @@ class Options(object):
 
         # Cover
         self.cover = local_config["cover"]
-        self._cover_title = (
-            local_config["cover_title"]
-            if local_config["cover_title"]
-            else config["site_name"]
-        )
+        self._cover_title = local_config["cover_title"] if local_config["cover_title"] else config["site_name"]
         self._cover_subtitle = local_config["cover_subtitle"]
 
         # path to custom template 'cover.html' and 'custom.css'
@@ -82,7 +77,7 @@ class Options(object):
         self.toc_ordering = local_config["toc_numbering"]
 
         # H1 Title of the document
-        self._body_title = ""
+        self._body_title: str = ""
 
         # Theming
         self.theme_name = config["theme"].name
@@ -114,7 +109,7 @@ class Options(object):
         self._site_url = url
 
     @property
-    def body_title(self):
+    def body_title(self) -> str:
         return self._body_title
 
     @body_title.setter
@@ -158,18 +153,24 @@ class Options(object):
         return self._template
 
     @property
-    def md_src_path(self):
+    def md_src_path(self) -> Path:
         return self._src_path
 
     @md_src_path.setter
     def md_src_path(self, input_path):
         self._src_path = input_path
 
+    @property
+    def out_dest_path(self) -> Path:
+        return self._dest_path
+
+    @out_dest_path.setter
+    def out_dest_path(self, input_path):
+        self._dest_path = input_path
+
     def debug_dir(self) -> Path:
         if self.debug:
-            docs_src_dir = Path(
-                Path(self.user_config["config_file_path"]).parent
-            ).resolve()
+            docs_src_dir = Path(Path(self.user_config["config_file_path"]).parent).resolve()
             debug_folder_path = docs_src_dir.joinpath("pdf_html_debug")
             if not debug_folder_path.is_dir():
                 debug_folder_path.mkdir(parents=True, exist_ok=True)

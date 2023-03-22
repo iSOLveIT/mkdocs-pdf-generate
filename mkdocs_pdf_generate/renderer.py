@@ -34,9 +34,7 @@ class Renderer(object):
         filename: str,
         pdf_metadata: Optional[Dict] = None,
     ):
-        self.render_doc(content, base_url, pdf_metadata=pdf_metadata).write_pdf(
-            filename
-        )
+        self.render_doc(content, base_url, pdf_metadata=pdf_metadata).write_pdf(filename)
 
     def render_doc(self, content: str, base_url: str, pdf_metadata: Dict = None):
         soup = BeautifulSoup(content, "html5lib")
@@ -54,6 +52,10 @@ class Renderer(object):
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
 
         # Enable Debugging
+        site_dir = self._options.user_config["site_dir"].replace("\\", "/").split("/")[-1]
+        not_as_uri = re.compile(r"^file:/{,3}")
+        pattern = r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]" + site_dir
+        check_site_dir = re.compile(pattern)
         if self._options.debug and self._options.debug_target is not None:
             # Debug a single PDF build file
             path_filter = URLFilter(self._options, self._options.user_config)
@@ -62,9 +64,8 @@ class Renderer(object):
 
             if doc_src_path == debug_target_file:
                 debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
-                rel_url = re.sub(r"^file:/{,3}", "", base_url)
-                regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
-                pdf_html_file = regex_pattern.sub(debug_folder_path, rel_url) + ".html"
+                rel_url = not_as_uri.sub("", base_url)
+                pdf_html_file = check_site_dir.sub(debug_folder_path, rel_url) + ".html"
                 pdf_html_dir = Path(pdf_html_file).parent
                 if not pdf_html_dir.is_dir():
                     pdf_html_dir.mkdir(parents=True, exist_ok=True)
@@ -75,17 +76,16 @@ class Renderer(object):
         elif self._options.debug and self._options.debug_target is None:
             # Debug every PDF build file
             debug_folder_path = str(self._options.debug_dir()).replace("\\", "/")
-            rel_url = re.sub(r"^file:/{,3}", "", base_url)
-            regex_pattern = re.compile(r"^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site")
-            pdf_html_file = regex_pattern.sub(debug_folder_path, rel_url) + ".html"
+            rel_url = not_as_uri.sub("", base_url)
+            pdf_html_file = check_site_dir.sub(debug_folder_path, rel_url) + ".html"
             pdf_html_dir = Path(pdf_html_file).parent
             if not pdf_html_dir.is_dir():
                 pdf_html_dir.mkdir(parents=True, exist_ok=True)
             with open(pdf_html_file, "w", encoding="UTF-8") as f:
                 f.write(soup.prettify())
 
-        html = HTML(string=str(soup))
-        return html.render()
+        html = HTML(string=str(soup)).render()
+        return html
 
     def add_link(self, content: str, file_name: str = None):
         return self.theme.modify_html(content, file_name)
@@ -116,9 +116,7 @@ class Renderer(object):
 
         if custom_handler_path:
             try:
-                spec = spec_from_file_location(
-                    module_name, Path.cwd().joinpath(custom_handler_path)
-                )
+                spec = spec_from_file_location(module_name, Path.cwd().joinpath(custom_handler_path))
                 mod = module_from_spec(spec)
                 spec.loader.exec_module(mod)
                 return mod
@@ -134,7 +132,5 @@ class Renderer(object):
         try:
             return import_module(module_name, "mkdocs_pdf_generate.themes")
         except ImportError as e:
-            self.logger.error(
-                "Could not load theme handler {}: {}".format(theme, e), file=sys.stderr
-            )
+            self.logger.error("Could not load theme handler {}: {}".format(theme, e), file=sys.stderr)
             return generic_theme

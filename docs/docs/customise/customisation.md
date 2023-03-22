@@ -2,6 +2,7 @@
 title: Customize Plugin
 pdf:
   revision: 0.1.8    
+  toc_txt: true
 ---
 
 

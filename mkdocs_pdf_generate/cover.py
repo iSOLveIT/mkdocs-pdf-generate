@@ -7,9 +7,7 @@ from .options import Options
 from .templates.filters.url import URLFilter
 
 
-def make_cover(
-    soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None
-):
+def make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None):
     """Generate a cover pages.
 
     Arguments:
@@ -21,32 +19,23 @@ def make_cover(
         _make_cover(soup, options, pdf_metadata)
 
 
-def _make_cover(
-    soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None
-):
+def _make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None):
     try:
         keywords = options.template.keywords
         keywords["site_url"] = re.sub(r"http://|https://", "", keywords["site_url"])
         # Set cover title
-        keywords["cover_title"] = (
-            pdf_metadata.get("title") or options.body_title or keywords["cover_title"]
-        )
+        keywords["cover_title"] = pdf_metadata.get("title") or options.body_title or keywords["cover_title"]
         # Set cover image
         document_type: str = pdf_metadata.get("type", "Documentation")
         path_filter = URLFilter(options, options.user_config)
         if options.cover_images is not None:
             cover_images = {
-                str(img_k).lower(): path_filter(pathname=str(img_v))
-                for img_k, img_v in options.cover_images.items()
+                str(img_k).lower(): path_filter(pathname=str(img_v)) for img_k, img_v in options.cover_images.items()
             }
-            keywords["cover_image"] = cover_images.get(
-                document_type.lower()
-            ) or cover_images.get("default")
+            keywords["cover_image"] = cover_images.get(document_type.lower()) or cover_images.get("default")
         # Set cover sub_title
         keywords["cover_subtitle"] = (
-            pdf_metadata.get("subtitle")
-            or document_type.capitalize()
-            or keywords["cover_subtitle"]
+            pdf_metadata.get("subtitle") or document_type.capitalize() or keywords["cover_subtitle"]
         )
         keywords["revision"] = pdf_metadata.get("revision") or None
         # Populate local options into template keywords
@@ -56,7 +45,7 @@ def _make_cover(
         cover_template_files = [document_type.lower(), "cover", "default_cover"]
         template = options.template.select(cover_template_files)
 
-        options.logger.info(f'Generate a cover page with "{template.name}".')
+        options.logger.info(f'Generate cover page for PDF document using "{template.name}" template.')
 
         def str_to_bs4(html_like_str: str) -> Tag:
             html_soup = BeautifulSoup(html_like_str, "html5lib")

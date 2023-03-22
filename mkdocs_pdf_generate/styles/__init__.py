@@ -42,9 +42,7 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
         _css_escape(options.author),
         _css_escape(options.author_logo),
         _css_escape(options.copyright),
-        _css_escape(
-            pdf_metadata.get("title", options.body_title or options.cover_title)
-        ),
+        _css_escape(pdf_metadata.get("title", options.body_title or options.cover_title)),
         _css_escape(pdf_metadata.get("subtitle", options.cover_subtitle)),
         _css_escape(pdf_metadata.get("type", "Documentation")),
         _css_escape(pdf_metadata.get("revision", "")),
@@ -71,11 +69,7 @@ def style_for_print(options: Options, pdf_metadata: Dict = None) -> list[Tag]:
 
     css_styles_list: list[Tag] = []
     for css_file in css_files:
-        filename = (
-            base_path.joinpath(css_file)
-            if css_file != "custom.css"
-            else custom_template_path.joinpath(css_file)
-        )
+        filename = base_path.joinpath(css_file) if css_file != "custom.css" else custom_template_path.joinpath(css_file)
         if filename.is_file():
             with open(filename, "r", encoding="UTF-8") as f:
                 css_rules = f.read()

@@ -36,8 +36,8 @@ def is_doc(href: str):
 
 
 def rel_html_href(base_url: str, href: str, site_url: str):
-    base_url = os.path.dirname(base_url)
-    rel_url = base_url.replace("file://", "")
+    new_base_url = os.path.dirname(base_url)
+    rel_url = new_base_url.replace("file://", "")
 
     internal = href.startswith("#")
     web_url = re.search(r"^(https://|http://)", href)
@@ -47,13 +47,13 @@ def rel_html_href(base_url: str, href: str, site_url: str):
     abs_html_href = Path(rel_url).joinpath(href).resolve()
     if isinstance(abs_html_href, PosixPath):
         abs_html_href = re.sub(
-            r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+",
+            r"^(/tmp|tmp)/(mkdocs|pages)[\w\-]+|^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site",
             site_url.rstrip("/"),
             str(abs_html_href),
         )
     elif isinstance(abs_html_href, WindowsPath):
         abs_html_href = re.sub(
-            r"^[\w\-:\\]+\\+(temp|Temp)\\+(mkdocs|pages)[\w\-]+",
+            r"^[\w\-:\\]+\\+(temp|Temp)\\+(mkdocs|pages)[\w\-]+|^[\w\-.~$&+,/:;=?@%#* \\]+[/\\]site",
             site_url.rstrip("/"),
             str(abs_html_href),
         )

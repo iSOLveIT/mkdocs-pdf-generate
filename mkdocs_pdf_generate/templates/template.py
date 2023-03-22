@@ -39,18 +39,14 @@ class Template(object):
             docs_src_dir = Path(Path(self._config["config_file_path"]).parent).resolve()
             custom_template_path = Path(self._options.custom_template_path)
             if not custom_template_path.is_absolute():
-                custom_template_path = docs_src_dir.joinpath(
-                    self._options.custom_template_path
-                )
+                custom_template_path = docs_src_dir.joinpath(self._options.custom_template_path)
 
             if custom_template_path.is_dir():
                 template_paths.append(custom_template_path)
             template_paths.append(base_path.joinpath("."))
 
             file_loader = jinja2.FileSystemLoader(template_paths)
-            logging_undefined = jinja2.make_logging_undefined(
-                logger=self._options.logger, base=jinja2.Undefined
-            )
+            logging_undefined = jinja2.make_logging_undefined(logger=self._options.logger, base=jinja2.Undefined)
             env = jinja2.Environment(
                 loader=file_loader,
                 undefined=logging_undefined,
