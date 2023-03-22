@@ -3,7 +3,7 @@ import logging
 import os
 from pathlib import Path
 from timeit import default_timer as timer
-from typing import Optional, List
+from typing import List
 
 from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
@@ -130,6 +130,7 @@ class PdfGeneratePlugin(BasePlugin):
                 build_pdf_document = False
 
         if build_pdf_document:
+            print("------------")
             self._options.body_title = h1_title_tag(output_content, dict(page.meta))
 
             file_name = (
@@ -142,7 +143,7 @@ class PdfGeneratePlugin(BasePlugin):
             if file_name is None:
                 file_name = str(src_path).split("/")[-1].rstrip(".md")
                 self._logger.error(
-                    "You must provide a filename for the PDF document. " "The source filename is used as fallback."
+                    "You must provide a filename for the PDF document. The source filename is used as fallback."
                 )
 
             doc_revision: str = pdf_meta.get("revision", False)
@@ -167,8 +168,8 @@ class PdfGeneratePlugin(BasePlugin):
                     pdf_metadata=pdf_meta,
                 )
                 generate_txt_document = pdf_meta.get("toc_txt", False)
-                if generate_txt_document and self._options.toc and self._options.toc_ordering:
-                    self._logger.info(f"Building TXT file containing the PDF document's table of contents.")
+                if generate_txt_document and (self._options.toc and self._options.toc_ordering):
+                    self._logger.info(f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents")
                     extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
                     # Generate TOC_TXT file
                     generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
@@ -197,6 +198,8 @@ class PdfGeneratePlugin(BasePlugin):
         if not self.enabled:
             return
 
+        print("------------")
+
         self._logger.info("Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
         self._logger.info("Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
 
@@ -205,10 +208,9 @@ class PdfGeneratePlugin(BasePlugin):
 
             csv_file_path = Path(getattr(config, "site_dir", config["site_dir"])).joinpath("4Dversions.csv")
             if rows:
-                with open(csv_file_path, mode='w') as csv_file_obj:
+                with open(csv_file_path, mode="w") as csv_file_obj:
                     csv_writer = csv.writer(
-                        csv_file_obj, delimiter=',', quotechar='"',
-                        quoting=csv.QUOTE_MINIMAL, dialect="excel"
+                        csv_file_obj, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect="excel"
                     )
                     csv_writer.writerows(rows)
             return len(rows)

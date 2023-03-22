@@ -47,7 +47,8 @@ def _make_pdf_txt_toc(destination_path: Path, filename: str, extra_data: Dict) -
             match_toc_pgnum = match_toc_text_n_pgnum.groups()[0]
             match_toc_text = match_toc_text_n_pgnum.groups()[1]
 
-            # if check_toc_text_n_pgnum.search(match_toc_pgnum) is not None and check_toc_text_n_pgnum.search(match_toc_text) is not None:
+            # if check_toc_text_n_pgnum.search(match_toc_pgnum) is not None
+            # and check_toc_text_n_pgnum.search(match_toc_text) is not None:
             toc_item_pgnum.append(match_toc_pgnum)
             toc_item_text.append(match_toc_text)
 

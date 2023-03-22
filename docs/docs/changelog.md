@@ -38,8 +38,9 @@ SOFTWARE.
 
 0.2.1
 -----
-Released: Under development
+Released: **22-03-2023**
 
+* Updated documentation and made minor changes to plugin code.
 * Added the `csv_name` local option.
 * Improvement: Added feature to generate a CSV file for all documents with the `toc_txt` local option set to `true`.
 * Improvement: Added changes that appends the revision number of a document to the filename.
@@ -49,7 +50,7 @@ Released: Under development
 
 0.2.0
 -----
-Released: 14-02-2023
+Released: **14-02-2023**
 
 * Package setup: Changed package from using setuptools to pyproject.toml
 
