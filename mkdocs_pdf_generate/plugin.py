@@ -130,7 +130,6 @@ class PdfGeneratePlugin(BasePlugin):
                 build_pdf_document = False
 
         if build_pdf_document:
-            print("------------")
             self._options.body_title = h1_title_tag(output_content, dict(page.meta))
 
             file_name = (
@@ -197,8 +196,6 @@ class PdfGeneratePlugin(BasePlugin):
     def on_post_build(self, config):
         if not self.enabled:
             return
-
-        print("------------")
 
         self._logger.info("Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
         self._logger.info("Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
