@@ -382,6 +382,8 @@ The value for this option is used as the title for a particular row in the CSV f
 Set to `true` if you want to build a TXT file that contains the Table of Contents of the Markdown file. 
 Value is `true` or `false`.
 
+**default**: `false`
+
 !!! note 
 
     The TXT file acts as the Table of Contents lookup table for a PDF document. 
@@ -389,5 +391,3 @@ Value is `true` or `false`.
 !!! warning
 
     You must set both the [toc](#toc) and [toc_numbering](#toc_numbering) global options to `true` before using this option.
-
-**default**: `false`

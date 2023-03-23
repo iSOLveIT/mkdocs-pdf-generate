@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from typing import Dict
 
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 
 
 def _make_pdf_txt_toc(destination_path: Path, filename: str, extra_data: Dict) -> str:
