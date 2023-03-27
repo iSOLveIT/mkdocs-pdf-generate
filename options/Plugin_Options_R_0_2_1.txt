@@ -27,7 +27,7 @@ Table of Contents
 2. Local Options	11
 2.1. build	11
 2.2. title	11
-2.3. subtitle	11
+2.3. subtitle	12
 2.4. type	12
 2.5. filename	12
 2.6. revision	12
