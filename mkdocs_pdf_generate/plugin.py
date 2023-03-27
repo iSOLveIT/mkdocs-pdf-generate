@@ -24,7 +24,6 @@ class PdfGeneratePlugin(BasePlugin):
         self._logger = logging.getLogger("mkdocs.pdf-generate")
         self._logger.setLevel(logging.INFO)
         self.renderer = None
-        self.generate_txt = None
         self.enabled = True
         self.combined = False
         self.pdf_num_files = 0
@@ -167,20 +166,21 @@ class PdfGeneratePlugin(BasePlugin):
                     pdf_metadata=pdf_meta,
                 )
                 generate_txt_document = pdf_meta.get("toc_txt", False)
-                if generate_txt_document and (self._options.toc and self._options.toc_ordering):
-                    self._logger.info(f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents")
-                    extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
-                    # Generate TOC_TXT file
-                    generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
-                    # Gather CSV file data
-                    if self._options.enable_csv:
-                        csv_data = generate_csv.get_data(dest_path, file_name, pdf_meta, site_url)
-                        self.csv_build.append(csv_data)
-                    self.txt_num_files += 1
-                if not self._options.toc or not self._options.toc_ordering:
-                    self._logger.info(
-                        "You can generate TXT table of contents by setting both `toc` and `toc_numbering` to `true`"
-                    )
+                if generate_txt_document:
+                    if self._options.toc and self._options.toc_ordering:
+                        self._logger.info(f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents")
+                        extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
+                        # Generate TOC_TXT file
+                        generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
+                        # Gather CSV file data
+                        if self._options.enable_csv:
+                            csv_data = generate_csv.get_data(dest_path, file_name, pdf_meta, site_url)
+                            self.csv_build.append(csv_data)
+                        self.txt_num_files += 1
+                    else:
+                        self._logger.info(
+                            "You must set both `toc` and `toc_numbering` to `true` to generate TXT table of contents"
+                        )
                 output_content = self.renderer.add_link(output_content, pdf_file)
                 self.pdf_num_files += 1
             except Exception as e:

@@ -111,7 +111,7 @@ Set the disclaimer text. <br>
 
 Set the cover image for specific document types. 
 
-The option takes a `key-value` pair where the `key` must be the same value as you specified for the [type](#type) 
+The option takes a `key-value` pair where the `key` must be the same value you specified for the [type](#type) 
 local pdf metadata option.
 
 The `value` for a `key` must be the path to the image.
@@ -324,6 +324,7 @@ The following options are available:
 * type
 * filename
 * revision
+* csv_name
 * toc_txt
 
 ### `build`
