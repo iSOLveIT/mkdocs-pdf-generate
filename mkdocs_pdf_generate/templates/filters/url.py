@@ -18,7 +18,7 @@ class URLFilter(_FilterBase):
 
         # Search image file in below directories:
         dirs = [
-            Path(Path(self.config["config_file_path"]).parent).resolve(),
+            Path(self.config["config_file_path"]).parent.resolve(),
             getattr(self.config["theme"], "custom_dir", None),
             Path(self.config["docs_dir"]),
             Path("."),
@@ -27,7 +27,7 @@ class URLFilter(_FilterBase):
         for d in dirs:
             if not d:
                 continue
-            path = Path(Path.joinpath(d, pathname)).resolve()
+            path = Path.joinpath(d, pathname).resolve()
             if path.is_file():
                 return path.as_uri()
         # return path

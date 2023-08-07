@@ -3,7 +3,7 @@ pdf:
   filename: Changelog
   title: Changelog & License for MkDocs PDF Generate Plugin
   type: Changelog
-  revision: 0.2.1   
+  revision: 0.2.2   
   toc_txt: true
   csv_name: Plugin Changelog
 ---
@@ -36,6 +36,12 @@ SOFTWARE.
 
 # Changelog
 
+0.2.2
+-----
+Released: **under development**
+
+* Improvement: Compatibility with MkDocs >= 1.5 and Markdown 3.4.4. Fix for issue [#20](https://github.com/iSOLveIT/mkdocs-pdf-generate/issues/20).
+* 
 0.2.1
 -----
 Released: **22-03-2023**

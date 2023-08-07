@@ -1,7 +1,7 @@
-from datetime import date, datetime
+from datetime import datetime
 
 
-def strptime(value: str, fmt) -> date:
+def strptime(value: str, fmt) -> datetime:
     return datetime.strptime(value, fmt)
 
 

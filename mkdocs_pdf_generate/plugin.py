@@ -21,8 +21,15 @@ class PdfGeneratePlugin(BasePlugin):
 
     def __init__(self):
         self._options = None
-        self._logger = logging.getLogger("mkdocs.pdf-generate")
-        self._logger.setLevel(logging.INFO)
+        try:
+            from mkdocs.plugins import get_plugin_logger
+
+            self._logger = get_plugin_logger("mkdocs-pdf-generate")
+            self._logger.setLevel(logging.INFO)
+        except ImportError:
+            get_plugin_logger = logging.getLogger("mkdocs-pdf-generate")
+            self._logger = get_plugin_logger
+            self._logger.setLevel(logging.INFO)
         self.renderer = None
         self.enabled = True
         self.combined = False
@@ -131,12 +138,7 @@ class PdfGeneratePlugin(BasePlugin):
         if build_pdf_document:
             self._options.body_title = h1_title_tag(output_content, dict(page.meta))
 
-            file_name = (
-                    pdf_meta.get("filename")
-                    or pdf_meta.get("title")
-                    or self._options.body_title
-                    or None
-            )
+            file_name = pdf_meta.get("filename") or pdf_meta.get("title") or self._options.body_title or None
 
             if file_name is None:
                 file_name = str(src_path).split("/")[-1].rstrip(".md")
@@ -168,7 +170,9 @@ class PdfGeneratePlugin(BasePlugin):
                 generate_txt_document = pdf_meta.get("toc_txt", False)
                 if generate_txt_document:
                     if self._options.toc and self._options.toc_ordering:
-                        self._logger.info(f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents")
+                        self._logger.info(
+                            f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents"
+                        )
                         extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
                         # Generate TOC_TXT file
                         generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)

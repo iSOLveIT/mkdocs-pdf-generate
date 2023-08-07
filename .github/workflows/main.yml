@@ -78,7 +78,7 @@ jobs:
         documentation_path: docs/
         requirements_path: docs_requirements.txt
         target_branch: docs-build
-        mkdocs_version: '1.4.2'
+        mkdocs_version: '1.5.2'
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
