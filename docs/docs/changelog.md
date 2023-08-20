@@ -40,6 +40,7 @@ SOFTWARE.
 -----
 Released: **under development**
 
+* Fix MkDocs build failure issue.
 * Improvement: Compatibility with MkDocs >= 1.5 and Markdown 3.4.4. Fix for issue [#20](https://github.com/iSOLveIT/mkdocs-pdf-generate/issues/20).
 * 
 0.2.1

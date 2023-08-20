@@ -27,7 +27,7 @@ class URLFilter(_FilterBase):
         for d in dirs:
             if not d:
                 continue
-            path = Path.joinpath(d, pathname).resolve()
+            path = Path(d).joinpath(pathname).resolve()
             if path.is_file():
                 return path.as_uri()
         # return path

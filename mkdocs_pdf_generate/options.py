@@ -93,7 +93,8 @@ class Options(object):
         logo_path_filter = URLFilter(self, config)
         self.author_logo = local_config["author_logo"]
         if not self.author_logo:
-            self.author_logo = config["theme"]["logo"]
+            config_theme = config["theme"]
+            self.author_logo = config_theme.get("logo")
         if isinstance(self.author_logo, str):
             self.author_logo = logo_path_filter(self.author_logo)
 
