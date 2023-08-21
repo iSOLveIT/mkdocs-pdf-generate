@@ -10,7 +10,7 @@ The exported documents support many advanced features such as table of contents,
 
 ## Requirements
 
-1. This package requires MkDocs version 1.0 or higher (0.17 works as well)
+1. This package requires MkDocs version 1.4.2 or higher (MkDocs <1.4.2 might work as well)
 2. Python 3.8 or higher
 3. WeasyPrint depends on cairo, Pango and GDK-PixBuf which need to be installed separately. Please follow the installation instructions for your platform carefully:
     - [Linux][weasyprint-linux]

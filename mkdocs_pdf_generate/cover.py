@@ -1,25 +1,42 @@
 import re
-from typing import Dict, Optional
+from typing import Dict
 
-from bs4 import BeautifulSoup, PageElement, Tag
+from bs4 import BeautifulSoup, Tag
 
 from .options import Options
 from .templates.filters.url import URLFilter
 
 
-def make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None):
-    """Generate a cover pages.
+def make_cover(soup: BeautifulSoup, options: Options, pdf_metadata: Dict):
+    """
+    Generate a cover page if the 'cover' option is enabled.
 
-    Arguments:
-        soup {BeautifulSoup} -- target element.
-        options {Options} -- the project options.
+    :param soup: The target element.
+    :param options: Project options.
+    :param pdf_metadata: Metadata for the PDF.
     """
 
     if options.cover:
         _make_cover(soup, options, pdf_metadata)
 
 
-def _make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict] = None):
+def _make_cover(soup: BeautifulSoup, options: Options, pdf_metadata: Dict):
+    """
+    Generate a cover page for a PDF document and add it to the provided BeautifulSoup object.
+
+    .. note::
+
+        This function modifies the input BeautifulSoup object in-place by inserting a cover page.
+
+    :param soup: The BeautifulSoup object representing the document's HTML.
+    :param options: An instance of the Options class containing various configuration settings.
+    :param pdf_metadata: Metadata for the PDF document.
+
+    :return: The modified BeautifulSoup object with the cover page inserted.
+    :raise Exception: If there's an error during cover page generation.
+
+
+    """
     try:
         keywords = options.template.keywords
         keywords["site_url"] = re.sub(r"http://|https://", "", keywords["site_url"])
@@ -44,13 +61,12 @@ def _make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict
         # Select cover template
         cover_template_files = [document_type.lower(), "cover", "default_cover"]
         template = options.template.select(cover_template_files)
-
         options.logger.info(f'Generate cover page for PDF document using "{template.name}" template.')
 
         def str_to_bs4(html_like_str: str) -> Tag:
-            html_soup = BeautifulSoup(html_like_str, "html5lib")
-            html_tags = html_soup.body.find()
-            return html_tags
+            """Convert an HTML-like string to a BeautifulSoup Tag."""
+            html_soup = BeautifulSoup(html_like_str, "html.parser")
+            return html_soup
 
         cover_template = str(template.render(keywords))
         cover_html = str_to_bs4(cover_template)
@@ -60,6 +76,8 @@ def _make_cover(soup: PageElement, options: Options, pdf_metadata: Optional[Dict
         if h1_title is not None:
             h1_title.decompose()
 
+        # Insert cover_html at the beginning of the document
         soup.body.insert(0, cover_html)
     except Exception as e:
-        options.logger.error("Failed to generate the cover page: %s", e)
+        options.logger.error(f"Failed to add cover page: {str(e)}")
+        return soup

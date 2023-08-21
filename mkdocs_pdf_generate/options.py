@@ -23,7 +23,7 @@ class Options(object):
         ("author", config_options.Type(str, default=None)),
         ("author_logo", config_options.Type(str, default=None)),
         ("copyright", config_options.Type(str, default=None)),
-        ("disclaimer", config_options.Type(str, default=None)),
+        ("disclaimer", config_options.Type(bool, default=False)),
         ("cover", config_options.Type(bool, default=True)),
         ("cover_title", config_options.Type(str, default=None)),
         ("cover_subtitle", config_options.Type(str, default=None)),
@@ -79,7 +79,7 @@ class Options(object):
         # H1 Title of the document
         self._body_title: str = ""
 
-        # Theming
+        # Theme and theme handler
         self.theme_name = config["theme"].name
         self.theme_handler_path = local_config.get("theme_handler_path", None)
         if not self.theme_handler_path:
@@ -94,7 +94,7 @@ class Options(object):
         self.author_logo = local_config["author_logo"]
         if not self.author_logo:
             config_theme = config["theme"]
-            self.author_logo = config_theme.get("logo")
+            self.author_logo = config_theme["logo"]
         if isinstance(self.author_logo, str):
             self.author_logo = logo_path_filter(self.author_logo)
 
@@ -102,11 +102,11 @@ class Options(object):
         self._logger = logger
 
     @property
-    def site_url(self):
+    def site_url(self) -> str:
         return self._site_url
 
     @site_url.setter
-    def site_url(self, url):
+    def site_url(self, url: str):
         self._site_url = url
 
     @property
@@ -114,7 +114,7 @@ class Options(object):
         return self._body_title
 
     @body_title.setter
-    def body_title(self, text):
+    def body_title(self, text: str):
         self._body_title = text
 
     @property
@@ -126,7 +126,7 @@ class Options(object):
         return self._copyright
 
     @property
-    def disclaimer(self) -> str:
+    def disclaimer(self) -> bool:
         return self._disclaimer
 
     @property
@@ -158,7 +158,7 @@ class Options(object):
         return self._src_path
 
     @md_src_path.setter
-    def md_src_path(self, input_path):
+    def md_src_path(self, input_path: str):
         self._src_path = input_path
 
     @property
@@ -166,12 +166,12 @@ class Options(object):
         return self._dest_path
 
     @out_dest_path.setter
-    def out_dest_path(self, input_path):
+    def out_dest_path(self, input_path: str):
         self._dest_path = input_path
 
     def debug_dir(self) -> Path:
         if self.debug:
-            docs_src_dir = Path(Path(self.user_config["config_file_path"]).parent).resolve()
+            docs_src_dir = Path(self.user_config["config_file_path"]).parent.resolve()
             debug_folder_path = docs_src_dir.joinpath("pdf_html_debug")
             if not debug_folder_path.is_dir():
                 debug_folder_path.mkdir(parents=True, exist_ok=True)

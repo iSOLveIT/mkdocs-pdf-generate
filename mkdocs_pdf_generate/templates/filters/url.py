@@ -5,18 +5,29 @@ from . import _FilterBase
 
 
 class URLFilter(_FilterBase):
-    """Finds a matching filename in some directories and returns its URL."""
+    """Filter that finds a matching filename in specified directories and returns its URL.
+
+    This filter takes a pathname and checks whether it is a URL or a local path to a file. If it's a URL, the
+    original pathname is returned. If it's a local path, the filter searches for the file in a list of directories
+    and returns the URL of the first matching file found.
+    """
 
     def __call__(self, pathname: str) -> str:
+        """
+        Filter the input pathname and return the corresponding URL.
+
+        :param pathname: The input pathname to be filtered.
+        :return: The URL corresponding to the input pathname.
+        """
         if not pathname:
             return ""
 
-        # Check for URL(eg. 'https://...')
+        # Check if the pathname is already a URL
         target_url = urlparse(pathname)
         if target_url.scheme or target_url.netloc:
             return pathname
 
-        # Search image file in below directories:
+        # Search for the image file in the specified directories
         dirs = [
             Path(self.config["config_file_path"]).parent.resolve(),
             getattr(self.config["theme"], "custom_dir", None),
@@ -30,7 +41,6 @@ class URLFilter(_FilterBase):
             path = Path(d).joinpath(pathname).resolve()
             if path.is_file():
                 return path.as_uri()
-        # return path
-
-        # not found?
+        
+        # If not found, return the original pathname
         return pathname
