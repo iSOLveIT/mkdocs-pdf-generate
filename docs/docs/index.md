@@ -79,7 +79,7 @@ If you want to contribute to the code of this project, please read the [Contribu
 [contributing]: https://github.com/iSOLveIT/mkdocs-pdf-generate/blob/main/CONTRIBUTING.md
 [terry]: https://github.com/zhaoterryy
 [mkdocs-pdf-export-plugin]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin
-[weasyprint-linux]: https://weasyprint.readthedocs.io/en/latest/install.html#linux
-[weasyprint-macos]: https://weasyprint.readthedocs.io/en/latest/install.html#os-x
-[weasyprint-windows]: https://weasyprint.readthedocs.io/en/latest/install.html#windows
+[weasyprint-linux]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#linux
+[weasyprint-macos]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#macos
+[weasyprint-windows]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#windows
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
