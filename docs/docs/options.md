@@ -106,7 +106,8 @@ Set the copyright text. <br>
 
 Set the value to `true` if you want to include disclaimer and legal information sections at the end of your PDF document. 
 
-If you specify this option, you need to have an HTML file or [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) template named `disclaimer.html.j2`, or you can create a customised disclaimer template and assign its name to the [disclaimer local option](#disclaimer_1). Check the [disclaimer local option](#disclaimer_1) for more information.
+If you specify this option, you need to have an HTML file or [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) template file named `disclaimer` with any of these file extensions (`.html.j2`, `.html.jinja2`, `.html`, `.htm`). 
+Also, you can create a customised disclaimer template and assign its name to the [disclaimer local option](#disclaimer_1). Check the [disclaimer local option](#disclaimer_1) for more information.
 
 The disclaimer templates must be saved under the folder you specified as the [custom_template_path](#custom_template_path).<br>  
 **default**: `false`
@@ -399,7 +400,7 @@ Value is `true` or `false`.
 
 ### `disclaimer`
 
-Set the name of the custom template without the file extensions (e.g. _disclaimer_ and not _disclaimer.html.j2_ or _disclaimer.html_) you want to use that contains the disclaimer information. If the custom template is not specified, we use the global `disclaimer.html.j2` template.
+Set the name of the custom template file, without the file extensions (e.g. _disclaimer_ and not _disclaimer.html.j2_ or _disclaimer.html_), you want to use that contains the disclaimer information. If the custom template file is not found, we use the global `disclaimer.html.j2` template, if it exists or the disclaimer content is not added.
 
 The custom template must be an HTML file or [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) template file. <br>
 !!! note
