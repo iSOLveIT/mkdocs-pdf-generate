@@ -15,9 +15,9 @@
                 {% if copyright %}
                     <p id="cover_copyright">{{ copyright | e }}</p>
                 {% endif %}
-                <p id="cover_disclaimer">
-                    Disclaimer: Content can change at anytime and best to refer to website for latest information.
-                </p>
+                {% if disclaimer %}
+                    <p id="cover_disclaimer">{{ disclaimer | e }}</p>
+                {% endif %}
             </address>
         </div>
     <div>

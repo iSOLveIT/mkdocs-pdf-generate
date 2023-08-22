@@ -21,9 +21,9 @@
 
     <div class="reserved_rights">
         <address>
-            <p id="cover_disclaimer" style="display:inline;">
-                Disclaimer: Content can change at anytime and best to refer to website for latest information.
-            </p> |
+            {% if disclaimer %}
+                <p id="cover_disclaimer" style="display:inline;">{{ disclaimer | e }}</p> |
+            {% endif %}
             {% if copyright %}
                 <p id="cover_copyright" style="display:inline;">{{ copyright | e }}</p>
             {% endif %}

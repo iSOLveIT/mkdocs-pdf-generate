@@ -21,6 +21,7 @@ class Template(object):
         "author",
         "author_logo",
         "copyright",
+        "disclaimer",
         "cover_title",
         "cover_subtitle",
         "site_url",

@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from .content import restructure_tabbed_content
 from .links import rel_html_href, replace_asset_hrefs
 from ..options import Options
-from ..utils import enable_disclaimer
+from ..utils import enable_legal_terms
 
 
 # def get_combined(soup: BeautifulSoup, base_url: str, rel_url: str):
@@ -62,8 +62,8 @@ def get_content(soup: BeautifulSoup, options: Options, pdf_metadata: Dict):
         td["style"] = "text-align:{};".format(position)
         del td["align"]
 
-    # Append disclaimer HTML to content (i.e. <div class="md-content__inner">...</div>)
-    is_disclaimer_enabled = options.disclaimer
-    if is_disclaimer_enabled:
-        soup = enable_disclaimer(soup, options, pdf_metadata)
+    # Append legal_terms HTML to content (i.e. <div class="md-content__inner">...</div>)
+    is_legal_terms_enabled = options.include_legal_terms
+    if is_legal_terms_enabled:
+        soup = enable_legal_terms(soup, options, pdf_metadata)
     return soup

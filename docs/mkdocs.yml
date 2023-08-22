@@ -60,7 +60,8 @@ plugins:
 #      debug_target: changelog.md
       enable_csv: true
       copyright: Copyright &copy; 2023 4D Systems
-      disclaimer: true
+      disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
+#      include_legal_terms: true
       custom_template_path: cover_template
       toc_numbering: true
       toc_level: 6

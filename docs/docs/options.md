@@ -102,12 +102,16 @@ Provide a logo image which you can use in the cover page. <br>
 Set the copyright text. <br>  
 **default**: use `copyright` in your project's `mkdocs.yml`
 
-#### `disclaimer`
+### `disclaimer`
 
-Set the value to `true` if you want to include disclaimer and legal information sections at the end of your PDF document. 
+Set the disclaimer text.
 
-If you specify this option, you need to have an HTML file or [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) template file named `disclaimer` with any of these file extensions (`.html.j2`, `.html.jinja2`, `.html`, `.htm`). 
-Also, you can create a customised disclaimer template and assign its name to the [disclaimer local option](#disclaimer_1). Check the [disclaimer local option](#disclaimer_1) for more information.
+#### `include_legal_terms`
+
+Set the value to `true` if you want to include legal information sections at the end of your PDF document. 
+
+If you specify this option, you need to have an HTML file or [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) template file named `legal_terms` with any of these file extensions (`.html.j2`, `.html.jinja2`, `.html`, `.htm`). 
+Also, you can create a customised legal_terms template and assign its name to the `legal_terms` local option. Check the [legal_terms](#legal_terms) local option for more information.
 
 The disclaimer templates must be saved under the folder you specified as the [custom_template_path](#custom_template_path).<br>  
 **default**: `false`
@@ -398,13 +402,13 @@ Value is `true` or `false`.
 
     You must set both the [toc](#toc) and [toc_numbering](#toc_numbering) global options to `true` before using this option.
 
-### `disclaimer`
+### `legal_terms`
 
-Set the name of the custom template file, without the file extensions (e.g. _disclaimer_ and not _disclaimer.html.j2_ or _disclaimer.html_), you want to use that contains the disclaimer information. If the custom template file is not found, we use the global `disclaimer.html.j2` template, if it exists or the disclaimer content is not added.
+Set the name of the custom template file, without the file extensions (e.g. _legal_terms_ and not _legal_terms.html.j2_ or _legal_terms.html_), you want to use that contains the legal_terms information. If the custom template file is not found, we use the global `legal_terms.html.j2` template, if it exists or the legal_terms information is not added.
 
 The custom template must be an HTML file or [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/templates/) template file. <br>
 !!! note
     
-    + You must set the [disclaimer](#disclaimer) global option to `true` before using this option.
-    + The disclaimer template's filename can either be `disclaimer` or any accepted filename with one of these file extensions
-    `.html.j2`, `.html.jinja2`, `.html`, or `.htm`. <br> **Example**: `disclaimer.html.j2`, `disclaimer.html.jinja2`, `disclaimer.html`, `disclaimer.htm` OR if document type is `legal` then you can create a template file called `legal.html` or `legal.html.j2` or `legal.html.jinja2` or `legal.htm`.
+    + You must set the [include_legal_terms](#include_legal_terms) global option to `true` before using this option.
+    + The legal_terms template's filename can either be `legal_terms` or any accepted filename with one of these file extensions
+    `.html.j2`, `.html.jinja2`, `.html`, or `.htm`. <br> **Example**: if `legal_terms` option is set to `privacy` then you can create a template file called `privacy.html` or `privacy.html.j2` or `privacy.html.jinja2` or `privacy.htm`.

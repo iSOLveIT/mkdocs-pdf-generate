@@ -23,7 +23,8 @@ class Options(object):
         ("author", config_options.Type(str, default=None)),
         ("author_logo", config_options.Type(str, default=None)),
         ("copyright", config_options.Type(str, default=None)),
-        ("disclaimer", config_options.Type(bool, default=False)),
+        ("disclaimer", config_options.Type(str, default=None)),
+        ("include_legal_terms", config_options.Type(bool, default=False)),
         ("cover", config_options.Type(bool, default=True)),
         ("cover_title", config_options.Type(str, default=None)),
         ("cover_subtitle", config_options.Type(str, default=None)),
@@ -58,6 +59,7 @@ class Options(object):
             self._copyright = config["copyright"]
 
         self._disclaimer = local_config["disclaimer"]
+        self._include_legal_terms = local_config["include_legal_terms"]
 
         # Individual document type cover
         self._cover_images: Dict = local_config["cover_images"]
@@ -126,8 +128,12 @@ class Options(object):
         return self._copyright
 
     @property
-    def disclaimer(self) -> bool:
+    def disclaimer(self) -> str:
         return self._disclaimer
+
+    @property
+    def include_legal_terms(self) -> bool:
+        return self._include_legal_terms
 
     @property
     def cover_title(self) -> str:

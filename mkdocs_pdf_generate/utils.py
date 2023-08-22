@@ -93,40 +93,40 @@ def extract_h1_title(content: Union[str, Tag], page_metadata: Dict) -> Optional[
     return title_text
 
 
-def enable_disclaimer(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> Tag:
+def enable_legal_terms(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> Tag:
     """
-    Enable and add a disclaimer to the PDF document content.
+    Enable and add legal_terms section to the PDF document content.
 
     .. note::
 
-            This function modifies the input BeautifulSoup object in-place by inserting a disclaimer page.
+        This function modifies the input BeautifulSoup object in-place by inserting a legal_terms page.
 
     :param soup: The BeautifulSoup object representing the document's content.
     :param options: The options for the PDF generation process.
     :param pdf_metadata: The metadata associated with the PDF.
 
-    :return: The modified BeautifulSoup object with added disclaimer content.
-    :raise Exception: If there's an error during cover page generation.
+    :return: The modified BeautifulSoup object with added legal_terms content.
+    :raise Exception: If there's an error during legal_terms page generation.
     """
     try:
         content = soup.find("article", attrs={"class": "md-content__inner"})
-        # Set disclaimer to document's disclaimer local option
-        document_disclaimer: str = pdf_metadata.get("disclaimer", "disclaimer")
-        # Select disclaimer template
-        cover_template_files = [document_disclaimer.lower()]
-        template = options.template.select(cover_template_files)
+        # Set legal_terms to document's legal_terms local option
+        document_legal_terms: str = pdf_metadata.get("legal_terms", "legal_terms")
+        # Select legal_terms template
+        legal_terms_template_files = [document_legal_terms.lower()]
+        template = options.template.select(legal_terms_template_files)
 
-        options.logger.info(f'Add disclaimer content to PDF document using "{template.name}" template.')
-        disclaimer_template = str(template.render())
+        options.logger.info(f'Add legal_terms content to PDF document using "{template.name}" template.')
+        legal_terms_template = str(template.render())
 
-        def add_disclaimer_html(disclaimer_html: str) -> Tag:
+        def format_legal_terms_html(legal_terms_html: str) -> Tag:
             """
-            Add disclaimer HTML to a BeautifulSoup Tag.
+            Format legal_terms HTML to a BeautifulSoup Tag.
 
-            :param disclaimer_html: The HTML content of the disclaimer.
-            :return: The BeautifulSoup Tag with the added disclaimer content.
+            :param legal_terms_html: The HTML content of the legal_terms.
+            :return: The BeautifulSoup Tag with the added legal_terms content.
             """
-            html_soup = BeautifulSoup(disclaimer_html, "html.parser")
+            html_soup = BeautifulSoup(legal_terms_html, "html.parser")
             headings = html_soup.find_all(["h2", "h3", "h4", "h5", "h6"])
             for h in headings:
                 ref = h.get("id")
@@ -134,20 +134,20 @@ def enable_disclaimer(soup: BeautifulSoup, options: Options, pdf_metadata: Dict)
                     h["id"] = generate_heading_id(h.string)
             return html_soup
 
-        # Add disclaimer div wrapper
-        disclaimer_div = soup.new_tag(
+        # Create legal_terms div wrapper
+        legal_terms_div = soup.new_tag(
             "div",
             attrs={
-                "id": "mkdocs-pdf-gen-disclaimer",
+                "id": "mkdocs-pdf-gen-legal-terms",
                 "class": "page-break",
             },
         )
-        disclaimer_div.append(add_disclaimer_html(disclaimer_template))
+        legal_terms_div.append(format_legal_terms_html(legal_terms_template))
 
-        content.append(disclaimer_div)
+        content.append(legal_terms_div)
         return soup
     except Exception as e:
-        options.logger.error(f"Failed to add disclaimer: {str(e)}")
+        options.logger.error(f"Failed to add legal_terms: {str(e)}")
         return soup
 
 
