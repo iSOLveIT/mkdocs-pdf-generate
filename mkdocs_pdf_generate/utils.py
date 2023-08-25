@@ -13,10 +13,23 @@ def get_pdf_metadata(metadata: Dict) -> Dict:
 
     :param metadata: The metadata dictionary containing PDF-related information.
     :return: A dictionary containing PDF metadata. If no PDF metadata is found,
-              an empty dictionary is returned.
+              we return the default PDF_LOCAL_OPTIONS dictionary.
     """
-    pdf_meta = metadata.get("pdf", {}) if "pdf" in metadata and metadata["pdf"] is not None else {}
-    return pdf_meta
+    pdf_local_options = {
+        "build": True,
+        "title": None,
+        "subtitle": None,
+        "type": None,
+        "filename": None,
+        "revision": None,
+        "csv_name": None,
+        "toc_txt": None,
+        "legal_terms": None,
+        "cover_image": None,
+    }
+    if "pdf" in metadata and metadata["pdf"] is not None:
+        pdf_local_options.update(metadata.get("pdf"))
+    return pdf_local_options
 
 
 def secure_filename(filename: str) -> str:
@@ -93,7 +106,7 @@ def extract_h1_title(content: Union[str, Tag], page_metadata: Dict) -> Optional[
     return title_text
 
 
-def enable_legal_terms(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> Tag:
+def enable_legal_terms(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> BeautifulSoup:
     """
     Enable and add legal_terms section to the PDF document content.
 
@@ -105,13 +118,13 @@ def enable_legal_terms(soup: BeautifulSoup, options: Options, pdf_metadata: Dict
     :param options: The options for the PDF generation process.
     :param pdf_metadata: The metadata associated with the PDF.
 
-    :return: The modified BeautifulSoup object with added legal_terms content.
-    :raise Exception: If there's an error during legal_terms page generation.
+    :return: The modified BeautifulSoup object with added legal_terms content
+      or the BeautifulSoup object without any changes.
     """
     try:
         content = soup.find("article", attrs={"class": "md-content__inner"})
         # Set legal_terms to document's legal_terms local option
-        document_legal_terms: str = pdf_metadata.get("legal_terms", "legal_terms")
+        document_legal_terms: str = pdf_metadata.get("legal_terms") or "legal_terms"
         # Select legal_terms template
         legal_terms_template_files = [document_legal_terms.lower()]
         template = options.template.select(legal_terms_template_files)

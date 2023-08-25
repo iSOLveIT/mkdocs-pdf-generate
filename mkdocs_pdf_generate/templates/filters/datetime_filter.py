@@ -12,7 +12,7 @@ def strptime(value: str, format_str: str) -> datetime:
     return datetime.strptime(value, format_str)
 
 
-def strftime(dt_obj, format_str: str) -> str:
+def strftime(dt_obj: datetime, format_str: str) -> str:
     """
     Format a datetime object as a string using the specified format.
 

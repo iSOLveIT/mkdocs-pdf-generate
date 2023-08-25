@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Dict
 
 from mkdocs.config import config_options
-from mkdocs.config.base import Config
+from mkdocs.config.base import LegacyConfig
+from mkdocs.config.defaults import MkDocsConfig
+
 
 from .templates.filters.url import URLFilter
 from .templates.template import Template
@@ -36,7 +38,7 @@ class Options(object):
         ("cover_images", config_options.Type(dict, default=None)),
     )
 
-    def __init__(self, local_config, config, logger: logging):
+    def __init__(self, local_config: LegacyConfig, config: MkDocsConfig, logger: logging):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
         self.enable_csv = local_config["enable_csv"]
@@ -46,7 +48,7 @@ class Options(object):
         self._dest_path = None
 
         # user_configs in mkdocs.yml
-        self._user_config: Config = config
+        self._user_config: MkDocsConfig = config
         self._site_url = config["site_url"]
 
         # Author and Copyright
@@ -144,7 +146,7 @@ class Options(object):
         return self._cover_subtitle
 
     @property
-    def user_config(self) -> Config:
+    def user_config(self) -> MkDocsConfig:
         return self._user_config
 
     @property

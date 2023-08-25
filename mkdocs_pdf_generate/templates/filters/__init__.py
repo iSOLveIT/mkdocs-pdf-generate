@@ -1,5 +1,6 @@
-from mkdocs.config.base import Config
 from typing import Any
+
+from mkdocs.config.defaults import MkDocsConfig
 
 
 class _FilterBase:
@@ -13,7 +14,7 @@ class _FilterBase:
     :param config: MkDocs configuration.
     """
 
-    def __init__(self, options: Any, config: Config):
+    def __init__(self, options: Any, config: MkDocsConfig):
         """
         Initialize a new FilterBase instance.
 
@@ -33,7 +34,7 @@ class _FilterBase:
         return self.__options
 
     @property
-    def config(self) -> Config:
+    def config(self) -> MkDocsConfig:
         """
         Get the MkDocs configuration.
 

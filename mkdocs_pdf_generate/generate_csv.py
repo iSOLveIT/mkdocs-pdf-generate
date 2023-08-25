@@ -59,7 +59,7 @@ def get_data(destination_path: Path, filename: str, pdf_meta: Dict, site_url: st
     revision = "R_{}".format(filename.split("_R_")[1])
     pdf_checksum = get_checksum(pdf_file, algorithm="MD5").upper()
     txt_checksum = get_checksum(txt_file, algorithm="MD5").upper()
-    doc_type = pdf_meta.get("type", "Document")
+    doc_type = pdf_meta.get("type") or "Document"
 
     return [
         title.replace(" ", "_"),

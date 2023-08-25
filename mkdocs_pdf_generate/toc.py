@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup, NavigableString, PageElement, Tag
 from .options import Options
 
 
-def make_toc(soup: PageElement, options: Options):
+def make_toc(soup: PageElement, options: Options) -> None:
     """
     Generate a table of contents (toc) tree if enabled in options.
 
@@ -139,7 +139,7 @@ def _make_indexes(soup: BeautifulSoup, options: Options) -> None:
     soup.body.insert(0, toc)
 
 
-def _inject_heading_order(soup: Tag, options: Options):
+def _inject_heading_order(soup: Tag, options: Options) -> None:
     """
     Injects numbering into headings based on their level.
 
@@ -196,7 +196,7 @@ def _inject_heading_order(soup: Tag, options: Options):
         h["data-numbering"] = prefix
 
 
-def _clone_element(el: Union[BeautifulSoup, PageElement]) -> Tag:
+def _clone_element(el: Union[Tag, PageElement]) -> Tag:
     """
     Clone a BeautifulSoup PageElement.
 

@@ -26,7 +26,8 @@ plugins:
         author: "Randy Duodu"
         author_logo: img/logo.svg
         copyright: "Copyright © 2022 - MkDocs PDF Generate"
-        disclaimer: true
+        disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
+        include_legal_terms: true
         cover: true
         cover_title: TITLE TEXT
         cover_subtitle: SUBTITLE TEXT
@@ -316,12 +317,16 @@ The local options are specified in the specific Markdown document you want to us
 ```markdown
 ---
 pdf:
-  - build: false  
-  - filename: Plugin Options
-  - title: Options for MkDocs PDF Generate Plugin
-  - type: Manual
-  - revision: 0.2
-  - toc_txt: true 
+  build: false  
+  filename: Plugin Options
+  title: Options for MkDocs PDF Generate Plugin
+  type: Manual
+  revision: 0.2
+  toc_txt: true
+  cover_image:
+    id: cover_product_image
+    source: "img/product_img.png" # relative to the MD file itself
+    inline_css: "position: absolute; opacity: 0.8; height: 10mm; width: 15mm; left: 50mm; top: 50mm;" 
 ---
 ```
 
@@ -335,6 +340,8 @@ The following options are available:
 * revision
 * csv_name
 * toc_txt
+* legal_terms
+* cover_image
 
 ### `build`
 
@@ -412,3 +419,30 @@ The custom template must be an HTML file or [Jinja2](https://jinja.palletsprojec
     + You must set the [include_legal_terms](#include_legal_terms) global option to `true` before using this option.
     + The legal_terms template's filename can either be `legal_terms` or any accepted filename with one of these file extensions
     `.html.j2`, `.html.jinja2`, `.html`, or `.htm`. <br> **Example**: if `legal_terms` option is set to `privacy` then you can create a template file called `privacy.html` or `privacy.html.j2` or `privacy.html.jinja2` or `privacy.htm`.
+
+### `cover_image`
+
+The `cover_image` option allows users to add an image to the cover page. <br>
+**default**: `None`
+
+The option takes 3 required `key-value` pairs which consist of:
+
+* __id__: Must be equal to the ID attribute of the HTML element you would like to apply the image on. E.g. if the HTML element looks like this: `<div id="product_img_area"></div>` then the `id` is equal to `product_img_area`.
+* __source__: Image path relative to the Markdown file itself. E.g. `img/product_img.png`
+* __inline_css__: CSS properties you would like to apply to the HTML element. E.g. `height: 200px; width: 200px; top: 10mm;`
+
+**Example:**
+```yaml
+cover_image:
+    id: product_img_area
+    source: "img/product_img.png" # relative to the MD file itself
+    inline_css: "height: 200px; width: 200px; top: 10mm"
+```
+
+!!! note
+
+    * The plugin adds the image by:
+        * using the value you set as `id` to select the element you want to apply the image to. __NB:__ You must have an HTML element with an ID attribute equal to `id` in your cover template.
+        * applying the CSS styles you set as `inline_css` to the HTML element using the inline CSS style attribute (i.e. `style='...'`).
+        * then applying the value you set as `source` to the HTML element's style attribute using the CSS `background-image` property. E.g. `background-image: url('source')`.
+    * Also, the plugin adds some default CSS properties such as `position: absolute; background-size: contain; background-repeat: no-repeat;` to the HTML element's style attribute. 

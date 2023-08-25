@@ -33,4 +33,4 @@ def modify_html(html: str, href: str) -> str:
     sm_wrapper.append(a)
     soup.body.footer.insert(0, sm_wrapper)
 
-    return str(soup)
+    return soup.prettify()

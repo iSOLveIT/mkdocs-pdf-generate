@@ -40,9 +40,9 @@ SOFTWARE.
 -----
 Released: **under development**
 
-* Removed disclaimer Jinja variable from the list of variables you can use in your custom Jinja template.
+* Introduced the `cover_image` local option which allows you to add an image to the cover page of your PDF document.
 * Added code comments and docstrings to help contributors understand the code base.
-* Added support for inserting customised legal information and disclaimer into generated PDF documents'.
+* Introduced the `include_legal_terms` global option and the `legal_terms` local option that allows the user to insert customised legal information and disclaimer into generated PDF documents'.
 * Updated documentation.
 * Fix MkDocs build failure issue.
 * Improvement: Compatibility with MkDocs >= 1.5 and Markdown 3.4.4. Fix for issue [#20](https://github.com/iSOLveIT/mkdocs-pdf-generate/issues/20).

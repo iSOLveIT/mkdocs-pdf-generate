@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Dict, Optional, Any
 
 from bs4 import BeautifulSoup, Tag
-from weasyprint import HTML
+from weasyprint import HTML, document
 
 from . import cover, toc
 from .options import Options
@@ -19,7 +19,7 @@ from .themes import generic as generic_theme
 
 class Renderer:
     """
-    A class responsible for rendering Markdown content to PDF using WeasyPrint.
+    A class responsible for rendering Markdown content to PDF using weasyprint.
     """
 
     def __init__(self, options: Options):
@@ -52,15 +52,15 @@ class Renderer:
         """
         self.render_doc(content, base_url, pdf_metadata=pdf_metadata).write_pdf(filename)
 
-    def render_doc(self, content: str, base_url: str, pdf_metadata: Dict):
+    def render_doc(self, content: str, base_url: str, pdf_metadata: Dict) -> document.Document:
         """
-        Render the Markdown content to HTML and generate a PDF using WeasyPrint.
+        Render the Markdown content to HTML and generate a PDF using weasyprint.
 
         :param content: The Markdown content to render.
         :param base_url: The base URL for resolving relative links.
         :param pdf_metadata: Metadata for the PDF.
 
-        :return: The rendered HTML content.
+        :return: A weasyprint :class:`document.Document` object.
         """
         soup = BeautifulSoup(content, "html.parser")
         soup = get_content(soup, self._options, pdf_metadata)
@@ -75,8 +75,6 @@ class Renderer:
         soup = prep_separate(soup, base_url, self._options.site_url)
         toc.make_toc(soup, self._options)
         cover.make_cover(soup, self._options, pdf_metadata=pdf_metadata)
-        # Weasyprint HTML
-        html = ""
 
         # Enable Debugging
         site_dir = self._options.user_config["site_dir"].replace("\\", "/").split("/")[-1]

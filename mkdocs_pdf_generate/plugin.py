@@ -3,10 +3,13 @@ import logging
 import os
 from pathlib import Path
 from timeit import default_timer as timer
-from typing import List
+from typing import List, Union, Optional
 
-from mkdocs.config import Config
+from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
+from mkdocs.structure.files import Files
+from mkdocs.structure.nav import Navigation
+from mkdocs.structure.pages import Page
 
 from . import generate_txt, generate_csv
 from .logger import get_logger
@@ -14,6 +17,14 @@ from .options import Options
 from .renderer import Renderer
 from .templates.filters.url import URLFilter
 from .utils import get_pdf_metadata, extract_h1_title, secure_filename
+
+
+class PDFPluginException(Exception):
+    """
+    Custom exception class for PDF plugin errors.
+    """
+
+    pass
 
 
 class PdfGeneratePlugin(BasePlugin):
@@ -36,7 +47,7 @@ class PdfGeneratePlugin(BasePlugin):
         self.total_time = 0
         self.csv_build: List[List] = []
 
-    def on_config(self, config):
+    def on_config(self, config: MkDocsConfig) -> Optional[MkDocsConfig]:
         """
         Event handler when the MkDocs configuration is being processed.
         """
@@ -72,7 +83,7 @@ class PdfGeneratePlugin(BasePlugin):
         self.renderer = Renderer(options=self._options)
         return config
 
-    def on_nav(self, nav, config, files):
+    def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:
         """
         Event handler after the navigation is processed.
         """
@@ -89,7 +100,7 @@ class PdfGeneratePlugin(BasePlugin):
 
         return nav
 
-    def on_post_page(self, output_content, page, config: Config):
+    def on_post_page(self, output_content: str, page: Page, config: MkDocsConfig) -> Union[str, PDFPluginException]:
         """
         Event handler after a page is processed.
         """
@@ -129,7 +140,7 @@ class PdfGeneratePlugin(BasePlugin):
         self._options.out_dest_path = dest_path
 
         pdf_meta = get_pdf_metadata(page.meta)
-        build_pdf_document = pdf_meta.get("build", True)
+        build_pdf_document = str(pdf_meta.get("build")).lower() != "false"
 
         if self._options.debug and self._options.debug_target is not None:
             # Debugging only the debug target file
@@ -152,7 +163,7 @@ class PdfGeneratePlugin(BasePlugin):
                     "⚠️You must provide a filename for the PDF document. The source filename is used as fallback."
                 )
 
-            doc_revision: str = pdf_meta.get("revision", False)
+            doc_revision: str = pdf_meta.get("revision")
             if doc_revision:
                 file_name = (
                     f"{file_name}_R_{doc_revision.replace('.', '_')}"
@@ -175,7 +186,7 @@ class PdfGeneratePlugin(BasePlugin):
                 )
                 self._logger.info("✅ {} file generated".format(pdf_file))
                 # Generate TXT TOC if needed
-                generate_txt_document = pdf_meta.get("toc_txt", False)
+                generate_txt_document = str(pdf_meta.get("toc_txt")).lower() == "true"
                 if generate_txt_document:
                     if self._options.toc and self._options.toc_ordering:
                         self._logger.info(
@@ -206,7 +217,7 @@ class PdfGeneratePlugin(BasePlugin):
         self.total_time += end - start
         return output_content
 
-    def on_post_build(self, config):
+    def on_post_build(self, config: MkDocsConfig) -> None:
         """
         Event handler after the MkDocs build process is complete.
         """
@@ -216,7 +227,7 @@ class PdfGeneratePlugin(BasePlugin):
         self._logger.info("🔸 Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
         self._logger.info("🔸 Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
 
-        def csv_generate(data: List[List]):
+        def csv_generate(data: List[List]) -> int:
             rows: List[List] = data
 
             csv_file_path = Path(getattr(config, "site_dir", config["site_dir"])).joinpath("4Dversions.csv")
@@ -233,11 +244,3 @@ class PdfGeneratePlugin(BasePlugin):
             self._logger.info("🔸 Generated '4Dversions.csv' file from {} entry(s)".format(csv_entry))
         if self.num_errors > 0:
             self._logger.error("❌{} conversion errors occurred (see above)".format(self.num_errors))
-
-
-class PDFPluginException(Exception):
-    """
-    Custom exception class for PDF plugin errors.
-    """
-
-    pass

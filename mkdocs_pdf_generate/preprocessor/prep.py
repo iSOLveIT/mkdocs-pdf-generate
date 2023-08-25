@@ -25,7 +25,7 @@ from ..utils import enable_legal_terms
 #     return soup
 
 
-def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
+def get_separate(soup: BeautifulSoup, base_url: str, site_url: str) -> BeautifulSoup:
     # transforms all relative hrefs pointing to other html docs
     # into relative html hrefs
     for a in soup.find_all("a", href=True):
@@ -36,7 +36,7 @@ def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
     return soup
 
 
-def get_content(soup: BeautifulSoup, options: Options, pdf_metadata: Dict):
+def get_content(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> BeautifulSoup:
     content = soup.find("article", attrs={"class": "md-content__inner"})
     new_content = [content]
     soup.body.clear()

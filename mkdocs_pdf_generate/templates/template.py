@@ -1,12 +1,12 @@
 # import os
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional, MutableMapping
 from pathlib import Path
 
 import jinja2
-from mkdocs.config.base import Config
+from mkdocs.config.defaults import MkDocsConfig
 
-from .filters.datetime import strftime, strptime
+from .filters.datetime_filter import strftime, strptime
 from .filters.url import URLFilter
 
 
@@ -27,7 +27,7 @@ class Template(object):
         "site_url",
     ]
 
-    def __init__(self, options: object, config: Config):
+    def __init__(self, options: object, config: MkDocsConfig) -> None:
         """
         Initialize the Template instance.
 
@@ -112,7 +112,7 @@ class Template(object):
                     new_values.append(v)
             return new_values
 
-        def unescape_html(variables: Dict):
+        def unescape_html(variables: Dict) -> None:
             """
             Recursively unescape HTML entities in a dictionary of variables.
 
@@ -160,7 +160,9 @@ class Template(object):
 
         return self._keywords
 
-    def select(self, names: [str], parent=None, globals=None) -> jinja2.Template:
+    def select(
+        self, names: [str], parent: Optional[str] = None, globals: Optional[MutableMapping[str, Any]] = None
+    ) -> jinja2.Template:
         """
         Find and load a template by names.
 
