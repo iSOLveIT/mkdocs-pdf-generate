@@ -38,7 +38,7 @@ SOFTWARE.
 
 0.2.2
 -----
-Released: **under development**
+Released: **28-08-2023**
 
 * Introduced the `cover_image` local option which allows you to add an image to the cover page of your PDF document.
 * Added code comments and docstrings to help contributors understand the code base.
