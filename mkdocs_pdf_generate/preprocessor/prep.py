@@ -1,9 +1,13 @@
 import re
+from typing import Dict, Optional
 
 from bs4 import BeautifulSoup
 
 from .content import restructure_tabbed_content
 from .links import rel_html_href, replace_asset_hrefs
+from ..options import Options
+from ..utils import enable_legal_terms
+
 
 # def get_combined(soup: BeautifulSoup, base_url: str, rel_url: str):
 #     for id in soup.find_all(id=True):
@@ -21,7 +25,7 @@ from .links import rel_html_href, replace_asset_hrefs
 #     return soup
 
 
-def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
+def get_separate(soup: BeautifulSoup, base_url: str, site_url: str) -> BeautifulSoup:
     # transforms all relative hrefs pointing to other html docs
     # into relative html hrefs
     for a in soup.find_all("a", href=True):
@@ -32,7 +36,7 @@ def get_separate(soup: BeautifulSoup, base_url: str, site_url: str):
     return soup
 
 
-def get_content(soup: BeautifulSoup):
+def get_content(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> BeautifulSoup:
     content = soup.find("article", attrs={"class": "md-content__inner"})
     new_content = [content]
     soup.body.clear()
@@ -57,4 +61,9 @@ def get_content(soup: BeautifulSoup):
         position = td["align"]
         td["style"] = "text-align:{};".format(position)
         del td["align"]
+
+    # Append legal_terms HTML to content (i.e. <div class="md-content__inner">...</div>)
+    is_legal_terms_enabled = options.include_legal_terms
+    if is_legal_terms_enabled:
+        soup = enable_legal_terms(soup, options, pdf_metadata)
     return soup

@@ -1,7 +1,7 @@
 ---
 title: Customize Plugin
 pdf:
-  revision: 0.1.8    
+  revision: 0.2.2    
   toc_txt: true
 ---
 
@@ -23,7 +23,6 @@ The plugin provides the following variables which you can use in your custom Jin
 * author
 * author_logo
 * copyright
-* disclaimer
 * site_url
 * revision
 * custom variables from the [`extra:`](https://www.mkdocs.org/user-guide/configuration/#extra) setting in your `mkdocs.yml`

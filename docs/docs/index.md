@@ -5,7 +5,7 @@ pdf:
   title: Introduction for MkDocs PDF Generate Plugin
   subtitle: Overview   
   type: Home
-  revision: 0.2.1    
+  revision: 0.2.2
 ---
 
 # MkDocs PDF Generate Plugin
@@ -19,7 +19,7 @@ ability to control page orientation, support for CSS paged media module
 
 ## Requirements
 
-1. This package requires MkDocs version 1.0 or higher (0.17 works as well)
+1. This package requires MkDocs version 1.4.2 or higher (MkDocs <1.4.2 might work as well)
 2. Python 3.8 or higher
 3. WeasyPrint depends on cairo, Pango and GDK-PixBuf which need to be installed separately. Please follow the installation instructions for your platform carefully:
     - [Linux][weasyprint-linux]
@@ -79,7 +79,7 @@ If you want to contribute to the code of this project, please read the [Contribu
 [contributing]: https://github.com/iSOLveIT/mkdocs-pdf-generate/blob/main/CONTRIBUTING.md
 [terry]: https://github.com/zhaoterryy
 [mkdocs-pdf-export-plugin]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin
-[weasyprint-linux]: https://weasyprint.readthedocs.io/en/latest/install.html#linux
-[weasyprint-macos]: https://weasyprint.readthedocs.io/en/latest/install.html#os-x
-[weasyprint-windows]: https://weasyprint.readthedocs.io/en/latest/install.html#windows
+[weasyprint-linux]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#linux
+[weasyprint-macos]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#macos
+[weasyprint-windows]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#windows
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material

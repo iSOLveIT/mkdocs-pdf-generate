@@ -2,18 +2,40 @@ import os
 import re
 from typing import Dict, Optional, Union
 
-from bs4 import BeautifulSoup, PageElement
+from bs4 import BeautifulSoup, Tag
+
+from .options import Options
 
 
-def get_pdf_metadata(metadata):
-    pdf_meta = metadata.get("pdf") if "pdf" in metadata and metadata["pdf"] is not None else {}
-    return pdf_meta
+def get_pdf_metadata(metadata: Dict) -> Dict:
+    """
+    Extracts PDF metadata from a given metadata dictionary.
+
+    :param metadata: The metadata dictionary containing PDF-related information.
+    :return: A dictionary containing PDF metadata. If no PDF metadata is found,
+              we return the default PDF_LOCAL_OPTIONS dictionary.
+    """
+    pdf_local_options = {
+        "build": True,
+        "title": None,
+        "subtitle": None,
+        "type": None,
+        "filename": None,
+        "revision": None,
+        "csv_name": None,
+        "toc_txt": None,
+        "legal_terms": None,
+        "cover_image": None,
+    }
+    if "pdf" in metadata and metadata["pdf"] is not None:
+        pdf_local_options.update(metadata.get("pdf"))
+    return pdf_local_options
 
 
-def secure_filename(filename):
-    r"""Pass it a filename, and it will return a secure version of it.  This
+def secure_filename(filename: str) -> str:
+    r"""Pass it a filename, and it will return a secure version of it. This
     filename can then safely be stored on a regular file system and passed
-    to :func:`os.path.join`.  The filename returned is an ASCII only string
+    to :func:`os.path.join`. The filename returned is an ASCII only string
     for maximum portability.
 
     On Windows systems the function also makes sure that the file is not
@@ -61,12 +83,98 @@ def secure_filename(filename):
     return filename
 
 
-def h1_title_tag(content: Union[str, PageElement], page_metadata: Dict) -> Optional[str]:
+def extract_h1_title(content: Union[str, Tag], page_metadata: Dict) -> Optional[str]:
+    """
+    Extracts and returns the H1 title from the given HTML content or returns the
+     page metadata title if no H1 title is found.
+
+    :param content: HTML content as a string or BeautifulSoup PageElement.
+    :param page_metadata: Metadata dictionary containing page information.
+
+    :return: Extracted H1 title or page metadata title if H1 title is not found.
+    """
     soup = content
     if isinstance(soup, str):
-        soup = BeautifulSoup(soup, "html5lib")
-    title = soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")})
-    if title is None:
+        soup = BeautifulSoup(soup, "html.parser")
+
+    title_element = soup.find("h1", attrs={"id": re.compile(r"[\w_\-]+")})
+    if title_element is None:
         return page_metadata.get("title")
-    title = re.sub(r"^[\d.]+ ", "", title.text)
-    return title
+
+    title_text = title_element.text
+    title_text = re.sub(r"^[\d.]+ ", "", title_text)
+    return title_text
+
+
+def enable_legal_terms(soup: BeautifulSoup, options: Options, pdf_metadata: Dict) -> BeautifulSoup:
+    """
+    Enable and add legal_terms section to the PDF document content.
+
+    .. note::
+
+        This function modifies the input BeautifulSoup object in-place by inserting a legal_terms page.
+
+    :param soup: The BeautifulSoup object representing the document's content.
+    :param options: The options for the PDF generation process.
+    :param pdf_metadata: The metadata associated with the PDF.
+
+    :return: The modified BeautifulSoup object with added legal_terms content
+      or the BeautifulSoup object without any changes.
+    """
+    try:
+        content = soup.find("article", attrs={"class": "md-content__inner"})
+        # Set legal_terms to document's legal_terms local option
+        document_legal_terms: str = pdf_metadata.get("legal_terms") or "legal_terms"
+        # Select legal_terms template
+        legal_terms_template_files = [document_legal_terms.lower()]
+        template = options.template.select(legal_terms_template_files)
+
+        options.logger.info(f'Add legal_terms content to PDF document using "{template.name}" template.')
+        legal_terms_template = str(template.render())
+
+        def format_legal_terms_html(legal_terms_html: str) -> Tag:
+            """
+            Format legal_terms HTML to a BeautifulSoup Tag.
+
+            :param legal_terms_html: The HTML content of the legal_terms.
+            :return: The BeautifulSoup Tag with the added legal_terms content.
+            """
+            html_soup = BeautifulSoup(legal_terms_html, "html.parser")
+            headings = html_soup.find_all(["h2", "h3", "h4", "h5", "h6"])
+            for h in headings:
+                ref = h.get("id")
+                if ref is None:
+                    h["id"] = generate_heading_id(h.string)
+            return html_soup
+
+        # Create legal_terms div wrapper
+        legal_terms_div = soup.new_tag(
+            "div",
+            attrs={
+                "id": "mkdocs-pdf-gen-legal-terms",
+                "class": "page-break",
+            },
+        )
+        legal_terms_div.append(format_legal_terms_html(legal_terms_template))
+
+        content.append(legal_terms_div)
+        return soup
+    except Exception as e:
+        options.logger.error(f"Failed to add legal_terms: {str(e)}")
+        return soup
+
+
+def generate_heading_id(input_string: str) -> str:
+    """
+    Generate MkDocs appropriate ids for heading tags.
+
+    :param input_string: The input string that needs to be processed.
+    :return: The modified string with spaces replaced by hyphens and symbols removed.
+    """
+    # Replace spaces with hyphens
+    modified_string = re.sub(r"\s+", "-", input_string)
+
+    # Remove symbols using regex pattern [^\w\s-]
+    modified_string = re.sub(r"[^\w\s-]", "", modified_string)
+
+    return modified_string.replace("--", "-").lower()

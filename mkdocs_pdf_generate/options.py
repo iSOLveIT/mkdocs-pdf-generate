@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Dict
 
 from mkdocs.config import config_options
-from mkdocs.config.base import Config
+from mkdocs.config.base import LegacyConfig
+from mkdocs.config.defaults import MkDocsConfig
+
 
 from .templates.filters.url import URLFilter
 from .templates.template import Template
@@ -24,6 +26,7 @@ class Options(object):
         ("author_logo", config_options.Type(str, default=None)),
         ("copyright", config_options.Type(str, default=None)),
         ("disclaimer", config_options.Type(str, default=None)),
+        ("include_legal_terms", config_options.Type(bool, default=False)),
         ("cover", config_options.Type(bool, default=True)),
         ("cover_title", config_options.Type(str, default=None)),
         ("cover_subtitle", config_options.Type(str, default=None)),
@@ -35,7 +38,7 @@ class Options(object):
         ("cover_images", config_options.Type(dict, default=None)),
     )
 
-    def __init__(self, local_config, config, logger: logging):
+    def __init__(self, local_config: LegacyConfig, config: MkDocsConfig, logger: logging):
         self.strict = True if config["strict"] else False
         self.verbose = local_config["verbose"]
         self.enable_csv = local_config["enable_csv"]
@@ -45,7 +48,7 @@ class Options(object):
         self._dest_path = None
 
         # user_configs in mkdocs.yml
-        self._user_config: Config = config
+        self._user_config: MkDocsConfig = config
         self._site_url = config["site_url"]
 
         # Author and Copyright
@@ -58,6 +61,7 @@ class Options(object):
             self._copyright = config["copyright"]
 
         self._disclaimer = local_config["disclaimer"]
+        self._include_legal_terms = local_config["include_legal_terms"]
 
         # Individual document type cover
         self._cover_images: Dict = local_config["cover_images"]
@@ -79,7 +83,7 @@ class Options(object):
         # H1 Title of the document
         self._body_title: str = ""
 
-        # Theming
+        # Theme and theme handler
         self.theme_name = config["theme"].name
         self.theme_handler_path = local_config.get("theme_handler_path", None)
         if not self.theme_handler_path:
@@ -93,7 +97,8 @@ class Options(object):
         logo_path_filter = URLFilter(self, config)
         self.author_logo = local_config["author_logo"]
         if not self.author_logo:
-            self.author_logo = config["theme"]["logo"]
+            config_theme = config["theme"]
+            self.author_logo = config_theme["logo"]
         if isinstance(self.author_logo, str):
             self.author_logo = logo_path_filter(self.author_logo)
 
@@ -101,11 +106,11 @@ class Options(object):
         self._logger = logger
 
     @property
-    def site_url(self):
+    def site_url(self) -> str:
         return self._site_url
 
     @site_url.setter
-    def site_url(self, url):
+    def site_url(self, url: str):
         self._site_url = url
 
     @property
@@ -113,7 +118,7 @@ class Options(object):
         return self._body_title
 
     @body_title.setter
-    def body_title(self, text):
+    def body_title(self, text: str):
         self._body_title = text
 
     @property
@@ -129,6 +134,10 @@ class Options(object):
         return self._disclaimer
 
     @property
+    def include_legal_terms(self) -> bool:
+        return self._include_legal_terms
+
+    @property
     def cover_title(self) -> str:
         return self._cover_title
 
@@ -137,7 +146,7 @@ class Options(object):
         return self._cover_subtitle
 
     @property
-    def user_config(self) -> Config:
+    def user_config(self) -> MkDocsConfig:
         return self._user_config
 
     @property
@@ -157,7 +166,7 @@ class Options(object):
         return self._src_path
 
     @md_src_path.setter
-    def md_src_path(self, input_path):
+    def md_src_path(self, input_path: str):
         self._src_path = input_path
 
     @property
@@ -165,12 +174,12 @@ class Options(object):
         return self._dest_path
 
     @out_dest_path.setter
-    def out_dest_path(self, input_path):
+    def out_dest_path(self, input_path: str):
         self._dest_path = input_path
 
     def debug_dir(self) -> Path:
         if self.debug:
-            docs_src_dir = Path(Path(self.user_config["config_file_path"]).parent).resolve()
+            docs_src_dir = Path(self.user_config["config_file_path"]).parent.resolve()
             debug_folder_path = docs_src_dir.joinpath("pdf_html_debug")
             if not debug_folder_path.is_dir():
                 debug_folder_path.mkdir(parents=True, exist_ok=True)

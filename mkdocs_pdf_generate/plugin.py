@@ -3,26 +3,41 @@ import logging
 import os
 from pathlib import Path
 from timeit import default_timer as timer
-from typing import List
+from typing import List, Union, Optional
 
-from mkdocs.config import Config
+from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
+from mkdocs.structure.files import Files
+from mkdocs.structure.nav import Navigation
+from mkdocs.structure.pages import Page
 
 from . import generate_txt, generate_csv
-
+from .logger import get_logger
 from .options import Options
 from .renderer import Renderer
 from .templates.filters.url import URLFilter
-from .utils import get_pdf_metadata, h1_title_tag, secure_filename
+from .utils import get_pdf_metadata, extract_h1_title, secure_filename
+
+
+class PDFPluginException(Exception):
+    """
+    Custom exception class for PDF plugin errors.
+    """
+
+    pass
 
 
 class PdfGeneratePlugin(BasePlugin):
+    """
+    MKDocs plugin for generating PDFs from Markdown documentation.
+    """
+
     config_scheme = Options.config_scheme
 
     def __init__(self):
-        self._options = None
-        self._logger = logging.getLogger("mkdocs.pdf-generate")
+        self._logger = get_logger("mkdocs-pdf-generate")
         self._logger.setLevel(logging.INFO)
+        self._options = None
         self.renderer = None
         self.enabled = True
         self.combined = False
@@ -32,7 +47,10 @@ class PdfGeneratePlugin(BasePlugin):
         self.total_time = 0
         self.csv_build: List[List] = []
 
-    def on_config(self, config):
+    def on_config(self, config: MkDocsConfig) -> Optional[MkDocsConfig]:
+        """
+        Event handler when the MkDocs configuration is being processed.
+        """
         if "enabled_if_env" in self.config:
             env_name = self.config["enabled_if_env"]
             if env_name:
@@ -46,7 +64,7 @@ class PdfGeneratePlugin(BasePlugin):
         if self.config["debug"]:
             self._logger.info("PDF debug option is enabled.")
         if self.config["debug_target"]:
-            self._logger.info("Debug Target File: {}".format(self.config["debug_target"]))
+            self._logger.info("Debug Target File: {}.".format(self.config["debug_target"]))
 
         self._options = Options(self.config, config, self._logger)
 
@@ -65,7 +83,10 @@ class PdfGeneratePlugin(BasePlugin):
         self.renderer = Renderer(options=self._options)
         return config
 
-    def on_nav(self, nav, config, files):
+    def on_nav(self, nav: Navigation, config: MkDocsConfig, files: Files) -> Navigation:
+        """
+        Event handler after the navigation is processed.
+        """
         if not self.enabled:
             return nav
 
@@ -79,7 +100,10 @@ class PdfGeneratePlugin(BasePlugin):
 
         return nav
 
-    def on_post_page(self, output_content, page, config: Config):
+    def on_post_page(self, output_content: str, page: Page, config: MkDocsConfig) -> Union[str, PDFPluginException]:
+        """
+        Event handler after a page is processed.
+        """
         if not self.enabled:
             return output_content
 
@@ -116,7 +140,7 @@ class PdfGeneratePlugin(BasePlugin):
         self._options.out_dest_path = dest_path
 
         pdf_meta = get_pdf_metadata(page.meta)
-        build_pdf_document = pdf_meta.get("build", True)
+        build_pdf_document = str(pdf_meta.get("build")).lower() != "false"
 
         if self._options.debug and self._options.debug_target is not None:
             # Debugging only the debug target file
@@ -129,22 +153,17 @@ class PdfGeneratePlugin(BasePlugin):
                 build_pdf_document = False
 
         if build_pdf_document:
-            self._options.body_title = h1_title_tag(output_content, dict(page.meta))
+            self._options.body_title = extract_h1_title(output_content, dict(page.meta))
 
-            file_name = (
-                    pdf_meta.get("filename")
-                    or pdf_meta.get("title")
-                    or self._options.body_title
-                    or None
-            )
+            file_name = pdf_meta.get("filename") or pdf_meta.get("title") or self._options.body_title or None
 
             if file_name is None:
                 file_name = str(src_path).split("/")[-1].rstrip(".md")
-                self._logger.error(
-                    "You must provide a filename for the PDF document. The source filename is used as fallback."
+                self._logger.warning(
+                    "⚠️You must provide a filename for the PDF document. The source filename is used as fallback."
                 )
 
-            doc_revision: str = pdf_meta.get("revision", False)
+            doc_revision: str = pdf_meta.get("revision")
             if doc_revision:
                 file_name = (
                     f"{file_name}_R_{doc_revision.replace('.', '_')}"
@@ -165,42 +184,50 @@ class PdfGeneratePlugin(BasePlugin):
                     dest_path.joinpath(pdf_file),
                     pdf_metadata=pdf_meta,
                 )
-                generate_txt_document = pdf_meta.get("toc_txt", False)
+                self._logger.info("✅ {} file generated".format(pdf_file))
+                # Generate TXT TOC if needed
+                generate_txt_document = str(pdf_meta.get("toc_txt")).lower() == "true"
                 if generate_txt_document:
                     if self._options.toc and self._options.toc_ordering:
-                        self._logger.info(f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents")
+                        self._logger.info(
+                            f"Generating TXT TOC: {file_name}.txt, from {file_name}.pdf table of contents"
+                        )
                         extra_data = dict(isCover=self._options.cover, tocTitle=self._options.toc_title)
                         # Generate TOC_TXT file
                         generate_txt.pdf_txt_toc(dest_path, file_name, extra_data)
+                        self._logger.info(f"✅ {file_name}.txt TOC file generated")
                         # Gather CSV file data
                         if self._options.enable_csv:
                             csv_data = generate_csv.get_data(dest_path, file_name, pdf_meta, site_url)
                             self.csv_build.append(csv_data)
                         self.txt_num_files += 1
                     else:
-                        self._logger.info(
-                            "You must set both `toc` and `toc_numbering` to `true` to generate TXT table of contents"
+                        self._logger.warning(
+                            "⚠️ You must set both `toc` and `toc_numbering` to `true` to generate TXT table of contents"
                         )
                 output_content = self.renderer.add_link(output_content, pdf_file)
                 self.pdf_num_files += 1
             except Exception as e:
                 self.num_errors += 1
-                raise PDFPluginException("Error converting {}. Reason: {}".format(src_path, e))
+                raise PDFPluginException("❌ Error converting {}. Reason: {}".format(src_path, e))
         else:
-            self._logger.info("Skipped: PDF conversion for {}".format(src_path))
+            self._logger.info("⏩ Skipped: PDF conversion for {}".format(src_path))
 
         end = timer()
         self.total_time += end - start
         return output_content
 
-    def on_post_build(self, config):
+    def on_post_build(self, config: MkDocsConfig) -> None:
+        """
+        Event handler after the MkDocs build process is complete.
+        """
         if not self.enabled:
             return
 
-        self._logger.info("Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
-        self._logger.info("Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
+        self._logger.info("🔸 Converting {} file(s) to PDF took {:.1f}s".format(self.pdf_num_files, self.total_time))
+        self._logger.info("🔸 Converted {} PDF document's TOC to TXT".format(self.txt_num_files))
 
-        def csv_generate(data: List[List]):
+        def csv_generate(data: List[List]) -> int:
             rows: List[List] = data
 
             csv_file_path = Path(getattr(config, "site_dir", config["site_dir"])).joinpath("4Dversions.csv")
@@ -214,10 +241,6 @@ class PdfGeneratePlugin(BasePlugin):
 
         if self._options.enable_csv:
             csv_entry = csv_generate(self.csv_build)
-            self._logger.info("Generated '4Dversions.csv' file from {} entry(s)".format(csv_entry))
+            self._logger.info("🔸 Generated '4Dversions.csv' file from {} entry(s)".format(csv_entry))
         if self.num_errors > 0:
-            self._logger.error("{} conversion errors occurred (see above)".format(self.num_errors))
-
-
-class PDFPluginException(Exception):
-    pass
+            self._logger.error("❌{} conversion errors occurred (see above)".format(self.num_errors))

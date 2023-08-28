@@ -48,24 +48,26 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
+      
 use_directory_urls: true
+
 plugins:
   - search
   - minify:
       minify_html: true
   - pdf-generate:
 #      debug: true
-#      debug_target: customise/customisation.md
+#      debug_target: changelog.md
       enable_csv: true
       copyright: Copyright &copy; 2023 4D Systems
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."
+#      include_legal_terms: true
       custom_template_path: cover_template
       toc_numbering: true
       toc_level: 6
       cover_images:
         default: img/cover.png
       enabled_if_env: ENABLE_PDF_EXPORT
-      
 
 nav:
   - Intro: index.md

@@ -1,7 +1,14 @@
-# from bs4 import BeautifulSoup
+"""
+This module provides functions for manipulating HTML content and generating a stylesheet.
+"""
 
 
 def get_stylesheet() -> str:
+    """
+    Generate a stylesheet for styling HTML content.
+
+    :return: The generated stylesheet as a string.
+    """
     return """
 .md-container {
     display: block;
@@ -35,6 +42,13 @@ def get_stylesheet() -> str:
 
 
 def modify_html(html: str, href: str) -> str:
+    """
+    Modify the given HTML content by adding a download button with an icon.
+
+    :param html: The original HTML content.
+    :param href: The link for the download button.
+    :return: The modified HTML content with the download button added.
+    """
     # SVG 'file-download' size 2x from fontawesome: https://fontawesome.com/icons/file-download?style=solid
     # resized to 16px width * height
     a_tag = '<a class="md-content__button md-icon" href="{}" download title="Download PDF">'.format(href)
@@ -58,7 +72,7 @@ def modify_html(html: str, href: str) -> str:
     )
     button_tag = a_tag + icon + "</a>"
 
-    # insert into HTML
+    # Insert the button into the HTML
     insert_point = '<article class="md-content__inner md-typeset">'
     html = html.replace(insert_point, insert_point + button_tag)
 
