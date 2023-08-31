@@ -11,6 +11,7 @@ edit_uri: edit/main/docs/docs/
 
 theme:
   name: material
+  custom_dir: overrides
   logo: img/plugin_icon.svg
   favicon: img/plugin_favicon.png
   font:
