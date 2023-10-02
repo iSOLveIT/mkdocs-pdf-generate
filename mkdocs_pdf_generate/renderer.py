@@ -9,7 +9,7 @@ from typing import Dict, Optional, Any
 from bs4 import BeautifulSoup, Tag
 from weasyprint import HTML, document
 
-from . import cover, toc
+from . import cover, toc, __version__
 from .options import Options
 from .preprocessor import get_content, get_separate as prep_separate
 from .styles import style_for_print
@@ -63,6 +63,8 @@ class Renderer:
         :return: A weasyprint :class:`document.Document` object.
         """
         soup = BeautifulSoup(content, "html.parser")
+        pdf_generator = soup.find("meta", attrs={"name": "generator"})
+        pdf_generator["content"] = f"mkdocs-pdf-generate-{__version__}, " + pdf_generator["content"]
         soup = get_content(soup, self._options, pdf_metadata)
         self.inject_pgnum(soup)
 

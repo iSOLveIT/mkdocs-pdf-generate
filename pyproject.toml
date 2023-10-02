@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-pdf-generate"
-version = "0.2.2"
+version = "0.2.3"
 description = "An MkDocs plugin to generate individual PDF files from content pages."
 readme = "README.md"
 documentation = "https://isolveit.github.io/mkdocs-pdf-generate/"

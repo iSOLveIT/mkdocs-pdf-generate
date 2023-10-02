@@ -1,33 +1,34 @@
 import os
 import re
 from pathlib import Path, PosixPath, WindowsPath
+from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup
 from weasyprint import urls
 
 
 # check if href is relative, if it is relative then it *should* be an HTML that generates a PDF doc
-def is_doc(href: str) -> bool:
+def is_doc_or_doc_subsection_link(href: str) -> bool:
     """
     Check if the given href is a relative link.
 
     :param href: The URL or path to be checked.
     :return: True if the href is a relative link, False otherwise.
     """
-    tail = Path(href).name
-    ext = Path(tail).suffix
+    parsed_url = urlsplit(href)
 
-    abs_url = urls.url_is_absolute(href)  # Check if it's an absolute URL
-    abs_path = os.path.isabs(href)  # Check if it's an absolute path
-    html_file = ext.startswith(".html")  # Check if the extension is .html
+    # abs_url = urls.url_is_absolute(href)  # Check if it's an absolute URL
+    # abs_path = os.path.isabs(href)  # Check if it's an absolute path
+    # html_file = ext.startswith(".html")  # Check if the extension is .html
 
     # Check if the href matches a relative link pattern
     relative_link = re.search(r"^\.{,2}?[\w\-.~$&+,/:;=?@%#*]*?$", href)
-    # If it doesn't match the relative link pattern or doesn't meet other conditions, it's not a relative link
-    if not relative_link or abs_url or abs_path or not html_file:
-        return False
+    # Check if the path and fragment of the href are not empty
+    doc_subsection_link = parsed_url.path and bool(parsed_url.fragment)
 
-    return True
+    if relative_link or (relative_link and doc_subsection_link):
+        return True
+    return False
 
 
 def rel_html_href(base_url: str, href: str, site_url: str) -> str:
@@ -48,7 +49,7 @@ def rel_html_href(base_url: str, href: str, site_url: str) -> str:
     internal = href.startswith("#")
     web_url = re.search(r"^(https://|http://)", href)
     # Check if href is a document link
-    is_document = is_doc(href)
+    is_document = is_doc_or_doc_subsection_link(href)
 
     # Return href if it's a web URL or is an internal link or not a document link
     if web_url or internal or not is_document:

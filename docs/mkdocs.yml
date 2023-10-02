@@ -9,9 +9,11 @@ repo_name: iSOLveIT/mkdocs-pdf-generate
 repo_url: https://github.com/iSOLveIT/mkdocs-pdf-generate
 edit_uri: edit/main/docs/docs/
 
+extra_css:
+  - styles.css
+
 theme:
   name: material
-  custom_dir: overrides
   logo: img/plugin_icon.svg
   favicon: img/plugin_favicon.png
   font:
@@ -57,8 +59,8 @@ plugins:
   - minify:
       minify_html: true
   - pdf-generate:
-#      debug: true
-#      debug_target: changelog.md
+      debug: true
+      debug_target: options.md
       enable_csv: true
       copyright: Copyright &copy; 2023 4D Systems
       disclaimer: "Disclaimer: Content can change at anytime and best to refer to website for latest information."

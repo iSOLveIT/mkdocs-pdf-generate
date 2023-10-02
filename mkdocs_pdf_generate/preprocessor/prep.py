@@ -1,5 +1,5 @@
 import re
-from typing import Dict, Optional
+from typing import Dict
 
 from bs4 import BeautifulSoup
 

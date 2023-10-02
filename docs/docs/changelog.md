@@ -34,10 +34,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-# Changelog
+## Changelog
 
-0.2.2
------
+### 0.2.3
+
+Released: **03-10-2023**
+
+* Fixed relative links to external site issue.
+* Added mkdocs-pdf-generator to PDF metadata.
+
+### 0.2.2
+
 Released: **28-08-2023**
 
 * Introduced the `cover_image` local option which allows you to add an image to the cover page of your PDF document.
@@ -47,8 +54,8 @@ Released: **28-08-2023**
 * Fix MkDocs build failure issue.
 * Improvement: Compatibility with MkDocs >= 1.5 and Markdown 3.4.4. Fix for issue [#20](https://github.com/iSOLveIT/mkdocs-pdf-generate/issues/20).
 
-0.2.1
------
+### 0.2.1
+
 Released: **22-03-2023**
 
 * Updated documentation and made minor changes to plugin code.
@@ -59,8 +66,8 @@ Released: **22-03-2023**
 * Improvement: Added the `toc_txt` local option that allows users to build TXT file containing the Table of Contents.
 * Minor improvements: Rewrote logging messages.
 
-0.2.0
------
+### 0.2.0
+
 Released: **14-02-2023**
 
 * Package setup: Changed package from using setuptools to pyproject.toml.

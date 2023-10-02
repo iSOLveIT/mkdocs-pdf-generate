@@ -420,7 +420,7 @@ The custom template must be an HTML file or [Jinja2](https://jinja.palletsprojec
     + The legal_terms template's filename can either be `legal_terms` or any accepted filename with one of these file extensions
     `.html.j2`, `.html.jinja2`, `.html`, or `.htm`. <br> **Example**: if `legal_terms` option is set to `privacy` then you can create a template file called `privacy.html` or `privacy.html.j2` or `privacy.html.jinja2` or `privacy.htm`.
 
-### `cover_image`
+### `cover_image` {: class="page-break"}
 
 The `cover_image` option allows users to add an image to the cover page. <br>
 **default**: `None`

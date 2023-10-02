@@ -41,6 +41,6 @@ class URLFilter(_FilterBase):
             path = Path(d).joinpath(pathname).resolve()
             if path.is_file():
                 return path.as_uri()
-        
+
         # If not found, return the original pathname
         return pathname
