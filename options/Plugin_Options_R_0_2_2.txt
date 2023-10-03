@@ -35,4 +35,4 @@ Table of Contents
 2.7. csv_name	12
 2.8. toc_txt (experimental)	13
 2.9. legal_terms	13
-2.10. cover_image	13
+2.10. cover_image	14
