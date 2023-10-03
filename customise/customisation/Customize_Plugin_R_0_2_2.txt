@@ -1,0 +1,7 @@
+Table of Contents
+
+1. Custom cover page	3
+1.1. Using custom cover template	3
+2. Adjusting the output	5
+2.1. Changing the orientation of a page	6
+2.1.1. Example	7
